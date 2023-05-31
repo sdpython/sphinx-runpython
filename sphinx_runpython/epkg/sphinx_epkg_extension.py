@@ -14,6 +14,7 @@ class epkg_node(nodes.TextElement):
     """
     Defines *epkg* node.
     """
+
     pass
 
 
@@ -49,12 +50,17 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
 
     ::
 
-        epkg_dictionary = {'pandas': ('http://pandas.pydata.org/pandas-docs/stable/generated/',
-                                      ('http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html', 1))
-                                                                                    # 1 for one paraemter
-                            '*py': ('https://docs.python.org/3/',
-                                    ('https://docs.python.org/3/library/{0}.html#{0}.{1}', 2))
-                           }
+        epkg_dictionary = {
+            'pandas': (
+                'http://pandas.pydata.org/pandas-docs/stable/generated/',
+                ('http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html', 1)
+            ),
+            # 1 for one parameter
+            '*py': (
+                'https://docs.python.org/3/',
+                ('https://docs.python.org/3/library/{0}.html#{0}.{1}', 2)
+            ),
+        }
 
     If the module name starts with a '*', the anchor does not contain it.
     See also :ref:`l-sphinx-epkg`.
@@ -66,9 +72,12 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         def my_custom_links(input):
             return "string to display", "url"
 
-        epkg_dictionary = {'weird_package': ('http://pandas.pydata.org/pandas-docs/stable/generated/',
-                                      ('http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html', 1),
-                                      my_custom_links)
+        epkg_dictionary = {
+            'weird_package': (
+                'http://pandas.pydata.org/pandas-docs/stable/generated/',
+                ('http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html', 1),
+                my_custom_links
+            )
 
     However, it is impossible to use a function as a value
     in the configuration because :epkg:`*py:pickle` does not handle
@@ -103,14 +112,17 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         ma = "\n".join(sorted(str(_) for _ in app.config))
         raise AttributeError(
             "unable to find 'epkg_dictionary' in configuration. Available:\n{0}"
-            "".format(ma)) from e
+            "".format(ma)
+        ) from e
 
     # Supported module?
     modname = spl[0]
     if modname not in epkg_dictionary:
+        txt = ", ".join(sorted(epkg_dictionary.keys()))
         msg = inliner.reporter.error(
-            "Unable to find module '{0}' in epkg_dictionary, existing={1}".format(
-                modname, ", ".join(sorted(epkg_dictionary.keys())), line=lineno))
+            f"Unable to find module {modname!r} in epkg_dictionary, existing={txt}",
+            line=lineno,
+        )
         prb = inliner.problematic(rawtext, rawtext, msg)
         return [prb], [msg]
 
@@ -119,7 +131,8 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         if isinstance(value, tuple):
             if len(value) == 0:  # pragma: no cover
                 msg = inliner.reporter.error(
-                    f"Empty values for module '{modname}' in epkg_dictionary.")
+                    f"Empty values for module '{modname}' in epkg_dictionary."
+                )
                 prb = inliner.problematic(rawtext, rawtext, msg)
                 return [prb], [msg]
             value = value[0]
@@ -134,7 +147,11 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         if found is None:
             if callable(value[-1]):
                 found = value[-1]
-            elif isinstance(value[-1], tuple) and len(value[-1]) == 2 and value[-1][-1] is None:
+            elif (
+                isinstance(value[-1], tuple)
+                and len(value[-1]) == 2
+                and value[-1][-1] is None
+            ):
                 # It assumes the first parameter is a name of a function.
                 namef = value[-1][0]
                 if not hasattr(config, namef):
@@ -147,7 +164,8 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         if found is None:  # pragma: no cover
             msg = inliner.reporter.error(
                 "Unable to find a tuple with '{0}' parameters in epkg_dictionary['{1}']"
-                "".format(expected, modname))
+                "".format(expected, modname)
+            )
             prb = inliner.problematic(rawtext, rawtext, msg)
             return [prb], [msg]
 
@@ -160,7 +178,8 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
                 except Exception as e:  # pragma: no cover
                     raise ValueError(
                         "epkg accepts function or classes with __call__ overloaded. "
-                        "Found '{0}'".format(found)) from e
+                        "Found '{0}'".format(found)
+                    ) from e
         else:
             url = found.format(*tuple(spl[1:]))
             if spl[0].startswith("*"):
@@ -170,15 +189,19 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
 
     extref = f"`{anchor} <{url}>`__"
     node = epkg_node(rawtext=rawtext)
-    node['classes'] += ["epkg"]
+    node["classes"] += ["epkg"]
 
-    memo = ClassStruct(document=inliner.document, reporter=inliner.reporter,
-                       language=inliner.language)
+    memo = ClassStruct(
+        document=inliner.document, reporter=inliner.reporter, language=inliner.language
+    )
     processed, messages = inliner.parse(extref, lineno, memo, node)
     if len(messages) > 0:  # pragma: no cover
         msg = inliner.reporter.error(
             "unable to interpret '{0}', messages={1}".format(
-                text, ", ".join(str(_) for _ in messages)), line=lineno)
+                text, ", ".join(str(_) for _ in messages)
+            ),
+            line=lineno,
+        )
         prb = inliner.problematic(rawtext, rawtext, msg)
         return [prb], [msg]
 
@@ -205,17 +228,19 @@ def setup(app):
     setup for ``bigger`` (sphinx)
     """
     if hasattr(app, "add_mapping"):
-        app.add_mapping('epkg', epkg_node)
+        app.add_mapping("epkg", epkg_node)
 
-    app.add_config_value('epkg_dictionary', {}, 'env')
-    app.add_node(epkg_node,
-                 html=(visit_epkg_node, depart_epkg_node),
-                 epub=(visit_epkg_node, depart_epkg_node),
-                 elatex=(visit_epkg_node, depart_epkg_node),
-                 latex=(visit_epkg_node, depart_epkg_node),
-                 rst=(visit_epkg_node, depart_epkg_node),
-                 md=(visit_epkg_node, depart_epkg_node),
-                 text=(visit_epkg_node, depart_epkg_node))
+    app.add_config_value("epkg_dictionary", {}, "env")
+    app.add_node(
+        epkg_node,
+        html=(visit_epkg_node, depart_epkg_node),
+        epub=(visit_epkg_node, depart_epkg_node),
+        elatex=(visit_epkg_node, depart_epkg_node),
+        latex=(visit_epkg_node, depart_epkg_node),
+        rst=(visit_epkg_node, depart_epkg_node),
+        md=(visit_epkg_node, depart_epkg_node),
+        text=(visit_epkg_node, depart_epkg_node),
+    )
 
-    app.add_role('epkg', epkg_role)
-    return {'version': sphinx.__display_version__, 'parallel_read_safe': True}
+    app.add_role("epkg", epkg_role)
+    return {"version": sphinx.__display_version__, "parallel_read_safe": True}

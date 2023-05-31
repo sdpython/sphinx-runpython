@@ -4,4 +4,4 @@ Sphinx extension.
 """
 
 __version__ = "0.1"
-__author__ = "Xavier Dupré"
+__author__ = "Xavier DuprÃ©"
