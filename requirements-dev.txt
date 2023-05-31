@@ -1,0 +1,16 @@
+autopep8
+black
+coverage
+flake8
+furo
+isort
+matplotlib
+openpyxl
+pandas
+pytest
+pytest-cov
+ruff
+sphinx
+sphinx-gallery
+tqdm
+wheel
