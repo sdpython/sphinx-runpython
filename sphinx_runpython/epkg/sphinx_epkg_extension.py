@@ -6,7 +6,7 @@
 
 import sphinx
 from docutils import nodes
-from .import_object_helper import import_any_object
+from ..import_object_helper import import_any_object
 
 
 class epkg_node(nodes.TextElement):

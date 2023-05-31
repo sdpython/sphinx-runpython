@@ -6,4 +6,6 @@ API
 .. toctree::
     :maxdepth: 1
 
-    tools
+    epkg
+    helpers
+    import_object_helper

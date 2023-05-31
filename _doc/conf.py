@@ -16,7 +16,7 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
     "sphinx_runpython.epkg",
-    "sphinx_runpython.runpython",
+    # "sphinx_runpython.runpython",
 ]
 
 templates_path = ["_templates"]
@@ -42,7 +42,6 @@ html_static_path = ["_static"]
 intersphinx_mapping = {
     "matplotlib": ("https://matplotlib.org/", None),
     "numpy": ("https://numpy.org/doc/stable", None),
-    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
     "python": (f"https://docs.python.org/{sys.version_info.major}", None),
 }
 
@@ -56,8 +55,28 @@ sphinx_gallery_conf = {
 epkg_dictionary = {
     "DOT": "https://graphviz.org/doc/info/lang.html",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",
-    "numpy": "https://numpy.org/",
-    "pyinstrument": "https://github.com/joerick/pyinstrument",
+    "numpy": (
+        "https://www.numpy.org/",
+        ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.html", 1),
+        ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.{1}.html", 2),
+    ),
+    "pandas": (
+        "https://pandas.pydata.org/pandas-docs/stable/",
+        ("https://pandas.pydata.org/pandas-docs/stable/generated/pandas.{0}.html", 1),
+        (
+            "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.{0}.{1}.html",
+            2,
+        ),
+    ),
+    "pandoc": "https://johnmacfarlane.net/pandoc/",
+    "Pandoc": "https://johnmacfarlane.net/pandoc/",
     "python": "https://www.python.org/",
     "sphinx-gallery": "https://github.com/sphinx-gallery/sphinx-gallery",
+    "*py": (
+        "https://docs.python.org/3/",
+        ("https://docs.python.org/3/library/{0}.html", 1),
+        ("https://docs.python.org/3/library/{0}.html#{0}.{1}", 2),
+        ("https://docs.python.org/3/library/{0}.html#{0}.{1}.{2}", 3),
+    ),
+    "*pyf": (("https://docs.python.org/3/library/functions.html#{0}", 1),),
 }

@@ -1,6 +1,14 @@
 import unittest
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
+from sphinx_runpython.epkg.sphinx_epkg_extension import (
+    epkg_role,
+    epkg_node,
+    visit_epkg_node,
+    depart_epkg_node,
+)
 from pyquickhelper.helpgen import rst2html
+
+tives = [("epkg", epkg_role, epkg_node, visit_epkg_node, depart_epkg_node)]
 
 
 class TestEpkgExtension(ExtTestCase):
@@ -20,7 +28,7 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
             epkg_dictionary={
                 "pandas": (
@@ -35,15 +43,15 @@ class TestEpkgExtension(ExtTestCase):
 
         t1 = "abeforea"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = "aftera"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = "http://pandas.pydata.org/pandas-docs/stable/generated/"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_module_twice(self):
@@ -63,7 +71,7 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
             epkg_dictionary={
                 "pandas": "http://pandas.pydata.org/pandas-docs/stable/generated/",
@@ -89,7 +97,7 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
             epkg_dictionary={
                 "pandas": (
@@ -105,25 +113,25 @@ class TestEpkgExtension(ExtTestCase):
 
         t1 = "abeforea"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = "aftera"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         spl = html.split("abeforea")[-1].split("aftera")[0]
 
         t1 = "`"
         if t1 in html:
-            raise Exception(f"\n**{spl}**\n----\n{html}")
+            raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
         t1 = 'href="http://www.7-zip.org/"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = 'href="http://pandas.pydata.org/pandas-docs/stable/generated/DataFrame.to_html.html"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function(self):
@@ -146,7 +154,7 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
             epkg_dictionary={
                 "pandas": (
@@ -163,25 +171,25 @@ class TestEpkgExtension(ExtTestCase):
 
         t1 = "abeforea"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = "aftera"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         spl = html.split("abeforea")[-1].split("aftera")[0]
 
         t1 = "`"
         if t1 in html:
-            raise Exception(f"\n**{spl}**\n----\n{html}")
+            raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
         t1 = 'href="http://www.7-zip.org/"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = 'href="pandas|DataFrame|to_html"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_class(self):
@@ -205,7 +213,7 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
             epkg_dictionary={
                 "pandas": (
@@ -222,25 +230,25 @@ class TestEpkgExtension(ExtTestCase):
 
         t1 = "abeforea"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = "aftera"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         spl = html.split("abeforea")[-1].split("aftera")[0]
 
         t1 = "`"
         if t1 in html:
-            raise Exception(f"\n**{spl}**\n----\n{html}")
+            raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
         t1 = 'href="http://www.7-zip.org/"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = 'href="pandas|DataFrame|to_html"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function_string(self):
@@ -260,7 +268,7 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
             epkg_dictionary={
                 "pandas": (
@@ -280,25 +288,25 @@ class TestEpkgExtension(ExtTestCase):
 
         t1 = "abeforea"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = "aftera"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         spl = html.split("abeforea")[-1].split("aftera")[0]
 
         t1 = "`"
         if t1 in html:
-            raise Exception(f"\n**{spl}**\n----\n{html}")
+            raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
         t1 = 'href="http://www.7-zip.org/"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = 'href="pandas|DataFrame|to_html"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function_long_link(self):
@@ -317,17 +325,17 @@ class TestEpkgExtension(ExtTestCase):
             content,
             writer="custom",
             keep_warnings=True,
-            directives=None,
+            directives=tives,
             layout="sphinx",
         )
 
         t1 = 'href="http://first.part/secondpart"'
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
         t1 = ">one link on two lines</a>"
         if t1 not in html:
-            raise Exception(html)
+            raise AssertionError(html)
 
 
 if __name__ == "__main__":

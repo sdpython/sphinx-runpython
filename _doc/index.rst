@@ -28,7 +28,6 @@ sphinx-runpython: (Numpy) Array API for ONNX
 .. toctree::
     :maxdepth: 2
 
-    tutorial/index
     api/index
     auto_examples/index
 
