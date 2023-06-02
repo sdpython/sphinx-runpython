@@ -1,5 +1,3 @@
-.. _l-api-import_object_helper:
-
 ====================
 import_object_helper
 ====================

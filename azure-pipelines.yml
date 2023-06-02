@@ -30,6 +30,9 @@ jobs:
       black --diff .
     displayName: 'Black'
   - script: |
+      rstcheck -r ./_doc ./onnx_array_api
+    displayName: 'rstcheck'
+  - script: |
       python -m pip wheel . --wheel-dir dist -v -v -v
     displayName: 'build wheel'
   - script: |

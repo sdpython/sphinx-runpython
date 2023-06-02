@@ -57,7 +57,7 @@ class TestRunCmd(ExtTestCase):
                 sin="\n\n\n" * 100,
             )
         except Exception as e:
-            self.assertIn("ERROR", str(e))
+            self.assertIn("Argument 'communicate' should be True", str(e))
 
         out, err = run_cmd(cmd, wait=True, communicate=True, sin="\n\n\n" * 100)
         self.assertGreater(len(out), 10)

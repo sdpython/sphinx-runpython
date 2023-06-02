@@ -2,7 +2,7 @@ import sys
 import unittest
 from docutils.parsers.rst import directives
 from pyquickhelper.helpgen import rst2html
-from sphinx_runpython.ext_test_case import ExtTestCase
+from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.runpython.sphinx_runpython_extension import RunPythonDirective
 
 
@@ -10,6 +10,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
     def test_post_parse(self):
         directives.register_directive("runpython", RunPythonDirective)
 
+    @ignore_warnings(PendingDeprecationWarning)
     def test_runpython_toggle(self):
         """
         this test also test the extension runpython

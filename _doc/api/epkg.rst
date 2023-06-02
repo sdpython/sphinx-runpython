@@ -1,5 +1,3 @@
-.. _l-sphinx-epkg:
-
 ====
 epkg
 ====

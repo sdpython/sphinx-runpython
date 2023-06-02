@@ -4,6 +4,8 @@ from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.collapse.sphinx_collapse_extension import (
     CollapseDirective,
     collapse_node,
+    visit_collapse_node_html,
+    depart_collapse_node_html,
     visit_collapse_node_rst,
     depart_collapse_node_rst,
 )
@@ -15,6 +17,16 @@ tives = [
         collapse_node,
         visit_collapse_node_rst,
         depart_collapse_node_rst,
+    )
+]
+
+tives_html = [
+    (
+        "collapse",
+        CollapseDirective,
+        collapse_node,
+        visit_collapse_node_html,
+        depart_collapse_node_html,
     )
 ]
 
@@ -59,7 +71,9 @@ class TestCollapseExtension(ExtTestCase):
             raise AssertionError(html)
 
         # HTML
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(
+            content, writer="custom", keep_warnings=True, directives=tives_html
+        )
 
         t1 = "this code shoud appear"
         if t1 not in html:
@@ -105,7 +119,9 @@ class TestCollapseExtension(ExtTestCase):
             raise AssertionError(html)
 
         # HTML
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(
+            content, writer="custom", keep_warnings=True, directives=tives_html
+        )
 
         t1 = "b.innerText = 'abcd';"
         if t1 not in html:
@@ -136,7 +152,9 @@ class TestCollapseExtension(ExtTestCase):
             raise AssertionError(html)
 
         # HTML
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(
+            content, writer="custom", keep_warnings=True, directives=tives_html
+        )
 
         t1 = ">abcd<"
         if t1 not in html:

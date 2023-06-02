@@ -1,5 +1,3 @@
-.. _l-sphinx-runpython:
-
 =========
 runpython
 =========
@@ -77,8 +75,6 @@ The directive displays the traceback.
     import os
     for i, name in enumerate(os.listdir("not existing")):
         pass
-
-.. _l-image-rst-runpython:
 
 The directive can also be used to display images
 with a tweak however. It consists in writing *rst*
