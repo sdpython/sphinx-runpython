@@ -14,6 +14,7 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
+    "sphinx_runpython.collapse",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
 ]

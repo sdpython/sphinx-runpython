@@ -489,28 +489,25 @@ class RunPythonDirective(Directive):
     Extracts script to run described by ``.. runpython::``
     and modifies the documentation.
 
-    .. exref::
-        :title: A python script which generates documentation
-
-        The following code prints the version of Python
-        on the standard output. It is added to the documentation::
-
-            .. runpython::
-                :showcode:
-
-                import sys
-                print("sys.version_info=", str(sys.version_info))
-
-        If give the following results:
+    The following code prints the version of Python
+    on the standard output. It is added to the documentation::
 
         .. runpython::
+            :showcode:
 
             import sys
             print("sys.version_info=", str(sys.version_info))
 
-        Options *showcode* can be used to display the code.
-        The option *rst* will assume the output is in RST format and must be
-        interpreted. *showout* will complement the RST output with the raw format.
+    If give the following results:
+
+    .. runpython::
+
+        import sys
+        print("sys.version_info=", str(sys.version_info))
+
+    Options *showcode* can be used to display the code.
+    The option *rst* will assume the output is in RST format and must be
+    interpreted. *showout* will complement the RST output with the raw format.
 
     The directive has a couple of options:
 

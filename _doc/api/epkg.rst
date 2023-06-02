@@ -11,7 +11,7 @@ In *conf.py*:
 ::
 
     extensions = [ ...
-        'pyquickhelper.sphinxext.sphinx_epkg_extension']
+        'sphinx_runpython.epkg.sphinx_epkg_extension']
 
     epkg_dictionary = {
         'pandoc': 'http://johnmacfarlane.net/pandoc/',                                       # 1

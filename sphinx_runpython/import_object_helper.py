@@ -24,7 +24,6 @@ def import_object(docname, kind, use_init=True) -> Tuple[object, str]:
     Extracts an object defined by its name including the module name.
 
     :param docname: full name of the object
-        (example: ``pyquickhelper.sphinxext.sphinx_docassert_extension.import_object``)
     :param kind: ``'function'`` or ``'class'`` or ``'kind'``
     :param use_init: return the constructor instead of the class
     :return: tuple(object, name)
@@ -124,7 +123,6 @@ def import_any_object(docname: str, use_init: bool = True) -> Tuple[object, str,
     Extracts an object defined by its name including the module name.
 
     :param docname: full name of the object
-        (example: ``pyquickhelper.sphinxext.sphinx_docassert_extension.import_object``)
     :param use_init: return the constructor instead of the class
     :returns: tuple(object, name, kind)
     :raises: :epkg:`*py:ImportError` if unable to import

@@ -169,13 +169,10 @@ def run_cmd(
     :param prefix_log: add a prefix to a line before printing it
     :return: content of stdout, stdres  (only if wait is True)
 
-    .. exref::
-        :title: Run a program using the command line
+    ::
 
-        ::
-
-            from pyquickhelper.loghelper import run_cmd
-            out, err = run_cmd("python setup.py install", wait=True)
+        from sphinx_runpython.runpython import run_cmd
+        out, err = run_cmd("python setup.py install", wait=True)
 
     If you are using this function to run :epkg:`git` function, parameter
     ``shell`` must be True.
