@@ -13,5 +13,7 @@ pytest-cov
 ruff
 sphinx
 sphinx-gallery
+rstcheck[sphinx,toml]
+tomli
 tqdm
 wheel

@@ -1,6 +1,6 @@
 
 sphinx-runpython: (Numpy) Array API for ONNX
-==========================================
+============================================
 
 .. image:: https://dev.azure.com/xavierdupre3/sphinx-runpython/_apis/build/status/sdpython.sphinx-runpython
     :target: https://dev.azure.com/xavierdupre3/sphinx-runpython/
