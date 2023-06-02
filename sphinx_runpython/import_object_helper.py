@@ -76,7 +76,7 @@ def import_object(docname, kind, use_init=True) -> Tuple[object, str]:
         if (
             hasattr(_Types.prop, "__class__")
             and myfunc.__class__ is not _Types.prop.__class__
-        ):  # pylint: disable=E1101
+        ):
             raise TypeError(f"'{docname}' is not a property(*) - {myfunc}")
         if not isinstance(myfunc, property):
             raise TypeError(f"'{docname}' is not a static property(**) - {myfunc}")

@@ -15,7 +15,7 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
     "sphinx_runpython.epkg",
-    # "sphinx_runpython.runpython",
+    "sphinx_runpython.runpython",
 ]
 
 templates_path = ["_templates"]

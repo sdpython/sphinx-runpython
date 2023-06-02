@@ -97,7 +97,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
     """
     # It extracts the pieces of the text.
     spl = text.split(":")
-    if len(spl) == 0:  # pragma: no cover
+    if len(spl) == 0:
         msg = inliner.reporter.error("empty value for role epkg", line=lineno)
         prb = inliner.problematic(rawtext, rawtext, msg)
         return [prb], [msg]
@@ -108,7 +108,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
     config = app.config
     try:
         epkg_dictionary = config.epkg_dictionary
-    except AttributeError as e:  # pragma: no cover
+    except AttributeError as e:
         ma = "\n".join(sorted(str(_) for _ in app.config))
         raise AttributeError(
             "unable to find 'epkg_dictionary' in configuration. Available:\n{0}"
@@ -129,7 +129,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
     if len(spl) == 1:
         value = epkg_dictionary[modname]
         if isinstance(value, tuple):
-            if len(value) == 0:  # pragma: no cover
+            if len(value) == 0:
                 msg = inliner.reporter.error(
                     f"Empty values for module '{modname}' in epkg_dictionary."
                 )
@@ -161,7 +161,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
                     # Defined in the configuration.
                     found = getattr(config, namef)
 
-        if found is None:  # pragma: no cover
+        if found is None:
             msg = inliner.reporter.error(
                 "Unable to find a tuple with '{0}' parameters in epkg_dictionary['{1}']"
                 "".format(expected, modname)
@@ -175,7 +175,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
             except TypeError:
                 try:
                     anchor, url = found()(text)
-                except Exception as e:  # pragma: no cover
+                except Exception as e:
                     raise ValueError(
                         "epkg accepts function or classes with __call__ overloaded. "
                         "Found '{0}'".format(found)
@@ -183,7 +183,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         else:
             url = found.format(*tuple(spl[1:]))
             if spl[0].startswith("*"):
-                anchor = ".".join(spl[1:])  # pragma: no cover
+                anchor = ".".join(spl[1:])
             else:
                 anchor = ".".join(spl)
 
@@ -195,7 +195,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
         document=inliner.document, reporter=inliner.reporter, language=inliner.language
     )
     processed, messages = inliner.parse(extref, lineno, memo, node)
-    if len(messages) > 0:  # pragma: no cover
+    if len(messages) > 0:
         msg = inliner.reporter.error(
             "unable to interpret '{0}', messages={1}".format(
                 text, ", ".join(str(_) for _ in messages)

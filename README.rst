@@ -28,9 +28,48 @@ sphinx-runpython: run python code in sphinx
 
 **sphinx-runpython** implements sphinx extensions including one
 to execute code and add the output to the documentation.
-
 The library is released on
 `pypi/sphinx-runpython <https://pypi.org/project/sphinx-runpython/>`_
 and its documentation is published at
 `sphinx-runpython
 <http://www.xavierdupre.fr/app/sphinx-runpython/helpsphinx/index.html>`_.
+
+epkg
+++++
+
+It implements a list of recurring urls in documentation.
+
+**conf.py**
+
+::
+
+    epkg_dictionary = {'title': 'url' }
+
+**rst**
+
+::
+
+    :epkg:`title`  -> `title <url>`_
+
+
+runpython
++++++++++
+
+Executes code in the documentation and adds it to documentation.
+
+::
+
+    .. runpython::
+        :showcode:
+
+        print("python code")
+
+::
+
+    <<<
+
+    print("python code")
+
+    >>>
+
+    python code
