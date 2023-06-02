@@ -1,8 +1,7 @@
 # coding: utf-8
 import os
 import sys
-
-from onnx_array_api import __version__
+from sphinx_runpython import __version__
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -23,7 +22,7 @@ templates_path = ["_templates"]
 html_logo = "_static/logo.png"
 source_suffix = ".rst"
 master_doc = "index"
-project = "onnx-array-api"
+project = "sphinx-runpython"
 copyright = "2023, Xavier Dupré"
 author = "Xavier Dupré"
 version = __version__
