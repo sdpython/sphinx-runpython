@@ -33,6 +33,9 @@ jobs:
       rstcheck -r ./_doc ./sphinx_runpython
     displayName: 'rstcheck'
   - script: |
+      python -m pip wheel . --wheel-dir dist -v -v -v
+    displayName: 'build wheel'
+  - script: |
       python -m pip install . -v -v -v
     displayName: 'install wheel'
   - script: |
