@@ -1,4 +1,4 @@
-.. _l-blodefs:
+.. _l-blocdefs:
 
 =======================
 blocref, exref, mathdef
