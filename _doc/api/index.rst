@@ -12,6 +12,7 @@ Extensions
     collapse
     epkg
     runpython
+    blocdefs
 
 Helpers
 =======
