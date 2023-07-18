@@ -18,7 +18,7 @@ def rst2html(
     :param directives: directives to load or None for all
         implemented in this package
     :param report_level: filter output, 0 means everything
-    :param writer_name: writer name    
+    :param writer_name: writer name
     :param kwargs: additional values to add to the configuration
     :return: output and warnings
     """
