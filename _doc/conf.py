@@ -19,6 +19,7 @@ extensions = [
     "sphinx_runpython.blocdefs.sphinx_mathdef_extension",
     "sphinx_runpython.collapse",
     "sphinx_runpython.docassert",
+    "sphinx_runpython.gdot",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
 ]
@@ -58,9 +59,11 @@ sphinx_gallery_conf = {
 
 epkg_dictionary = {
     "autopep8": "https://pypi.org/project/autopep8/",
-    "DOT": "https://graphviz.org/doc/info/lang.html",
+    "dot": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
+    "DOT": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",
     "git": "https://git-scm.com/",
+    "HTML": "https://simple.wikipedia.org/wiki/HTML",
     "nested_parse_with_titles": "http://sphinx-doc.org/extdev/markupapi.html?highlight=nested_parse_with_titles",
     "numpy": (
         "https://www.numpy.org/",
@@ -77,10 +80,13 @@ epkg_dictionary = {
     ),
     "pandoc": "https://johnmacfarlane.net/pandoc/",
     "Pandoc": "https://johnmacfarlane.net/pandoc/",
+    "PNG": "https://en.wikipedia.org/wiki/PNG",
     "python": "https://www.python.org/",
     "RST": "https://fr.wikipedia.org/wiki/ReStructuredText",
     "sphinx": "https://www.sphinx-doc.org/en/master/",
     "sphinx-gallery": "https://github.com/sphinx-gallery/sphinx-gallery",
+    "SVG": "https://en.wikipedia.org/wiki/SVG",
+    "viz.js": "https://visjs.org/",
     "*py": (
         "https://docs.python.org/3/",
         ("https://docs.python.org/3/library/{0}.html", 1),

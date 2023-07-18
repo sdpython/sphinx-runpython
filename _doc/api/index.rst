@@ -9,12 +9,13 @@ Extensions
 .. toctree::
     :maxdepth: 1
 
+    blocdefs
+    blocdefs_list
     collapse
     docassert
     epkg
+    gdot
     runpython
-    blocdefs
-    blocdefs_list
 
 Helpers
 =======
