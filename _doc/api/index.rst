@@ -13,6 +13,7 @@ Extensions
     epkg
     runpython
     blocdefs
+    blocdefs_list
 
 Helpers
 =======
