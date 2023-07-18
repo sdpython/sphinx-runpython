@@ -26,7 +26,7 @@ sphinx-runpython: (Numpy) Array API for ONNX
 **sphinx-runpython** an extension to execute python code in documentation
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
     api/index
     auto_examples/index

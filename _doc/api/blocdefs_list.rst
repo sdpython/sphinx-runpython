@@ -3,7 +3,7 @@ blocreflist, exreflist, mathdeflist
 ===================================
 
 These extensions can recall the blocs defined by
-:ref:`l-blodefs`.
+:ref:`l-blocdefs`.
 
 exreflist
 =========

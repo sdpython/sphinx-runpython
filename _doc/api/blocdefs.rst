@@ -38,11 +38,12 @@ Which gives:
 .. exref::
     :title: How to add an example?
     :tag: example
-    :label: this-faq-example
+    :label: l-this-example
 
     This example, a piece of code...
 
-A reference can be added to this example :ref:`l-this-example`.
+A reference can be added to this example :ref:`Example 1 <l-this-example>`.
+The title needs to be recalled.
 
 blocref
 =======
@@ -78,7 +79,8 @@ Which gives:
 
     A bloc...
 
-A reference can be added to this bloc :ref:`l-this-bloc`.
+A reference can be added to this bloc :ref:`Bloc A <l-this-bloc>`.
+The title needs to be recalled.
 
 mathdef
 =======
@@ -114,4 +116,5 @@ Which gives:
 
     A definition...
 
-A reference can be added to this definition :ref:`l-this-def`.
+A reference can be added to this definition :ref:`Def 1 <l-this-def>`.
+The title needs to be recalled.
