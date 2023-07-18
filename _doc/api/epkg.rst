@@ -4,6 +4,12 @@
 epkg
 ====
 
+This role can be used to store urls in the configuration file and
+only show the anchor in the documentation.
+
+Usage
+=====
+
 Location: :class:`epkg_role <sphinx_runpython.epkg.sphinx_epkg_extension.epkg_role>`.
 
 In *conf.py*:

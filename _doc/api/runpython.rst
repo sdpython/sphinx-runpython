@@ -2,8 +2,11 @@
 runpython
 =========
 
-Description
-===========
+This directive executes snippets of code inserted and add
+the output to the documentation, as plain text or even RST format.
+
+Usage
+=====
 
 Location: :class:`RunPythonDirective <sphinx_runpython.runpython.sphinx_runpython_extension.RunPythonDirective>`.
 
@@ -20,16 +23,18 @@ happen unless the documentation runs the example itself and update its output.
 That's what this directive does. It adds as raw text whatever comes out
 throught the standard output.
 
-.. sidebar:: runpython
+One example:
 
-    ::
+::
 
-        .. runpython::
-            :showcode:
+    .. runpython::
+        :showcode:
 
-            import os
-            for i, name in enumerate(os.listdir(".")):
-                print(i, name)
+        import os
+        for i, name in enumerate(os.listdir(".")):
+            print(i, name)
+
+Which gives:
 
 .. runpython::
     :showcode:

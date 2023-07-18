@@ -79,6 +79,7 @@ List of directives
 
 * `blocref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
 * `collapse <https://sdpython.github.io/doc/sphinx-runpython/api/collapse.html>`_
+* `docassert <https://sdpython.github.io/doc/sphinx-runpython/api/docassert.html>_`
 * `epkg <https://sdpython.github.io/doc/sphinx-runpython/api/epkg.html>`_
 * `exref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
 * `mathdef <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`

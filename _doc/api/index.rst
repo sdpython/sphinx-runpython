@@ -10,6 +10,7 @@ Extensions
     :maxdepth: 1
 
     collapse
+    docassert
     epkg
     runpython
     blocdefs
