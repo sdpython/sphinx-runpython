@@ -58,6 +58,7 @@ sphinx_gallery_conf = {
 epkg_dictionary = {
     "DOT": "https://graphviz.org/doc/info/lang.html",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",
+    "git": "https://git-scm.com/",
     "numpy": (
         "https://www.numpy.org/",
         ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.html", 1),
@@ -74,6 +75,7 @@ epkg_dictionary = {
     "pandoc": "https://johnmacfarlane.net/pandoc/",
     "Pandoc": "https://johnmacfarlane.net/pandoc/",
     "python": "https://www.python.org/",
+    "RST": "https://fr.wikipedia.org/wiki/ReStructuredText",
     "sphinx-gallery": "https://github.com/sphinx-gallery/sphinx-gallery",
     "*py": (
         "https://docs.python.org/3/",
