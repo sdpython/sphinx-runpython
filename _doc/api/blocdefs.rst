@@ -9,9 +9,9 @@ differs depending on the content.
 List of bloc extensions
 =======================
 
-* :class:`BlocRef <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`:
+* :class:`blocref <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`:
   to add a definition (or any kind of definition)
-* :class:`ExRef <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`:
+* :class:`exref <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`:
   to add an example
 * :class:`mathdef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef>`:
   to add a mathematical definition (or any kind of definition)
@@ -19,7 +19,7 @@ List of bloc extensions
 exref
 =====
 
-Location: :class:`ExRef <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`.
+Location: :class:`exref <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`.
 
 In *conf.py*:
 
@@ -67,7 +67,7 @@ for a specific tag.
 blocref
 =======
 
-Location: :class:`BlocRef <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`.
+Location: :class:`blocref <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`.
 
 In *conf.py*:
 
@@ -97,25 +97,25 @@ In *conf.py*:
     A bloc...
 
 A reference can be added to this bloc :ref:`l-this-bloc`.
-And all examples can be replicated with commad `exblocreflist`
+And all examples can be replicated with commad `blocreflist`
 for a specific tag.
 
-.. sidebar:: exblocreflist
+.. sidebar:: blocreflist
 
     ::
 
-        .. exblocreflist::
+        .. blocreflist::
             :tag: bloc
             :contents:
 
-.. exblocreflist::
+.. blocreflist::
     :tag: bloc
     :contents:
 
-mathref
+mathdef
 =======
 
-Location: :class:`MathRef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathRef>`.
+Location: :class:`mathdef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef>`.
 
 In *conf.py*:
 
@@ -145,18 +145,18 @@ In *conf.py*:
     A definition...
 
 A reference can be added to this definition :ref:`l-this-def`.
-And all examples can be replicated with commad `exmathdeflist`
+And all examples can be replicated with commad `mathdeflist`
 for a specific tag.
 
-.. sidebar:: exmathdeflist
+.. sidebar:: mathdeflist
 
     ::
 
-        .. exmathdeflist::
+        .. mathdeflist::
             :tag: definition
             :contents:
 
-.. exmathdeflist::
+.. mathdeflist::
     :tag: definition
     :contents:
 
