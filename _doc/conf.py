@@ -15,6 +15,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
+    "sphinx_issues",
     "sphinx_runpython.blocdefs.sphinx_blocref_extension",
     "sphinx_runpython.blocdefs.sphinx_exref_extension",
     "sphinx_runpython.blocdefs.sphinx_mathdef_extension",
