@@ -56,9 +56,11 @@ sphinx_gallery_conf = {
 }
 
 epkg_dictionary = {
+    "autopep8": "https://pypi.org/project/autopep8/",
     "DOT": "https://graphviz.org/doc/info/lang.html",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",
     "git": "https://git-scm.com/",
+    "nested_parse_with_titles": "http://sphinx-doc.org/extdev/markupapi.html?highlight=nested_parse_with_titles",
     "numpy": (
         "https://www.numpy.org/",
         ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.html", 1),
@@ -76,6 +78,7 @@ epkg_dictionary = {
     "Pandoc": "https://johnmacfarlane.net/pandoc/",
     "python": "https://www.python.org/",
     "RST": "https://fr.wikipedia.org/wiki/ReStructuredText",
+    "sphinx": "https://www.sphinx-doc.org/en/master/",
     "sphinx-gallery": "https://github.com/sphinx-gallery/sphinx-gallery",
     "*py": (
         "https://docs.python.org/3/",

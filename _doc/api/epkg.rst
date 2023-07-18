@@ -1,15 +1,18 @@
+.. _l-sphinx-epkg:
+
 ====
 epkg
 ====
 
-Location: :func:`epkg_role <sphinx_runpython.epkg.sphinxext_epkg_extension.epkg_role>`.
+Location: :class:`epkg_role <sphinx_runpython.epkg.sphinx_epkg_extension.epkg_role>`.
 
 In *conf.py*:
 
 ::
 
     extensions = [ ...
-        'sphinx_runpython.epkg.sphinx_epkg_extension']
+        'sphinx_runpython.epkg',
+    ]
 
     epkg_dictionary = {
         'pandoc': 'http://johnmacfarlane.net/pandoc/',                                       # 1
@@ -58,3 +61,8 @@ value is a callable <https://github.com/sphinx-doc/sphinx/issues/1424>`_),
 ``my_custom_links`` needs to be replaced by:
 ``("module_where_it_is_defined.my_custom_links", None)``.
 The role *epkg* will import it based on its name.
+
+Directive
+=========
+
+.. autofunction:: sphinx_runpython.epkg.sphinx_epkg_extension.epkg_role

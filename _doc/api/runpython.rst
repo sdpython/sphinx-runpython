@@ -5,14 +5,15 @@ runpython
 Description
 ===========
 
-Location: :py:class:`RunPythonDirective <sphinx_runpython.runpython.sphinx_runpython_extension.RunPythonDirective>`.
+Location: :class:`RunPythonDirective <sphinx_runpython.runpython.sphinx_runpython_extension.RunPythonDirective>`.
 
 In *conf.py*:
 
 ::
 
     extensions = [ ...
-        'sphinx_runpython.runpython.sphinxext_runpython_extension']
+        'sphinx_runpython.runpython',
+    ]
 
 Documentation means many examples which needs to be updated when a change
 happen unless the documentation runs the example itself and update its output.
@@ -101,7 +102,7 @@ Applied to images...
             ax.plot([0, 1], [0, 1], '--')
             fig.savefig(os.path.join(__WD__, "oo.png"))
 
-            text = ".. image:: oo.png\n    :width: 202px"
+            text = ".. image:: oo.png"
             print(text)
 
 The image needs to be save in the same folder than
@@ -115,7 +116,7 @@ the *rst* file.
     ax.plot([0, 1], [0, 1], '--')
     fig.savefig(os.path.join(__WD__, "oo.png"))
 
-    text = ".. image:: oo.png\\\\n    :width: 201px"
+    text = ".. image:: oo.png\n    :width: 201px"
     print(text)
 
 Option ``:toggle:`` can hide the code or the output or both
@@ -184,3 +185,10 @@ Interesting functions
 =====================
 
 .. autofunction:: sphinx_runpython.runpython.run_cmd
+
+.. autofunction:: sphinx_runpython.runpython.sphinx_runpython_extension.remove_extra_spaces_and_pep8
+
+Directive
+=========
+
+.. autoclass:: sphinx_runpython.runpython.sphinx_runpython_extension.RunPythonDirective

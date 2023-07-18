@@ -118,3 +118,12 @@ Which gives:
 
 A reference can be added to this definition :ref:`Def 1 <l-this-def>`.
 The title needs to be recalled.
+
+Directives
+==========
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef

@@ -537,9 +537,7 @@ class RunPythonDirective(Directive):
       output to check what is happening
     * ``:sin:<text_for_in>`` which text to display before the code (by default *In*)
     * ``:sout:<text_for_in>`` which text to display before the output (by default *Out*)
-    * ``:sphinx:`` by default, function `nested_parse_with_titles
-      <https://www.sphinx-doc.org/en/master/extdev/markupapi.html
-      ?highlight=nested_parse#parsing-directive-content-as-rest>`_ is
+    * ``:sphinx:`` by default, function :epkg:`nested_parse_with_titles` is
       used to parse the output of the script, if this option is set to false,
       `public_doctree <http://code.nabla.net/doc/docutils/api/
       docutils/core/docutils.core.publish_doctree.html>`_.
@@ -579,8 +577,7 @@ class RunPythonDirective(Directive):
     `docutils directives <http://docutils.sourceforge.net/docs/ref/rst/directives.html>`_
     and `Sphinx directives
     <https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html>`_
-    with function `nested_parse_with_titles <http://sphinx-doc.org/extdev/
-    markupapi.html?highlight=nested_parse>`_. However, if this text contains
+    with function :epkg:`nested_parse_with_titles`. However, if this text contains
     titles, it is better to use option ``:sphinx: false``.
     Unless *process* option is enabled, global variables cannot be used.
     `sphinx-autorun <https://pypi.org/project/sphinx-autorun/>`_ offers a similar

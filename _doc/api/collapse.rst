@@ -12,7 +12,8 @@ In *conf.py*:
 ::
 
     extensions = [ ...
-        'sphinx_runpython.collapse']
+        'sphinx_runpython.collapse',
+    ]
 
 .. sidebar:: collapse
 
@@ -25,3 +26,8 @@ In *conf.py*:
 .. collapse::
 
     Show or hide a part of the documentation.
+
+Directive
+=========
+
+.. autoclass:: sphinx_runpython.collapse.sphinx_collapse_extension.CollapseDirective
