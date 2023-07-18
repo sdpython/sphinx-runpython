@@ -77,10 +77,11 @@ Executes code in the documentation and adds it to documentation.
 List of directives
 ++++++++++++++++++
 
-* `blocref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
+* `blocref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>`_
 * `collapse <https://sdpython.github.io/doc/sphinx-runpython/api/collapse.html>`_
-* `docassert <https://sdpython.github.io/doc/sphinx-runpython/api/docassert.html>_`
+* `docassert <https://sdpython.github.io/doc/sphinx-runpython/api/docassert.html>`_
 * `epkg <https://sdpython.github.io/doc/sphinx-runpython/api/epkg.html>`_
-* `exref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
-* `mathdef <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
-* `runpython <https://sdpython.github.io/doc/sphinx-runpython/api/runpython.html>_`
+* `exref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>`_
+* `gdot <https://sdpython.github.io/doc/sphinx-runpython/api/gdot.html>`_
+* `mathdef <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>`_
+* `runpython <https://sdpython.github.io/doc/sphinx-runpython/api/runpython.html>`_
