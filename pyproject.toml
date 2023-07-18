@@ -3,9 +3,15 @@ report_level = "INFO"
 ignore_directives = [
     "autoclass",
     "autofunction",
+    "blocref",
+    "blocreflist",
     "collapse",
+    "exref",
+    "exreflist",
     "gdot",
     "image-sg",
+    "mathdef",
+    "mathdeflist",
     "runpython",
 ]
 ignore_roles = ["epkg"]
