@@ -5,6 +5,7 @@ flake8
 furo
 isort
 matplotlib
+numpydoc
 openpyxl
 pandas
 pyquickhelper

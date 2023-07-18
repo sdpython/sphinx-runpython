@@ -40,3 +40,8 @@ see also `code coverage <cov/index.html>`_.
     :warningout: DeprecationWarning, FutureWarning
 
     print("This is executed.")
+
+Older versions
+++++++++++++++
+
+* `0.1.0 <v0.1.0/index.html>`_

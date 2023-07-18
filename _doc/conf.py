@@ -18,6 +18,7 @@ extensions = [
     "sphinx_runpython.blocdefs.sphinx_exref_extension",
     "sphinx_runpython.blocdefs.sphinx_mathdef_extension",
     "sphinx_runpython.collapse",
+    "sphinx_runpython.docassert",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
 ]
