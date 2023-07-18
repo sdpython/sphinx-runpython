@@ -35,12 +35,12 @@ jobs:
 
       - name: Check for errors and warnings
         run: |
-          if [[ $(grep ERROR log.txt) ]]; then
+          if [[ $(grep ERROR doc.txt) ]]; then
             echo "Documentation produces errors."
             grep ERROR log.txt
             exit 1
           fi
-          if [[ $(grep WARNING log.txt) ]]; then
+          if [[ $(grep WARNING doc.txt) ]]; then
             echo "Documentation produces warnings."
             grep WARNING log.txt
             exit 1
