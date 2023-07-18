@@ -69,7 +69,7 @@ class GDotDirective(Directive):
             "bar" -> "baz";
         }
 
-    The output can be produced by a script.
+    The output can be produced by a script::
 
         .. gdot::
             :script:
