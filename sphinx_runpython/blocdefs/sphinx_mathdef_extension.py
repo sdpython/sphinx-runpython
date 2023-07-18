@@ -161,8 +161,7 @@ class MathDef(BaseAdmonition):
                 mathtag,
                 env.new_serialno("indexmathe%s" % mathtag),
             )
-            ids = [targetid]
-            targetnode = nodes.target(legend, "", ids=ids[0])
+            targetnode = nodes.target(legend, "", ids=[targetid])
             set_source_info(self, targetnode)
             try:
                 self.state.add_target(targetid, "", targetnode, lineno)
