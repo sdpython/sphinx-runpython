@@ -8,8 +8,6 @@ the output to the documentation, as plain text or even RST format.
 Usage
 =====
 
-Location: :class:`RunPythonDirective <sphinx_runpython.runpython.sphinx_runpython_extension.RunPythonDirective>`.
-
 In *conf.py*:
 
 ::

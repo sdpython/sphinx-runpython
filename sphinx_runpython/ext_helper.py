@@ -183,3 +183,51 @@ def get_index(index_url, cache_dir):
         with open(full_file, "wb") as f:
             pickle.dump(index, f)
     return index
+
+
+def get_env_state_info(self):
+    """
+    Retrieves an environment and a docname inside a directive.
+
+    :param self: self inside a :epkg:`sphinx` directive
+    :return: docname, lineno
+    """
+    if hasattr(self, "env") and self.env is not None:
+        env = self.env
+    elif hasattr(self.state.document.settings, "env"):
+        env = self.state.document.settings.env
+    else:
+        env = None  # pragma: no cover
+
+    reporter = self.state.document.reporter
+    try:
+        docname, lineno = reporter.get_source_and_line(self.lineno)
+    except AttributeError:  # pragma: no cover
+        docname = lineno = None
+
+    if docname is not None:
+        docname = docname.replace("\\", "/").split("/")[-1]
+    res = {
+        "env": env,
+        "reporter_docname": docname,
+        "docname": env.docname,
+        "lineno": lineno,
+        "state_document": self.state.document,
+        "location": self.state_machine.get_source_and_line(self.lineno),
+    }
+    if hasattr(self, "app"):
+        res["srcdic"] = self.app.builder.srcdir
+    if hasattr(self, "builder"):
+        res["srcdic"] = self.builder.srcdir
+    if env is not None:
+        here = os.path.dirname(env.doc2path("HERE"))
+        if "IMPOSSIBLE:TOFIND" not in here:
+            res["HERE"] = here
+
+    keys = list(res.keys())
+    for k in keys:  # pylint: disable=C0206
+        if isinstance(res[k], str):
+            res[k] = res[k].replace("\\", "/")
+        elif isinstance(res[k], tuple):
+            res[k] = (res[k][0].replace("\\", "/"), res[k][1])
+    return res

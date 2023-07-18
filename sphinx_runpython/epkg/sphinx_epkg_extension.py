@@ -120,7 +120,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
     if modname not in epkg_dictionary:
         txt = ", ".join(sorted(epkg_dictionary.keys()))
         msg = inliner.reporter.error(
-            f"Unable to find module {modname!r} in epkg_dictionary, existing={txt}",
+            f"Unable to find {modname!r} in epkg_dictionary, existing={txt}",
             line=lineno,
         )
         prb = inliner.problematic(rawtext, rawtext, msg)

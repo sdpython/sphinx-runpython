@@ -750,7 +750,7 @@ class RunPythonDirective(Directive):
             try:
                 script_disp = remove_extra_spaces_and_pep8(script_disp, is_string=True)
             except Exception as e:
-                logger = logging.getLogger(__name__)
+                logger = logging.getLogger("runpython")
                 if "." in docname:
                     comment = f'  File "{docname}", line {lineno}'
                 else:
