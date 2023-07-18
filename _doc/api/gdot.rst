@@ -7,8 +7,6 @@ This directive displays :epkg:`dot` graph in the documentation.
 Usage
 =====
 
-Location: :func:`gdot <sphinx_runpython.gdot.sphinx_gdot_extension.GDotDirective>`.
-
 In *conf.py*:
 
 ::
@@ -23,36 +21,16 @@ One example:
 
     .. gdot::
 
-        digraph tree {
-            A [label="X1 &lt; 5",shape=record];
-            B [label="X2 &lt; 3",shape=record];
-            C [label="X3 &lt; 2",shape=record];
-            A -> B;
-            A -> C;
-            D [label="<c0> 0|<c1> 1",shape=record];
-            E [label="<c0> 0|<c1> 1",shape=record];
-            B -> D:c0;
-            B -> D:c1;
-            C -> E:c0;
-            C -> E:c1;
+        digraph foo {
+            "bar" -> "baz" -> "end";
         }
 
 Which gives:
 
 .. gdot::
 
-    digraph tree {
-        A [label="X1 &lt; 5",shape=record];
-        B [label="X2 &lt; 3",shape=record];
-        C [label="X3 &lt; 2",shape=record];
-        A -> B;
-        A -> C;
-        D [label="<c0> 0|<c1> 1",shape=record];
-        E [label="<c0> 0|<c1> 1",shape=record];
-        B -> D:c0;
-        B -> D:c1;
-        C -> E:c0;
-        C -> E:c1;
+    digraph foo {
+        "bar" -> "baz" -> "end";
     }
 
 The output format is an image (:epkg:`PNG`).
@@ -64,35 +42,15 @@ it requires `viz.js` to be displayed.
     .. gdot::
         :format: svg
 
-        digraph tree {
-            A [label="X1 &lt; 5",shape=record];
-            B [label="X2 &lt; 3",shape=record];
-            C [label="X3 &lt; 2",shape=record];
-            A -> B;
-            A -> C;
-            D [label="<c0> 0|<c1> 1",shape=record];
-            E [label="<c0> 0|<c1> 1",shape=record];
-            B -> D:c0;
-            B -> D:c1;
-            C -> E:c0;
-            C -> E:c1;
+        digraph foo {
+            "bar" -> "baz" -> "svg";
         }
 
 .. gdot::
     :format: svg
 
-    digraph tree {
-        A [label="X1 &lt; 5",shape=record];
-        B [label="X2 &lt; 3",shape=record];
-        C [label="X3 &lt; 2",shape=record];
-        A -> B;
-        A -> C;
-        D [label="<c0> 0|<c1> 1",shape=record];
-        E [label="<c0> 0|<c1> 1",shape=record];
-        B -> D:c0;
-        B -> D:c1;
-        C -> E:c0;
-        C -> E:c1;
+    digraph foo {
+        "bar" -> "baz" -> "svg";
     }
 
 The graph may also be the output of a script.
@@ -105,18 +63,8 @@ The graph may also be the output of a script.
 
         print("before the graph")
         print("AFTER-THIS", """
-        digraph tree {
-            A [label="X1 &lt; 5",shape=record];
-            B [label="X2 &lt; 3",shape=record];
-            C [label="X3 &lt; 2",shape=record];
-            A -> B;
-            A -> C;
-            D [label="<c0> 0|<c1> 1",shape=record];
-            E [label="<c0> 0|<c1> 1",shape=record];
-            B -> D:c0;
-            B -> D:c1;
-            C -> E:c0;
-            C -> E:c1;
+        digraph foo {
+            "bar" -> "baz" -> "script";
         }
         """)
 
@@ -126,18 +74,8 @@ The graph may also be the output of a script.
 
     print("before the graph")
     print("AFTER-THIS", """
-    digraph tree {
-        A [label="X1 &lt; 5",shape=record];
-        B [label="X2 &lt; 3",shape=record];
-        C [label="X3 &lt; 2",shape=record];
-        A -> B;
-        A -> C;
-        D [label="<c0> 0|<c1> 1",shape=record];
-        E [label="<c0> 0|<c1> 1",shape=record];
-        B -> D:c0;
-        B -> D:c1;
-        C -> E:c0;
-        C -> E:c1;
+    digraph foo {
+        "bar" -> "baz" -> "script";
     }
     """)
 
