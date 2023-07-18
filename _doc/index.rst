@@ -30,6 +30,8 @@ sphinx-runpython: (Numpy) Array API for ONNX
 
     api/index
     auto_examples/index
+    CHANGELOGS
+    license
 
 Sources available on
 `github/sphinx-runpython <https://github.com/sdpython/sphinx-runpython>`_,
