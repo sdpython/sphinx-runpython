@@ -77,5 +77,9 @@ Executes code in the documentation and adds it to documentation.
 List of directives
 ++++++++++++++++++
 
-* `collapse <>`_
-* `epkg <>`_
+* `blocref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
+* `collapse <https://sdpython.github.io/doc/sphinx-runpython/api/collapse.html>`_
+* `epkg <https://sdpython.github.io/doc/sphinx-runpython/api/epkg.html>`_
+* `exref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
+* `mathdef <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>_`
+* `runpython <https://sdpython.github.io/doc/sphinx-runpython/api/runpython.html>_`
