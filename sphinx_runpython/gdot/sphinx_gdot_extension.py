@@ -380,7 +380,7 @@ def copy_js_files(app):
     if os.path.exists(file_dest):
         logger.info("[gdot] %r already installed.", file_dest)
     else:
-        download_requirejs(destf, fLOG=lambda *args, **kwargs: None)
+        download_requirejs(destf)
 
     if os.path.exists(file_dest):
         # It adds <script async="defer" src="_static/require.js"></script>

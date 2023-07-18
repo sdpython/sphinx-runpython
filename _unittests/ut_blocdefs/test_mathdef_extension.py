@@ -52,7 +52,7 @@ class TestMathDefExtension(ExtTestCase):
         ]
 
         html = rst2html(
-            content,  # fLOG=fLOG,
+            content,
             writer="custom",
             keep_warnings=True,
             directives=tives,
@@ -104,9 +104,7 @@ class TestMathDefExtension(ExtTestCase):
             ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
         ]
 
-        html = rst2html(
-            content, writer="custom", keep_warnings=True, directives=tives  # fLOG=fLOG,
-        )
+        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
 
         temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
         with open(
@@ -156,9 +154,7 @@ class TestMathDefExtension(ExtTestCase):
             ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
         ]
 
-        html = rst2html(
-            content, writer="custom", keep_warnings=True, directives=tives  # fLOG=fLOG,
-        )
+        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
 
         temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
         with open(
@@ -222,7 +218,7 @@ class TestMathDefExtension(ExtTestCase):
         ]
 
         html = rst2html(
-            content,  # fLOG=fLOG,
+            content,
             writer="custom",
             keep_warnings=True,
             directives=tives,
@@ -230,7 +226,7 @@ class TestMathDefExtension(ExtTestCase):
         )
 
         body = rst2html(
-            content,  # fLOG=fLOG,
+            content,
             writer="custom",
             keep_warnings=True,
             directives=tives,
