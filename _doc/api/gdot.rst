@@ -3,6 +3,7 @@ gdot
 ====
 
 This directive displays :epkg:`dot` graph in the documentation.
+It relies on :epkg:`Graphviz`.
 
 Usage
 =====
@@ -12,6 +13,7 @@ In *conf.py*:
 ::
 
     extensions = [ ...
+        'sphinx.ext.graphviz',
         'sphinx_runpython.gdot',
     ]
 
@@ -20,6 +22,7 @@ One example:
 ::
 
     .. gdot::
+        :format: png
 
         digraph foo {
             "bar" -> "baz" -> "end";
@@ -28,6 +31,7 @@ One example:
 Which gives:
 
 .. gdot::
+    :format: png
 
     digraph foo {
         "bar" -> "baz" -> "end";

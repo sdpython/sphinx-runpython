@@ -115,7 +115,7 @@ class GDotDirective(Directive):
         if "format" in self.options:
             format = self.options["format"]
         else:
-            format = "?"
+            format = "png"
         url = self.options.get("url", "local")
         bool_set_ = (True, 1, "True", "1", "true", "")
         process = "process" in self.options and self.options["process"] in bool_set_
@@ -165,15 +165,12 @@ class GDotDirective(Directive):
         if script or script == "":
             stdout, stderr, _ = run_python_script(content, process=process)
             if stderr:
-                raise RuntimeError(f"A graph cannot be draw due to {stderr}")
+                logger.warning("[gdot] a dot graph cannot be draw due to %s", stderr)
             content = stdout
             if script:
                 spl = content.split(script)
                 if len(spl) > 2:
-                    raise RuntimeError(
-                        "'{}' indicates the beginning of the graph "
-                        "but there are many in\n{}".format(script, content)
-                    )
+                    logger.warning("[gdot] too many output lines %s", content)
                 content = spl[-1]
 
         node = gdot_node(
@@ -356,17 +353,12 @@ def copy_js_files(app):
                     logger.info("[gdot] copy %r to %r.", path, file_dest)
                 except PermissionError as e:  # pragma: no cover
                     logger.warning(
-                        "[gdot] permission error: %r, " "unable to use local viz.js.", e
+                        "[gdot] permission error (%r), unable to use local viz.js.", e
                     )
             else:
-                logger.warning(
-                    "[gdot] jyquickhelper needs to be update, unable to find %r.", path
-                )
+                logger.warning("[gdot] unable to find %r.", path)
         else:
-            logger.warning(
-                "[gdot] jyquickhelper not installed, falling back to " "%r",
-                GDotDirective._default_url,
-            )
+            logger.warning("[gdot] viz.js, use %r", GDotDirective._default_url)
 
             file_dest = os.path.join(destf, "require.js")
             content = get_url_content_timeout(

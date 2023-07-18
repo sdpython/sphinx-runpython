@@ -5,13 +5,14 @@ from sphinx_runpython import __version__
 
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
     "sphinx.ext.coverage",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.ifconfig",
-    "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
+    "sphinx.ext.graphviz",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
     "sphinx_runpython.blocdefs.sphinx_blocref_extension",
@@ -63,6 +64,7 @@ epkg_dictionary = {
     "DOT": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",
     "git": "https://git-scm.com/",
+    "Graphviz": "https://graphviz.org/",
     "HTML": "https://simple.wikipedia.org/wiki/HTML",
     "nested_parse_with_titles": "http://sphinx-doc.org/extdev/markupapi.html?highlight=nested_parse_with_titles",
     "numpy": (
