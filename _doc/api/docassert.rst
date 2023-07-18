@@ -19,13 +19,14 @@ In *conf.py*:
 ::
 
     extensions = [ ...
-        'pyquickhelper.sphinxext.sphinx_docassert_extension']
+        'sphinx_runpython.docassert',
+    ]
 
 Sphinx outputs some warnings:
 
 ::
 
-    WARNING: [docassert] '_init' has undocumented parameters 'translator_class' (in 'pyquickhelper\_doc\sphinxdoc\source\pyquickhelper\helpgen\sphinxm_convert_doc_sphinx_helper.py').
+    WARNING: [docassert] '_init' has undocumented parameters 'translator_class' (in 'example_file.py').
 
 Classes
 =======
