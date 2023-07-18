@@ -34,13 +34,13 @@ jobs:
       - name: Echo 1
         run: |
           echo "-------------"
-          echo "${{ steps.documentation.outputs.stdout }}"
+          echo "${{ steps.documentation.outputs.documentationOutput }}"
           echo "-------------"
 
       - name: Echo 2
         run: |
           echo "-------------"
-          echo "${{ steps.documentation.outputs.stderr }}"
+          echo "${{ steps.documentation.outputs.message }}"
           echo "-------------"
 
       - name: Check Errors
