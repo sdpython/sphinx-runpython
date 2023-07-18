@@ -29,7 +29,9 @@ jobs:
 
       - id: documentation
         name: Documentation
-        run: python -m sphinx ./_doc ./dist/html -n >> "$GITHUB_OUTPUT"
+        run: python -m sphinx ./_doc ./dist/html -n -W
+        with:
+          output: ' '
 
       - name: Echo 3
         run: |
