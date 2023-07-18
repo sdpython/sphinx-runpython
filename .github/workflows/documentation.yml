@@ -30,6 +30,12 @@ jobs:
       - name: Documentation
         run: python -m sphinx ./_doc ./dist/html -n
 
+      - name: Echo
+        run: |
+          echo "-------------"
+          echo "${{ steps.documentation.outputs.message }}"
+          echo "-------------"
+
       - name: Check Errors
         if: contains(steps.documentation.outputs.*, 'ERROR')
         run: |
