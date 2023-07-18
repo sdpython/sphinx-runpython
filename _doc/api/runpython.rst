@@ -55,7 +55,8 @@ modules.
 
             for i, mod in [sphinx, pandas, numpy]:
                 print("* version of *{0}*: *{1}*".format(
-                    getattr(mod, "__name__"), getattr(mod, "__version__"))
+                    getattr(mod, "__name__"), getattr(mod, "__version__"
+                ))
 
 .. runpython::
     :rst:
@@ -100,7 +101,7 @@ Applied to images...
             ax.plot([0, 1], [0, 1], '--')
             fig.savefig(os.path.join(__WD__, "oo.png"))
 
-            text = ".. image:: oo.png\\\\n    :width: 202px"
+            text = ".. image:: oo.png\n    :width: 202px"
             print(text)
 
 The image needs to be save in the same folder than
