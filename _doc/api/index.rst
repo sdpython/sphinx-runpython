@@ -12,6 +12,8 @@ Extensions
     collapse
     epkg
     runpython
+    blocdefs
+    blocdefs_list
 
 Helpers
 =======

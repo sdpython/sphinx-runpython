@@ -1,6 +1,11 @@
 Change Logs
 ===========
 
+0.2.0
++++++
+
+* :pr:`4`: add sphinx extension mathdef, exref, blocref
+
 0.1.0
 +++++
 

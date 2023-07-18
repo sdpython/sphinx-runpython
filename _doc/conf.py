@@ -14,6 +14,9 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
+    "sphinx_runpython.blocdefs.sphinx_blocref_extension",
+    "sphinx_runpython.blocdefs.sphinx_exref_extension",
+    "sphinx_runpython.blocdefs.sphinx_mathdef_extension",
     "sphinx_runpython.collapse",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
@@ -53,8 +56,11 @@ sphinx_gallery_conf = {
 }
 
 epkg_dictionary = {
+    "autopep8": "https://pypi.org/project/autopep8/",
     "DOT": "https://graphviz.org/doc/info/lang.html",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",
+    "git": "https://git-scm.com/",
+    "nested_parse_with_titles": "http://sphinx-doc.org/extdev/markupapi.html?highlight=nested_parse_with_titles",
     "numpy": (
         "https://www.numpy.org/",
         ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.html", 1),
@@ -71,6 +77,8 @@ epkg_dictionary = {
     "pandoc": "https://johnmacfarlane.net/pandoc/",
     "Pandoc": "https://johnmacfarlane.net/pandoc/",
     "python": "https://www.python.org/",
+    "RST": "https://fr.wikipedia.org/wiki/ReStructuredText",
+    "sphinx": "https://www.sphinx-doc.org/en/master/",
     "sphinx-gallery": "https://github.com/sphinx-gallery/sphinx-gallery",
     "*py": (
         "https://docs.python.org/3/",

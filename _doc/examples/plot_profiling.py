@@ -1,7 +1,4 @@
 """
-
-.. _l-example-empty:
-
 Empty example
 =============
 

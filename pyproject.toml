@@ -3,12 +3,22 @@ report_level = "INFO"
 ignore_directives = [
     "autoclass",
     "autofunction",
+    "blocref",
+    "blocreflist",
     "collapse",
+    "exref",
+    "exreflist",
     "gdot",
     "image-sg",
+    "mathdef",
+    "mathdeflist",
     "runpython",
 ]
 ignore_roles = ["epkg"]
+ignore_messages = [
+    ".*Hyperlink target .l-blocdefs. is not referenced.*",
+    ".*Hyperlink target .l-sphinx-epkg. is not referenced.*",
+]
 
 [tool.ruff]
 
