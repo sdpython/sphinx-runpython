@@ -32,7 +32,7 @@ The library is released on
 `pypi/sphinx-runpython <https://pypi.org/project/sphinx-runpython/>`_
 and its documentation is published at
 `sphinx-runpython
-<http://www.xavierdupre.fr/app/sphinx-runpython/helpsphinx/index.html>`_.
+<https://sdpython.github.io/doc/sphinx-runpython/>`_.
 
 epkg
 ++++
@@ -73,3 +73,9 @@ Executes code in the documentation and adds it to documentation.
     >>>
 
     python code
+
+List of directives
+++++++++++++++++++
+
+* `collapse <>`_
+* `epkg <>`_

@@ -15,6 +15,10 @@ ignore_directives = [
     "runpython",
 ]
 ignore_roles = ["epkg"]
+ignore_messages = [
+    ".*Hyperlink target .l-blocdefs. is not referenced.*",
+    ".*Hyperlink target .l-sphinx-epkg. is not referenced.*",
+]
 
 [tool.ruff]
 
