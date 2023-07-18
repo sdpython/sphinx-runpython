@@ -162,7 +162,6 @@ class TestDocAssert(ExtTestCase):
                 self.rows = []
 
             def write(self, text):
-                # print("[warning-i] {0} - '{1}'".format(len(self), text.strip("\n\r ")))
                 self.rows.append(text)
 
             def getvalue(self):
@@ -207,7 +206,6 @@ class TestDocAssert(ExtTestCase):
                 self.rows = []
 
             def write(self, text):
-                # print("[warning-i2] {0} - '{1}'".format(len(self), text.strip("\n\r ")))
                 self.rows.append(text)
 
             def getvalue(self):
@@ -252,7 +250,6 @@ class TestDocAssert(ExtTestCase):
                 self.rows = []
 
             def write(self, text):
-                # print("[warning-i3] {0} - '{1}'".format(len(self), text.strip("\n\r ")))
                 self.rows.append(text)
 
             def getvalue(self):
