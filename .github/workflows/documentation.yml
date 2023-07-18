@@ -39,12 +39,12 @@ jobs:
         run: |
           if [[ $(grep ERROR doc.txt) ]]; then
             echo "Documentation produces errors."
-            grep ERROR log.txt
+            grep ERROR doc.txt
             exit 1
           fi
           if [[ $(grep WARNING doc.txt) ]]; then
             echo "Documentation produces warnings."
-            grep WARNING log.txt
+            grep WARNING doc.txt
             exit 1
           fi
 
