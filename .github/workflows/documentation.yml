@@ -28,6 +28,7 @@ jobs:
         run: python -m pip install -e .
 
       - name: documentation
+        id: documentation
         run: python -m sphinx ./_doc ./dist/html -n
 
       - name: Echo 1
