@@ -30,19 +30,17 @@ jobs:
       - name: Documentation
         run: python -m sphinx ./_doc ./dist/html -n
 
-      - name: Check Documentation Output
-        if: steps.documentation.outputs.documentationOutput != 'Hello, GitHub Actions!'
+      - name: Check Errors
+        if: contains(steps.documentation.outputs.*, "ERROR")
         run: |
-          message="${{ steps.documentation.outputs.message }}"
+          echo "Sphinx output has errors."
+          exit 1
 
-          if [[ $message == *"ERROR"* ]]; then
-            echo "Sphinx output has errors."
-            exit 1
-          fi
-          if [[ $message == *"WARNING"* ]]; then
-            echo "Sphinx output has warnings."
-            exit 1
-          fi
+      - name: Check Warnings
+        if: contains(steps.documentation.outputs.*, "WARNING")
+        run: |
+          echo "Sphinx output has warnings."
+          exit 1
 
       - uses: actions/upload-artifact@v3
         with:
