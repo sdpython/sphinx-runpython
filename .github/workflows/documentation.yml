@@ -31,13 +31,13 @@ jobs:
         run: python -m sphinx ./_doc ./dist/html -n
 
       - name: Check Errors
-        if: contains(steps.documentation.outputs.*, "ERROR")
+        if: contains(steps.documentation.outputs.*, 'ERROR')
         run: |
           echo "Sphinx output has errors."
           exit 1
 
       - name: Check Warnings
-        if: contains(steps.documentation.outputs.*, "WARNING")
+        if: contains(steps.documentation.outputs.*, 'WARNING')
         run: |
           echo "Sphinx output has warnings."
           exit 1
