@@ -27,35 +27,24 @@ jobs:
       - name: Install
         run: python -m pip install -e .
 
-      - id: documentation
-        name: Documentation
-        run: python -m sphinx ./_doc ./dist/html -n -W
-        with:
-          output: ' '
+      - name: Documentation
+        run: python -m sphinx ./_doc ./dist/html -n -w doc.txt
 
-      - name: Echo 3
-        run: |
-          echo "-------------"
-          echo "${{ steps.documentation.outputs.test }}"
-          echo "-------------"
+      - name: Summary
+        run: cat doc.txt
 
-      - name: Echo 4
+      - name: Check for errors and warnings
         run: |
-          echo "-------------"
-          echo "${{join(steps.documentation.outputs.*, '\n')}}"
-          echo "-------------"
-
-      - name: Check Errors
-        if: contains(steps.documentation.outputs.*, 'ERROR')
-        run: |
-          echo "Sphinx output has errors."
-          exit 1
-
-      - name: Check Warnings
-        if: contains(steps.documentation.outputs.*, 'WARNING')
-        run: |
-          echo "Sphinx output has warnings."
-          exit 1
+          if [[ $(grep ERROR log.txt) ]]; then
+            echo "Documentation produces errors."
+            grep ERROR log.txt
+            exit 1
+          fi
+          if [[ $(grep WARNING log.txt) ]]; then
+            echo "Documentation produces warnings."
+            grep WARNING log.txt
+            exit 1
+          fi
 
       - uses: actions/upload-artifact@v3
         with:
