@@ -26,6 +26,9 @@ sphinx-runpython: run python code in sphinx
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
 
+.. image:: https://codecov.io/gh/sdpython/sphinx-runpython/branch/main/graph/badge.svg?token=CTUV6EDBB6 
+    :target: https://codecov.io/gh/sdpython/sphinx-runpython
+
 **sphinx-runpython** implements sphinx extensions including one
 to execute code and add the output to the documentation.
 The library is released on
