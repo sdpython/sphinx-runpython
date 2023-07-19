@@ -1,4 +1,4 @@
-name: Documentation
+name: Documentation and Code Coverage
 
 on: [push]
 
@@ -40,7 +40,7 @@ jobs:
           pip install pytest
           pip install pytest-cov
           export PYTHONPATH=.
-          pytest --cov=./_unittests/ --cov-report=xml --durations=10 --ignore-glob=**LONG*.py --ignore-glob=**notebook*.py
+          pytest --cov=./sphinx_runpython/ --cov-report=xml --durations=10 --ignore-glob=**LONG*.py --ignore-glob=**notebook*.py
           export PYTHONPATH=
 
       - name: Upload coverage reports to Codecov
