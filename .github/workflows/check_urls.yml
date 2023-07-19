@@ -12,7 +12,7 @@ jobs:
     - name: urls-checker-code
       uses: urlstechie/urlchecker-action@master
       with:
-        subfolder: mlstatpy
+        subfolder: sphinx_runpython
         file_types: .md,.py,.rst,.ipynb
         print_all: false
         timeout: 2

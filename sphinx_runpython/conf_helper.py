@@ -2,7 +2,10 @@ from .runpython import run_cmd
 
 
 def _check_cmd(cmd):
-    stdout, _ = run_cmd(f"{cmd} --help", wait=True)
+    try:
+        stdout, _ = run_cmd(f"{cmd} --help", wait=True)
+    except FileNotFoundError:
+        return False
     if cmd in stdout:
         return True
     return False
