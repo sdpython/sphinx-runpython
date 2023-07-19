@@ -496,7 +496,9 @@ def download_requirejs(
             local = download(filename, to)
         except ReadUrlException as e:  # pragma: no cover
             # We implement a backup plan.
-            new_filename = "http://www.xavierdupre.fr/enseignement/setup/require.js/2.3.6/require.js"
+            new_filename = (
+                "https://requirejs.org/docs/release/2.3.6/minified/require.js"
+            )
             try:
                 local = download(new_filename, to)
             except ReadUrlException:
