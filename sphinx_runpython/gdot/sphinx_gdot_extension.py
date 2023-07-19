@@ -282,8 +282,8 @@ def depart_gdot_node_html_svg(self, node):
 def visit_gdot_node_html(self, node):
     """
     visit collapse_node, the function switches between
-    `graphviz.py <https://github.com/sphinx-doc/sphinx/blob/
-    master/sphinx/ext/graphviz.py>`_ and the :epkg:`SVG` format.
+    `graphviz.py <https://github.com/sphinx-doc/sphinx/blob/master/sphinx/ext/graphviz.py>`_
+    and the :epkg:`SVG` format.
     """
     if node["format"].lower() == "png":
         from sphinx.ext.graphviz import html_visit_graphviz

@@ -19,8 +19,8 @@ def check_typed_make_field(
 ):
     """
     Overwrites function
-    #L197>`_.
-    `make_field <https://github.com/sphinx-doc/sphinx/blob/master/sphinx/util/docfields.py
+    `make_field
+    <https://github.com/sphinx-doc/sphinx/blob/master/sphinx/util/docfields.py#L197>`_.
     Processes one argument of a function.
 
     :param self: from original function
@@ -116,8 +116,7 @@ class OverrideDocFieldTransformer:
         """
         Transform a single field list *node*.
         Overwrite function `transform
-        <https://github.com/sphinx-doc/sphinx/blob/
-        master/sphinx/util/docfields.py#L271>`_.
+        <https://github.com/sphinx-doc/sphinx/blob/master/sphinx/util/docfields.py#L271>`_.
         It only adds extra verification and returns results from
         the replaced function.
 

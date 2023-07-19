@@ -119,7 +119,7 @@ def skip_run_cmd(
 def run_cmd(
     cmd,
     sin="",
-    shell=sys.platform.startswith("win"),
+    shell=None,
     wait=False,
     log_error=True,
     stop_running_if=None,
@@ -184,6 +184,8 @@ def run_cmd(
     ``__exit__`` should be called if wait if False.
     Parameter *prefix_log* was added.
     """
+    if shell is None:
+        shell = sys.platform.startswith("win")
     if prefix_log is None:
         prefix_log = ""
     if logf is not None:
