@@ -84,6 +84,7 @@ epkg_dictionary = {
     "pandoc": "https://johnmacfarlane.net/pandoc/",
     "Pandoc": "https://johnmacfarlane.net/pandoc/",
     "PNG": "https://en.wikipedia.org/wiki/PNG",
+    "pypandoc": "https://github.com/JessicaTegner/pypandoc",
     "python": "https://www.python.org/",
     "RST": "https://fr.wikipedia.org/wiki/ReStructuredText",
     "sphinx": "https://www.sphinx-doc.org/en/master/",
