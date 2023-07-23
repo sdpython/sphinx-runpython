@@ -10,6 +10,8 @@ build/*
 .eggs/*
 *egg-info/*
 temp_*
+_doc/CHANGELOGS*
+_doc/LICENSE
 _doc/api/oo.png
 _doc/examples/_cache/*
 _doc/auto_examples/*
