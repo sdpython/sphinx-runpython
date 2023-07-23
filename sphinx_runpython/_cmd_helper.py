@@ -10,7 +10,7 @@ def get_parser():
         description="A collection of quick tools.",
         epilog="",
     )
-    parser.add_argument("command", help="Command to run, only nb2rst is available")
+    parser.add_argument("command", help="Command to run, only nb2py is available")
     parser.add_argument(
         "-p", "--path", help="Folder which contains the files to process"
     )
@@ -21,16 +21,16 @@ def get_parser():
     return parser
 
 
-def nb2rst(infolder: str, recursive: bool = False, verbose: int = 0):
+def nb2py(infolder: str, recursive: bool = False, verbose: int = 0):
     if not os.path.exists(infolder):
         raise FileNotFoundError(f"Unable to find {infolder!r}.")
     patterns = [infolder + "/*.ipynb", infolder + "/**/*.ipynb"]
     for pattern in patterns:
         if verbose:
-            print(f"nb2rst: look with pattern {pattern!r}, recursive={recursive}")
+            print(f"nb2py: look with pattern {pattern!r}, recursive={recursive}")
         for name in glob.iglob(pattern, recursive=recursive):
             spl = os.path.splitext(name)
-            out = spl[0] + ".rst"
+            out = spl[0] + ".py"
             if verbose:
                 print(f"process {name!r} -> {out!r}")
                 convert_ipynb_to_gallery(name, outfile=out)
@@ -38,8 +38,8 @@ def nb2rst(infolder: str, recursive: bool = False, verbose: int = 0):
 
 def process_args(args):
     cmd = args.command
-    if cmd == "nb2rst":
-        nb2rst(args.path, recursive=args.recursive, verbose=args.verbose)
+    if cmd == "nb2py":
+        nb2py(args.path, recursive=args.recursive, verbose=args.verbose)
         return
     raise ValueError(f"Command {cmd!r} is unknown.")
 
