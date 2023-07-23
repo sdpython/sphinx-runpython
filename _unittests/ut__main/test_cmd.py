@@ -1,3 +1,4 @@
+import platform
 import unittest
 import os
 from sphinx_runpython.ext_test_case import ExtTestCase
@@ -9,6 +10,7 @@ class TestCmd(ExtTestCase):
         parser = get_parser()
         self.assertNotEmpty(parser)
 
+    @unittest.skipIf(platform.system() != "Linux", reason="pandoc not installed")
     def test_convert(self):
         data = os.path.join(os.path.dirname(__file__), "data")
         parser = get_parser()
