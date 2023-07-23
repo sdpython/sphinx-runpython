@@ -33,7 +33,12 @@ def _linkcode_resolve(domain, info, package, url_fmt, revision):
         return
 
     class_name = info["fullname"].split(".")[0]
-    module = __import__(info["module"], fromlist=[class_name])
+    try:
+        module = __import__(info["module"], fromlist=[class_name])
+    except ImportError as e:
+        raise ImportError(
+            f"Unable to find {info['module']!r} wich class={class_name!r}."
+        ) from e
     obj = attrgetter(info["fullname"])(module)
 
     # Unwrap the object to get the correct source
