@@ -14,7 +14,9 @@ class TestCmd(ExtTestCase):
         parser = get_parser()
         parser.command = "nb2rst"
         parser.path = data
-        nb2rst(data)
+        nb2rst(data, verbose=1)
+        expected = os.path.join(data, "float_and_double_rouding.rst")
+        self.assertExists(expected)
 
 
 if __name__ == "__main__":

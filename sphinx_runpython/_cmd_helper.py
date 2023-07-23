@@ -24,15 +24,16 @@ def get_parser():
 def nb2rst(infolder: str, recursive: bool = False, verbose: int = 0):
     if not os.path.exists(infolder):
         raise FileNotFoundError(f"Unable to find {infolder!r}.")
-    pattern = infolder + "/**/*.ipynb"
-    if verbose:
-        print(f"nb2rst: look with pattern {pattern!r}, recursive={recursive}")
-    for name in glob.iglob(pattern, recursive=recursive):
-        spl = os.path.splitext(name)
-        out = spl[0] + ".rst"
+    patterns = [infolder + "/*.ipynb", infolder + "/**/*.ipynb"]
+    for pattern in patterns:
         if verbose:
-            print(f"process {name!r} -> {out!r}")
-            convert_ipynb_to_gallery(name, outfile=out)
+            print(f"nb2rst: look with pattern {pattern!r}, recursive={recursive}")
+        for name in glob.iglob(pattern, recursive=recursive):
+            spl = os.path.splitext(name)
+            out = spl[0] + ".rst"
+            if verbose:
+                print(f"process {name!r} -> {out!r}")
+                convert_ipynb_to_gallery(name, outfile=out)
 
 
 def process_args(args):
