@@ -1,7 +1,7 @@
 import unittest
 import os
 from sphinx_runpython.ext_test_case import ExtTestCase
-from sphinx_runpython._cmd_helper import get_parser, nb2rst
+from sphinx_runpython._cmd_helper import get_parser, nb2py
 
 
 class TestCmd(ExtTestCase):
@@ -12,9 +12,9 @@ class TestCmd(ExtTestCase):
     def test_convert(self):
         data = os.path.join(os.path.dirname(__file__), "data")
         parser = get_parser()
-        parser.command = "nb2rst"
+        parser.command = "nb2py"
         parser.path = data
-        nb2rst(data, verbose=1)
+        nb2py(data, verbose=1)
         expected = os.path.join(data, "float_and_double_rouding.rst")
         self.assertExists(expected)
 
