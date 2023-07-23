@@ -8,6 +8,7 @@ matplotlib
 numpydoc
 openpyxl
 pandas
+pypandoc
 pyquickhelper
 pytest
 pytest-cov

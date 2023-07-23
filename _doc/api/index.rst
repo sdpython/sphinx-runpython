@@ -16,6 +16,7 @@ Extensions
     epkg
     gdot
     runpython
+    tools
 
 Helpers
 =======
