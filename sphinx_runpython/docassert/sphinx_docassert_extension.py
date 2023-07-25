@@ -1,9 +1,56 @@
 import inspect
+import re
 from docutils import nodes
 import sphinx
 from sphinx.util import logging
 from sphinx.util.docfields import DocFieldTransformer, _is_single_paragraph
 from ..import_object_helper import import_any_object
+
+
+class Parameter:
+    "Definition of a parameter."
+
+    def __init__(self, name: str, dtype: type):
+        self.name = name
+        self.dtype = dtype
+
+    def __repr__(self):
+        return f"{self.name}: {self.dtype}"
+
+
+class Signature:
+    "Definition of a signature."
+
+    def __init__(self, name, result_type):
+        self.name = name
+        self.result_type = result_type
+        self.params = []
+
+    def append(self, par: Parameter) -> None:
+        self.params.append(par)
+
+    def __repr__(self):
+        els = [self.name, "("]
+        ps = []
+        for p in self.params:
+            ps.append(repr(p))
+        els.append(", ".join(ps))
+        els.extend([")", " -> ", self.result_type])
+        return "".join(els)
+
+
+def parse_signature(text: str) -> Signature:
+    reg = re.compile("([_a-zA-Z][_a-zA-Z0-9]*?)[(](.*?)[)] -> ([a-zA-Z0-9]+)")
+    res = reg.search(text)
+    name, params, result = res.groups(0)
+    spl = [_.strip() for _ in params.split(",")]
+    sig = Signature(name.strip(), result.strip())
+    for p in spl:
+        k, v = p.split(":", maxsplit=1)
+        sig.append(Parameter(k.strip(), v.strip()))
+    return sig
+
+    print(params, result)
 
 
 def check_typed_make_field(
@@ -64,10 +111,11 @@ def check_typed_make_field(
         if fieldarg not in check_params:
             if function_name is not None:
                 logger.warning(
-                    "[docassert] %r has no parameter %r (in %r).",
+                    "[docassert] %r has no parameter %r (in %r)%s.",
                     function_name,
                     fieldarg,
                     docname,
+                    " (no detected signature) " if parameters is None else "",
                 )
         else:
             check_params[fieldarg] += 1
@@ -208,6 +256,7 @@ class OverrideDocFieldTransformer:
 
             # Import object, get the list of parameters
             docs = fieldbody.parent.source.split("docstring of")[-1].strip()
+            docs = docs.replace(".PyCapsule.", ".")
 
             myfunc = None
             funckind = None
@@ -239,8 +288,9 @@ class OverrideDocFieldTransformer:
                     signature = inspect.signature(myfunc)
                     parameters = signature.parameters
                 except (TypeError, ValueError):
+                    # built-in function
                     logger = logging.getLogger("docassert")
-                    logger.warning("[docassert] unable to get signature of %r.", docs)
+                    logger.warning("[docassert] unable to get signature of %r", docs)
                     signature = None
                     parameters = None
 
@@ -274,7 +324,7 @@ class OverrideDocFieldTransformer:
             logger.warning("[docassert] %s", e)
             env = None
 
-        docname = fieldbody.parent.source.split(":docstring")[0]
+        docname = fieldbody.parent.source.split("docstring of")[-1].strip()
 
         for entry in entries:
             if isinstance(entry, nodes.field):

@@ -11,6 +11,7 @@ from sphinx.util.logging import getLogger
 from pyquickhelper.helpgen import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, sys_path_append, ignore_warnings
 from sphinx_runpython.import_object_helper import import_object
+from sphinx_runpython.docassert.sphinx_docassert_extension import parse_signature
 
 
 class TestDocAssert(ExtTestCase):
@@ -41,7 +42,7 @@ class TestDocAssert(ExtTestCase):
             with warnings.catch_warnings(record=True) as ws:
                 html = rst2html(docstring)
                 if "if a and b have different" not in html:
-                    raise Exception(html)
+                    raise AssertionError(html)
 
             newstring = ".. autofunction:: exdocassert.onefunction"
             with warnings.catch_warnings(record=True) as ws:
@@ -61,7 +62,7 @@ class TestDocAssert(ExtTestCase):
         if len(lines) > 0:
             for line in lines:
                 if "'onefunction' has no parameter 'TypeError'" in line:
-                    raise Exception(
+                    raise AssertionError(
                         "This warning should not happen.\n{0}".format("\n".join(lines))
                     )
         self.assertTrue("<strong>a</strong>" in html)
@@ -101,13 +102,13 @@ class TestDocAssert(ExtTestCase):
 
         lines = log_capture_string.getvalue().split("\n")
         if len(lines) == 0:
-            raise Exception("no warning")
+            raise AssertionError("no warning")
         nb = 0
         for line in lines:
             if "'onefunction' has no parameter 'c'" in line:
                 nb += 1
         if nb == 0:
-            raise Exception("not the right warning")
+            raise AssertionError("not the right warning")
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_method(self):
@@ -144,16 +145,16 @@ class TestDocAssert(ExtTestCase):
 
         lines = log_capture_string.getvalue().split("\n")
         if len(lines) == 0:
-            raise Exception("no warning")
+            raise AssertionError("no warning")
         nb = 0
         for line in lines:
             if "'onemethod' has no parameter 'c'" in line:
                 nb += 1
         if nb == 0:
-            raise Exception("not the right warning")
+            raise AssertionError("not the right warning")
         for line in lines:
             if "'onemethod' has undocumented parameters 'b, self'" in line:
-                raise Exception(line)
+                raise AssertionError(line)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_init(self):
@@ -189,7 +190,7 @@ class TestDocAssert(ExtTestCase):
 
         lines = log_capture_string.getvalue().split("\n")
         if len(lines) == 0:
-            raise Exception("no warning")
+            raise AssertionError("no warning")
         nb = 0
         for line in lines:
             if "'Estimator' has no parameter 'alph'" in line:
@@ -197,7 +198,7 @@ class TestDocAssert(ExtTestCase):
             if "'Estimator' has undocumented parameters" in line:
                 nb += 1
         if nb == 0:
-            raise Exception("not the right warning")
+            raise AssertionError("not the right warning")
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_init2(self):
@@ -233,7 +234,7 @@ class TestDocAssert(ExtTestCase):
 
         lines = log_capture_string.getvalue().split("\n")
         if len(lines) == 0:
-            raise Exception("no warning")
+            raise AssertionError("no warning")
         nb = 0
         for line in lines:
             if "'Estimator2' has no parameter 'alp'" in line:
@@ -241,7 +242,7 @@ class TestDocAssert(ExtTestCase):
             if "'Estimator2' has undocumented parameters" in line:
                 nb += 1
         if nb == 0:
-            raise Exception("not the right warning")
+            raise AssertionError("not the right warning")
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_style(self):
@@ -279,7 +280,7 @@ class TestDocAssert(ExtTestCase):
 
         lines = log_capture_string.getvalue().split("\n")
         if len(lines) == 0:
-            raise Exception("no warning")
+            raise AssertionError("no warning")
         nb = 0
         for line in lines:
             if "'Estimator3' has no parameter 'fit_intercep'" in line:
@@ -287,7 +288,23 @@ class TestDocAssert(ExtTestCase):
             if "'Estimator3' has undocumented parameters 'fit" in line:
                 nb += 1
         if nb == 0:
-            raise Exception("not the right warning")
+            raise AssertionError("not the right warning")
+
+    def test_extract_signature(self):
+        sig = (
+            "benchmark_cache(size: int, verbose: bool = True) -> float\n\n "
+            "Runs a benchmark to measure the cache performance.\nThe function "
+            "measures the time for N random accesses in array of size N\nand "
+            "returns the time divided by N.\nIt copies random elements taken "
+            "from the array size to random\nposition in another of the same size. "
+            "It does that *size* times\nand return the average time per move."
+            "\nSee example :ref:`l-example-bench-cpu`.\n\n"
+            ":param size: array size\n:return: average time per move\n\n'"
+        )
+        res = parse_signature(sig)
+        self.assertEqual(
+            repr(res), "benchmark_cache(size: int, verbose: bool = True) -> float"
+        )
 
 
 if __name__ == "__main__":
