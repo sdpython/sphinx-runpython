@@ -207,7 +207,7 @@ class OverrideDocFieldTransformer:
             translatable_content += content
 
             # Import object, get the list of parameters
-            docs = fieldbody.parent.source.split(":docstring of")[-1].strip()
+            docs = fieldbody.parent.source.split("docstring of")[-1].strip()
 
             myfunc = None
             funckind = None
