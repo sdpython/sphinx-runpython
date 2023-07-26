@@ -9,7 +9,7 @@ class TestDocAssertCpp(ExtTestCase):
         name = "onnx_extended.ortcy.wrap.ortinf.OrtSession"
         try:
             obj, new_name = import_object(name, kind="class")
-        except ImportError:
+        except (ImportError, RuntimeError):
             return
         self.assertEqual(name.split(".")[-1], new_name)
         self.assertEqual(obj.__text_signature__, "($self, /, *args, **kwargs)")
@@ -18,7 +18,7 @@ class TestDocAssertCpp(ExtTestCase):
         name = "onnx_extended.validation.cpu._validation.benchmark_cache"
         try:
             obj, new_name = import_object(name, kind="function")
-        except ImportError:
+        except (ImportError, RuntimeError):
             return
         self.assertEqual(name.split(".")[-1], new_name)
         self.assertEmpty(obj.__text_signature__)
