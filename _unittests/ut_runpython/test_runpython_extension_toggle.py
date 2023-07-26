@@ -1,7 +1,7 @@
 import sys
 import unittest
 from docutils.parsers.rst import directives
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.helpers import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.runpython.sphinx_runpython_extension import RunPythonDirective
 

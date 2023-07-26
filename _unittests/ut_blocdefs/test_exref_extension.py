@@ -1,12 +1,6 @@
-"""
-@brief      test log(time=4s)
-@author     Xavier Dupre
-"""
-import os
 import unittest
 from docutils.parsers.rst import directives
-from pyquickhelper.pycode import get_temp_folder
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.helpers import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.blocdefs.sphinx_exref_extension import (
     ExRef,
@@ -53,10 +47,6 @@ class TestExRefExtension(ExtTestCase):
             extlinks={"issue": ("http://%s", "_issue_%s")},
         )
 
-        temp = get_temp_folder(__file__, "temp_exref")
-        with open(os.path.join(temp, "out_exref.html"), "w", encoding="utf8") as f:
-            f.write(html)
-
         t1 = "this code shoud appear"
         if t1 not in html:
             raise AssertionError("ISSUE in " + html)
@@ -101,10 +91,6 @@ class TestExRefExtension(ExtTestCase):
         html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
         if "admonition-exref exref_node admonition" not in html:
             raise html
-
-        temp = get_temp_folder(__file__, "temp_exreflist")
-        with open(os.path.join(temp, "out_exref.html"), "w", encoding="utf8") as f:
-            f.write(html)
 
         t1 = "this code shoud appear"
         if t1 not in html:

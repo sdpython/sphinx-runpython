@@ -1,8 +1,6 @@
-import os
 import unittest
 from docutils.parsers.rst import directives
-from pyquickhelper.pycode import get_temp_folder
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.helpers import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.blocdefs.sphinx_blocref_extension import (
     BlocRef,
@@ -52,10 +50,6 @@ class TestBlocRefExtension(ExtTestCase):
             extlinks={"issue": ("http://%s", "_issue_%s")},
         )
 
-        temp = get_temp_folder(__file__, "temp_blocref_rst")
-        with open(os.path.join(temp, "out_blocref.html"), "w", encoding="utf8") as f:
-            f.write(html)
-
         t1 = "this code should appear"
         if t1 not in html:
             raise Exception(html)
@@ -103,10 +97,6 @@ class TestBlocRefExtension(ExtTestCase):
             directives=tives,
             extlinks={"issue": ("http://%s", "_issue_%s")},
         )
-
-        temp = get_temp_folder(__file__, "temp_blocref_html")
-        with open(os.path.join(temp, "out_blocref.html"), "w", encoding="utf8") as f:
-            f.write(html)
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -156,10 +146,6 @@ class TestBlocRefExtension(ExtTestCase):
             extlinks={"issue": ("http://%s", "_issue_%s")},
         )
 
-        temp = get_temp_folder(__file__, "temp_blocref")
-        with open(os.path.join(temp, "out_blocref.html"), "w", encoding="utf8") as f:
-            f.write(html)
-
         t1 = "this code shoud appear"
         if t1 not in html:
             raise Exception(html)
@@ -205,10 +191,6 @@ class TestBlocRefExtension(ExtTestCase):
         ]
 
         html = rst2html(content, writer="html", keep_warnings=True, directives=tives)
-
-        temp = get_temp_folder(__file__, "temp_blocreflist")
-        with open(os.path.join(temp, "out_blocref.html"), "w", encoding="utf8") as f:
-            f.write(html)
 
         t1 = "this code should appear"
         if t1 not in html:

@@ -1,12 +1,6 @@
-"""
-@brief      test log(time=4s)
-@author     Xavier Dupre
-"""
-import os
 import unittest
 from docutils.parsers.rst import directives
-from pyquickhelper.pycode import get_temp_folder
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.helpers import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.blocdefs.sphinx_mathdef_extension import (
     MathDef,
@@ -59,10 +53,6 @@ class TestMathDefExtension(ExtTestCase):
             extlinks={"issue": ("http://%s", "_issue_%s")},
         )
 
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(os.path.join(temp, "test_mathdef.html"), "w", encoding="utf8") as f:
-            f.write(html)
-
         t1 = "this code should appear"
         if t1 not in html:
             raise AssertionError("ISSUE in \n" + html)
@@ -105,12 +95,6 @@ class TestMathDefExtension(ExtTestCase):
         ]
 
         html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(
-            os.path.join(temp, "test_mathdeflist.html"), "w", encoding="utf8"
-        ) as f:
-            f.write(html)
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -155,12 +139,6 @@ class TestMathDefExtension(ExtTestCase):
         ]
 
         html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(
-            os.path.join(temp, "test_mathdeflist_contents.html"), "w", encoding="utf8"
-        ) as f:
-            f.write(html)
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -236,14 +214,6 @@ class TestMathDefExtension(ExtTestCase):
             raise AssertionError("ISSUE in \n" + body)
         if "</body>" in body:
             raise AssertionError("ISSUE in \n" + body)
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(
-            os.path.join(temp, "test_mathdeflist_contents_sphinx.html"),
-            "w",
-            encoding="utf8",
-        ) as f:
-            f.write(html)
 
         # not yet ready
 
