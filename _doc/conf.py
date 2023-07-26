@@ -2,6 +2,8 @@
 import os
 import sys
 from sphinx_runpython import __version__
+from sphinx_runpython.github_link import make_linkcode_resolve
+from sphinx_runpython.conf_helper import has_dvipng, has_dvisvgm
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -27,6 +29,15 @@ extensions = [
     "sphinx_runpython.sphinx_rst_builder",
 ]
 
+if has_dvisvgm():
+    extensions.append("sphinx.ext.imgmath")
+    imgmath_image_format = "svg"
+elif has_dvipng():
+    extensions.append("sphinx.ext.pngmath")
+    imgmath_image_format = "png"
+else:
+    extensions.append("sphinx.ext.mathjax")
+
 templates_path = ["_templates"]
 html_logo = "_static/logo.png"
 source_suffix = ".rst"
@@ -46,6 +57,38 @@ html_theme_path = ["_static"]
 html_theme_options = {}
 html_static_path = ["_static"]
 
+html_sourcelink_suffix = ""
+
+# The following is used by sphinx.ext.linkcode to provide links to github
+linkcode_resolve = make_linkcode_resolve(
+    "sphinx-runpython",
+    (
+        "https://github.com/sdpython/sphinx-runpython/"
+        "blob/{revision}/{package}/"
+        "{path}#L{lineno}"
+    ),
+)
+
+latex_elements = {
+    "papersize": "a4",
+    "pointsize": "10pt",
+    "title": project,
+}
+
+# Check intersphinx reference targets exist
+nitpicky = True
+# See also scikit-learn/scikit-learn#26761
+nitpick_ignore = [
+    ("py:class", "False"),
+    ("py:class", "True"),
+]
+
+nitpick_ignore_regex = [
+    ("py:class", ".*numpy[.].*"),
+    ("py:func", ".*[.]PyCapsule[.].*"),
+    ("py:func", ".*numpy[.].*"),
+    ("py:func", ".*scipy[.].*"),
+]
 
 intersphinx_mapping = {
     "matplotlib": ("https://matplotlib.org/", None),
