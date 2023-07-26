@@ -5,7 +5,7 @@ from sphinx_runpython.docassert.sphinx_docassert_extension import parse_signatur
 
 
 class TestDocAssertCpp(ExtTestCase):
-    def test_import_objec1(self):
+    def test_import_object1(self):
         name = "onnx_extended.ortcy.wrap.ortinf.OrtSession"
         try:
             obj, new_name = import_object(name, kind="class")
@@ -14,7 +14,7 @@ class TestDocAssertCpp(ExtTestCase):
         self.assertEqual(name.split(".")[-1], new_name)
         self.assertEqual(obj.__text_signature__, "($self, /, *args, **kwargs)")
 
-    def test_import_objec2(self):
+    def test_import_object2(self):
         name = "onnx_extended.validation.cpu._validation.benchmark_cache"
         try:
             obj, new_name = import_object(name, kind="function")
@@ -27,6 +27,18 @@ class TestDocAssertCpp(ExtTestCase):
             repr(sig), "benchmark_cache(size: int, verbose: bool = True) -> float"
         )
         self.assertIn("size", sig.param_names)
+
+    def test_import_object3(self):
+        name = "onnx_extended.validation.cython.vector_function_cy.vector_add_c"
+        try:
+            obj, new_name = import_object(name, kind="function")
+        except (ImportError, RuntimeError):
+            return
+        self.assertEqual(name.split(".")[-1], new_name)
+        self.assertIn("vector_add_c(v1, v2)", obj.__doc__)
+        sig = parse_signature(obj.__doc__)
+        self.assertEqual(repr(sig), "vector_add_c(v1, v2)")
+        self.assertIn("v1", sig.param_names)
 
     def test_extract_signature(self):
         sig = (

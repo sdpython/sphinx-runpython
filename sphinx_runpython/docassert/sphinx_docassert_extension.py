@@ -15,6 +15,8 @@ class Parameter:
         self.dtype = dtype
 
     def __repr__(self):
+        if self.dtype is None:
+            return self.name
         return f"{self.name}: {self.dtype}"
 
 
@@ -35,7 +37,10 @@ class Signature:
         for p in self.params:
             ps.append(repr(p))
         els.append(", ".join(ps))
-        els.extend([")", " -> ", self.result_type])
+        if self.result_type is None:
+            els.append(")")
+        else:
+            els.extend([")", " -> ", self.result_type])
         return "".join(els)
 
     @property
@@ -44,16 +49,19 @@ class Signature:
 
 
 def parse_signature(text: str) -> Signature:
-    reg = re.compile("([_a-zA-Z][_a-zA-Z0-9]*?)[(](.*?)[)] -> ([a-zA-Z0-9]+)")
+    reg = re.compile("([_a-zA-Z][_a-zA-Z0-9]*?)[(](.*?)[)]( -> ([a-zA-Z0-9]+))?")
     res = reg.search(text)
     if res is None:
         return None
-    name, params, result = res.groups(0)
+    name, params, _, result = res.groups()
     spl = [_.strip() for _ in params.split(",")]
-    sig = Signature(name.strip(), result.strip())
+    sig = Signature(name.strip(), result.strip() if result is not None else None)
     for p in spl:
-        k, v = p.split(":", maxsplit=1)
-        sig.append(Parameter(k.strip(), v.strip()))
+        if ":" in p:
+            k, v = p.split(":", maxsplit=1)
+            sig.append(Parameter(k.strip(), v.strip()))
+        else:
+            sig.append(Parameter(p.strip(), None))
     return sig
 
 
@@ -324,7 +332,6 @@ class OverrideDocFieldTransformer:
                     docs,
                     reasons,
                 )
-                myfunc = None
 
             if myfunc is None:
                 signature = None
