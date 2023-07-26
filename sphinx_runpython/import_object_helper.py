@@ -62,6 +62,9 @@ def import_object(docname, kind, use_init=True) -> Tuple[object, str]:
             not inspect.isfunction(myfunc)
             and "built-in function" not in str(myfunc)
             and "built-in method" not in str(myfunc)
+            and (
+                not hasattr(myfunc, "func_code") or ".pyx" not in str(myfunc.func_code)
+            )
         ):
             # inspect.isfunction fails for C functions.
             raise TypeError(f"'{docname}' is not a function")
