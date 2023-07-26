@@ -1,6 +1,6 @@
 import unittest
 from docutils.parsers.rst import directives
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.blocdefs.sphinx_exref_extension import (
     ExRef,
@@ -41,7 +41,7 @@ class TestExRefExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             extlinks={"issue": ("http://%s", "_issue_%s")},
@@ -86,11 +86,9 @@ class TestExRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [("exref", ExRef, exref_node, visit_exref_node, depart_exref_node)]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
-        if "admonition-exref exref_node admonition" not in html:
-            raise html
+        html = rst2html(content, writer="rst")
+        if "admonition-exref admonition" not in html:
+            raise AssertionError("ISSUE in " + html)
 
         t1 = "this code shoud appear"
         if t1 not in html:
@@ -131,12 +129,10 @@ class TestExRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [("exref", ExRef, exref_node, visit_exref_node, depart_exref_node)]
-
-        rst = rst2html(content, writer="rst", keep_warnings=True, directives=tives)
+        rst = rst2html(content, writer="rst")
 
         self.assertNotEmpty(rst)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)

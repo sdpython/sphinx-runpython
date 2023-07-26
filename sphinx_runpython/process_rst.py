@@ -7,13 +7,7 @@ from typing import Any, Dict, Optional, Tuple
 from docutils.core import publish_parts
 from .runpython import run_cmd
 
-
-_dummy_conf = """
-import os
-import sys
-from sphinx_runpython import __version__
-
-extensions = [
+_dummy_extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
     "sphinx.ext.githubpages",
@@ -31,21 +25,10 @@ extensions = [
     "sphinx_runpython.docassert",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
+    "sphinx_runpython.sphinx_rst_builder",
 ]
 
-source_suffix = ".rst"
-master_doc = "index"
-project = "rst2html"
-pygments_style = "sphinx"
-todo_include_todos = True
-
-html_theme = "alabaster"
-html_theme_path = ["_static"]
-html_theme_options = {}
-html_static_path = ["_static"]
-
-
-epkg_dictionary = {
+_dummy_epkg_dictionary = {
     "autopep8": "https://pypi.org/project/autopep8/",
     "dot": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
     "DOT": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
@@ -85,12 +68,32 @@ epkg_dictionary = {
     ),
     "*pyf": (("https://docs.python.org/3/library/functions.html#{0}", 1),),
 }
+
+
+_dummy_conf = """
+import os
+import sys
+from sphinx_runpython import __version__
+
+source_suffix = ".rst"
+master_doc = "index"
+project = "rst2html"
+pygments_style = "sphinx"
+todo_include_todos = True
+
+html_theme = "alabaster"
+html_theme_path = ["_static"]
+html_theme_options = {}
+html_static_path = ["_static"]
+
 """
 
 
 def _rst2html_sphinx(
     rst: str, report_level: int = 0, writer_name: str = "html", **kwargs
 ) -> Tuple[str, str]:
+    if "writer" in kwargs:
+        raise ValueError("'writer' is not a valid argument, please use 'writer_name'.")
     with tempfile.TemporaryDirectory() as folder:
         index = os.path.join(folder, "index.rst")
         with open(index, "w", encoding="utf-8") as f:
@@ -98,12 +101,15 @@ def _rst2html_sphinx(
         conf = os.path.join(folder, "conf.py")
         with open(conf, "w", encoding="utf-8") as f:
             f.write(_dummy_conf)
+            f.write(f"\nextensions = {_dummy_extensions}\n")
+            f.write(f"\nepkg_dictionary = {_dummy_epkg_dictionary}\n")
         fout = os.path.join(folder, "output")
 
-        cmd = f"{sys.executable} -m sphinx -b {writer_name} {folder} {fout}"
+        rep = " -v" * report_level
+        cmd = f"{sys.executable} -m sphinx -b {writer_name} {folder} {fout}{rep}"
         out, err = run_cmd(cmd, wait=True)
 
-        html = os.path.join(fout, "index.html")
+        html = os.path.join(fout, f"index.{writer_name}")
         if not os.path.exists(html):
             raise RuntimeError(
                 f"Unable to find output {html!r}\n--STDOUT--\n{out}\n--STDERR--\n{err}"

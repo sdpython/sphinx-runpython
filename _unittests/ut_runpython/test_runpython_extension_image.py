@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
 from docutils.parsers.rst import directives
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase
 from sphinx_runpython.runpython.sphinx_runpython_extension import RunPythonDirective
 
@@ -37,7 +37,7 @@ class TestRunPythonExtensionImage(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :rst:
                         :showcode:
 
@@ -58,17 +58,7 @@ class TestRunPythonExtensionImage(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         with open(os.path.join(temp, "out.html"), "w", encoding="utf8") as f:
             f.write(html)

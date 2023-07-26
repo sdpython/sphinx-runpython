@@ -1,6 +1,6 @@
 import unittest
 import logging
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 
 

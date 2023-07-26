@@ -1,6 +1,6 @@
 import unittest
 from docutils.parsers.rst import directives
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.blocdefs.sphinx_blocref_extension import (
     BlocRef,
@@ -140,7 +140,7 @@ class TestBlocRefExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer="rst",
             keep_warnings=True,
             directives=tives,
             extlinks={"issue": ("http://%s", "_issue_%s")},
@@ -186,11 +186,7 @@ class TestBlocRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("blocref", BlocRef, blocref_node, visit_blocref_node, depart_blocref_node)
-        ]
-
-        html = rst2html(content, writer="html", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer="html")
 
         t1 = "this code should appear"
         if t1 not in html:

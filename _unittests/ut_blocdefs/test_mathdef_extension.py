@@ -1,6 +1,6 @@
 import unittest
 from docutils.parsers.rst import directives
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.blocdefs.sphinx_mathdef_extension import (
     MathDef,
@@ -47,7 +47,7 @@ class TestMathDefExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer="rst",
             keep_warnings=True,
             directives=tives,
             extlinks={"issue": ("http://%s", "_issue_%s")},
@@ -90,11 +90,7 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer="rst")
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -134,11 +130,7 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer="rst")
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -197,44 +189,23 @@ class TestMathDefExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
         )
 
-        body = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx_body",
-        )
-        if "<body>" in body:
-            raise AssertionError("ISSUE in \n" + body)
-        if "</body>" in body:
-            raise AssertionError("ISSUE in \n" + body)
-
-        # not yet ready
-
-        if "alabaster" in html:
+        t1 = "this code should appear"
+        if t1 not in html:
             raise AssertionError("ISSUE in \n" + html)
 
-        t1 = "this code should appear"
-        if t1 not in body:
-            raise AssertionError("ISSUE in \n" + body)
-
         t1 = "after"
-        if t1 not in body:
-            raise AssertionError("ISSUE in \n" + body)
+        if t1 not in html:
+            raise AssertionError("ISSUE in \n" + html)
 
         t1 = "first def2"
-        if t1 not in body:
-            raise AssertionError("ISSUE in \n" + body)
-
-        # t1 = 'class="reference internal"'
-        # if t1 not in body:
-        #    raise AssertionError("ISSUE in \n" + body)
+        if t1 not in html:
+            raise AssertionError("ISSUE in \n" + html)
 
 
 if __name__ == "__main__":

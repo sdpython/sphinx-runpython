@@ -24,6 +24,7 @@ extensions = [
     "sphinx_runpython.gdot",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
+    "sphinx_runpython.sphinx_rst_builder",
 ]
 
 templates_path = ["_templates"]

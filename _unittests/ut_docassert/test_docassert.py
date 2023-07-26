@@ -4,7 +4,7 @@ import unittest
 import warnings
 import logging
 from sphinx.util.logging import getLogger
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, sys_path_append, ignore_warnings
 from sphinx_runpython.import_object_helper import import_object
 from sphinx_runpython.docassert.sphinx_docassert_extension import parse_signature

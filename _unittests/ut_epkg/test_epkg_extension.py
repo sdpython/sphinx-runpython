@@ -1,6 +1,6 @@
 import unittest
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.epkg.sphinx_epkg_extension import (
     epkg_role,
     epkg_node,
@@ -27,7 +27,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
@@ -70,7 +70,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
@@ -94,7 +94,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
@@ -144,7 +144,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
@@ -198,7 +198,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
@@ -238,7 +238,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",
@@ -286,7 +286,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
+            writer_name="rst",
             keep_warnings=True,
             directives=tives,
             layout="sphinx",

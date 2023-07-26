@@ -1,7 +1,7 @@
 import sys
 import unittest
 from docutils.parsers.rst import directives
-from sphinx_runpython.helpers import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase
 from sphinx_runpython.runpython.sphinx_runpython_extension import (
     RunPythonDirective,
@@ -50,7 +50,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :rst:
                         :showcode:
@@ -65,17 +65,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code shoud appear___"
         if t1 not in html:
@@ -103,7 +93,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :rst:
                         :showcode:
@@ -115,7 +105,7 @@ class TestRunPythonExtension(ExtTestCase):
             "                    ", ""
         )
 
-        html = rst2html(content, writer="rst", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer="rst")
         if "[1.12 1.99]" not in html:
             raise AssertionError(html)
 
@@ -130,7 +120,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :rst:
                         :showcode:
@@ -143,12 +133,12 @@ class TestRunPythonExtension(ExtTestCase):
             "                    ", ""
         )
 
-        html = rst2html(content, writer="rst", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer="rst")
         if "[1.12 1.99]" not in html:
             raise AssertionError(html)
         self.assertIn(":linenos:", html)
 
-        html = rst2html(content, writer="html", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer="html")
         self.assertIn('class="linenos">', html)
 
     def test_runpython_catch_warning(self):
@@ -176,7 +166,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :rst:
                         :showcode:
@@ -189,17 +179,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t1 = ": DeprecationWarning: deprecated"
         if t1 in html:
@@ -230,7 +210,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :rst:
                         :showcode:
@@ -242,17 +222,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "DeprecationWarning"
         if t1 not in html:
@@ -283,7 +253,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
 
                         print(u"this code shoud appear" + u"___")
@@ -295,17 +265,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code shoud appear___"
         for t in t1.split():
@@ -349,7 +309,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :process:
                         :showcode:
@@ -364,17 +324,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code shoud appear___"
         for t in t1.split():
@@ -415,7 +365,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :showcode:
                         :exception:
 
@@ -427,17 +377,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
         if t2 not in html:
@@ -470,7 +410,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :showcode:
                         :assert: z == 1.1
 
@@ -492,7 +432,7 @@ class TestRunPythonExtension(ExtTestCase):
             )
         ]
 
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
         if t2 not in html:
@@ -505,7 +445,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :showcode:
                         :assert: z == 1.2
 
@@ -518,7 +458,7 @@ class TestRunPythonExtension(ExtTestCase):
         try:
             html = rst2html(
                 content,
-                writer="custom",
+                writer_name="rst",
                 keep_warnings=True,
                 directives=tives,
             )
@@ -549,7 +489,7 @@ class TestRunPythonExtension(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :showcode:
                         :exception:
                         :process:
@@ -562,17 +502,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
         if t2 not in html:
