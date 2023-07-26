@@ -1,5 +1,6 @@
 import unittest
 import logging
+import sys
 from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 
@@ -120,6 +121,7 @@ class TestGDotExtension(ExtTestCase):
         self.assertIn("document.getElementById('gdot-", content)
         self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
 
+    @unittest.skipIf(sys.platform != "linux", reason="Missing dependency.")
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot4_png(self):
         content = """
