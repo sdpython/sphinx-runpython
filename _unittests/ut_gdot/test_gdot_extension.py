@@ -1,6 +1,7 @@
 import unittest
 import logging
-from pyquickhelper.helpgen import rst2html
+import sys
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 
 
@@ -25,7 +26,9 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="rst", keep_warnings=True)
+        content = rst2html(
+            content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
+        )
         self.assertIn(
             'digraphfoo{"bar"->"baz";}', content.replace("\n", "").replace(" ", "")
         )
@@ -45,7 +48,9 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="rst", keep_warnings=True)
+        content = rst2html(
+            content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
+        )
         self.assertIn('digraph foo { "bar" -> "baz"; }', content)
 
     @ignore_warnings(PendingDeprecationWarning)
@@ -63,7 +68,9 @@ class TestGDotExtension(ExtTestCase):
             "            ", ""
         )
 
-        content = rst2html(content, writer="rst", keep_warnings=True)
+        content = rst2html(
+            content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
+        )
         self.assertIn('digraph foo { "bar" -> "baz"; }', content)
         self.assertNotIn("BEGIN", content)
 
@@ -84,7 +91,9 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="html", keep_warnings=True)
+        content = rst2html(
+            content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
+        )
         self.assertIn("document.getElementById('gdot-", content)
         self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
 
@@ -106,10 +115,13 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="html", keep_warnings=True)
+        content = rst2html(
+            content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
+        )
         self.assertIn("document.getElementById('gdot-", content)
         self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
 
+    @unittest.skipIf(sys.platform != "linux", reason="Missing dependency.")
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot4_png(self):
         content = """
@@ -128,7 +140,9 @@ class TestGDotExtension(ExtTestCase):
         )
 
         try:
-            content = rst2html(content, writer="html", keep_warnings=True)
+            content = rst2html(
+                content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
+            )
         except FileNotFoundError:
             # This class cannot write on disk.
             return

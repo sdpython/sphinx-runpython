@@ -64,10 +64,29 @@ jobs:
           cp LICENSE* ./_doc
           cp CHANGELOGS* ./_doc
 
-      - name: Documentation
+      - name: Documentation HTML
         run: python -m sphinx ./_doc ./dist/html -n -w doc.txt
 
-      - name: Summary
+      - name: Summary HTML
+        run: cat doc.txt
+
+      - name: Check for errors and warnings
+        run: |
+          if [[ $(grep ERROR doc.txt) ]]; then
+            echo "Documentation produces errors."
+            grep ERROR doc.txt
+            exit 1
+          fi
+          if [[ $(grep WARNING doc.txt) ]]; then
+            echo "Documentation produces warnings."
+            grep WARNING doc.txt
+            exit 1
+          fi
+
+      - name: Documentation RST
+        run: python -m sphinx -b rst ./_doc ./dist/rst -n -w doc.txt
+
+      - name: Summary RST
         run: cat doc.txt
 
       - name: Check for errors and warnings
@@ -85,4 +104,4 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: ./dist/html/**
+          path: ./dist/**

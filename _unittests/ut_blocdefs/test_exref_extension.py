@@ -1,27 +1,9 @@
-"""
-@brief      test log(time=4s)
-@author     Xavier Dupre
-"""
-import os
 import unittest
-from docutils.parsers.rst import directives
-from pyquickhelper.pycode import get_temp_folder
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
-from sphinx_runpython.blocdefs.sphinx_exref_extension import (
-    ExRef,
-    ExRefList,
-    exref_node,
-    visit_exref_node,
-    depart_exref_node,
-)
 
 
 class TestExRefExtension(ExtTestCase):
-    def test_post_parse_exref(self):
-        directives.register_directive("exref", ExRef)
-        directives.register_directive("exreflist", ExRefList)
-
     @ignore_warnings(PendingDeprecationWarning)
     def test_exref(self):
         content = """
@@ -43,19 +25,10 @@ class TestExRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [("exref", ExRef, exref_node, visit_exref_node, depart_exref_node)]
-
         html = rst2html(
             content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            extlinks={"issue": ("http://%s", "_issue_%s")},
+            writer_name="rst",
         )
-
-        temp = get_temp_folder(__file__, "temp_exref")
-        with open(os.path.join(temp, "out_exref.html"), "w", encoding="utf8") as f:
-            f.write(html)
 
         t1 = "this code shoud appear"
         if t1 not in html:
@@ -96,15 +69,7 @@ class TestExRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [("exref", ExRef, exref_node, visit_exref_node, depart_exref_node)]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
-        if "admonition-exref exref_node admonition" not in html:
-            raise html
-
-        temp = get_temp_folder(__file__, "temp_exreflist")
-        with open(os.path.join(temp, "out_exref.html"), "w", encoding="utf8") as f:
-            f.write(html)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code shoud appear"
         if t1 not in html:
@@ -145,12 +110,10 @@ class TestExRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [("exref", ExRef, exref_node, visit_exref_node, depart_exref_node)]
-
-        rst = rst2html(content, writer="rst", keep_warnings=True, directives=tives)
+        rst = rst2html(content, writer_name="rst")
 
         self.assertNotEmpty(rst)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)

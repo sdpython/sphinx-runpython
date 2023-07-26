@@ -324,10 +324,8 @@ def copy_js_files(app):
         return
 
     srcdir = app.builder.srcdir
-    if "IMPOSSIBLE:TOFIND" not in srcdir:
-        if not os.path.exists(srcdir):
-            raise FileNotFoundError(f"Source file is wrong '{srcdir}'.")
-
+    if not os.path.exists(srcdir):
+        raise FileNotFoundError(f"Source file is wrong {srcdir!r}.")
     destf = os.path.join(os.path.abspath(srcdir), dest)
     if not os.path.exists(destf):
         logger.warning(
@@ -353,26 +351,31 @@ def copy_js_files(app):
                     logger.info("[gdot] copy %r to %r.", path, file_dest)
                 except PermissionError as e:  # pragma: no cover
                     logger.warning(
-                        "[gdot] permission error (%r), unable to use local viz.js.", e
+                        "[gdot] permission error (%r), unable to use local viz.js", e
                     )
             else:
-                logger.warning("[gdot] unable to find %r.", path)
+                logger.warning("[gdot] unable to find %r", path)
         else:
             logger.warning("[gdot] viz.js, use %r", GDotDirective._default_url)
 
             file_dest = os.path.join(destf, "require.js")
-            content = get_url_content_timeout(
-                GDotDirective._default_url, output=file_dest, raise_exception=False
-            )
+            try:
+                content = get_url_content_timeout(
+                    GDotDirective._default_url, output=file_dest, raise_exception=False
+                )
+            except Exception as e:
+                logger.warning("[gdot] download failed due to %r", e)
+                content = None
+
             if content is None:
                 logger.warning(
-                    "[gdot] unable to download: %r to %r",
+                    "[gdot] unable to download %r to %r",
                     GDotDirective._default_url,
                     file_dest,
                 )
             else:
                 logger.info(
-                    "[gdot] download %r to %r.", GDotDirective._default_url, file_dest
+                    "[gdot] download %r to %r", GDotDirective._default_url, file_dest
                 )
 
     # require.js
@@ -380,7 +383,10 @@ def copy_js_files(app):
     if os.path.exists(file_dest):
         logger.info("[gdot] %r already installed.", file_dest)
     else:
-        download_requirejs(destf)
+        try:
+            download_requirejs(destf)
+        except Exception as e:
+            logger.warning("[gdot] download_requirejs failed due to %r", e)
 
     if os.path.exists(file_dest):
         # It adds <script async="defer" src="_static/require.js"></script>

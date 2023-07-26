@@ -17,6 +17,7 @@ Extensions
     gdot
     runpython
     tools
+    rst_builder
 
 Helpers
 =======
@@ -24,5 +25,5 @@ Helpers
 .. toctree::
     :maxdepth: 1
 
-    helpers
+    process_rst
     import_object_helper

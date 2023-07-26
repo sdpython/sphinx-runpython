@@ -1,7 +1,7 @@
 import sys
 import unittest
 from docutils.parsers.rst import directives
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
 from sphinx_runpython.runpython.sphinx_runpython_extension import RunPythonDirective
 
@@ -43,7 +43,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
                     test a directive
                     ================
 
-                    .. runpythonthis::
+                    .. runpython::
                         :setsysvar:
                         :rst:
                         :showcode:
@@ -59,25 +59,15 @@ class TestRunPythonExtensionToggle(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
         # HTML
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="html")
 
         t1 = "button"
         if t1 not in html:
             raise AssertionError(html)
 
         # RST
-        html = rst2html(content, writer="rst", keep_warnings=True, directives=tives)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "<<<::"
         t2 = "<<<.. code-block:: python"

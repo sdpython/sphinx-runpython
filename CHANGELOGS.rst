@@ -4,6 +4,7 @@ Change Logs
 0.2.0
 +++++
 
+* :pr:`17`: add RST writer to output the documentation into pure RST format
 * :pr:`16`: add command line nb2py to convert notebook to python files
 * :pr:`11`: add function make_linkcode_resolve
 * :pr:`6`: add sphinx extension gdot

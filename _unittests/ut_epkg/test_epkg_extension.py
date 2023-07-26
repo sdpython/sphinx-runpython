@@ -1,12 +1,13 @@
 import unittest
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.epkg.sphinx_epkg_extension import (
     epkg_role,
     epkg_node,
     visit_epkg_node,
     depart_epkg_node,
 )
-from pyquickhelper.helpgen import rst2html
+
 
 tives = [("epkg", epkg_role, epkg_node, visit_epkg_node, depart_epkg_node)]
 
@@ -26,19 +27,7 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                )
-            },
+            writer_name="rst",
         )
 
         t1 = "abeforea"
@@ -49,7 +38,7 @@ class TestEpkgExtension(ExtTestCase):
         if t1 not in html:
             raise AssertionError(html)
 
-        t1 = "http://pandas.pydata.org/pandas-docs/stable/generated/"
+        t1 = "https://pandas.pydata.org/pandas-docs/stable/"
         if t1 not in html:
             raise AssertionError(html)
 
@@ -69,15 +58,9 @@ class TestEpkgExtension(ExtTestCase):
 
         html = rst2html(
             content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": "http://pandas.pydata.org/pandas-docs/stable/generated/",
-            },
+            writer_name="rst",
         )
-        self.assertIn("http://pandas.pydata.org/pandas-docs/stable/generated/", html)
+        self.assertIn("https://pandas.pydata.org/pandas-docs/stable/", html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_sub(self):
@@ -86,30 +69,12 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas:DataFrame.to_html` aaftera
-
-                    7za :epkg:`7z` 7zb
                     """.replace(
             "                    ", ""
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                ),
-                "7z": "http://www.7-zip.org/",
-            },
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = "abeforea"
         if t1 not in html:
@@ -124,14 +89,6 @@ class TestEpkgExtension(ExtTestCase):
         t1 = "`"
         if t1 in html:
             raise AssertionError(f"\n**{spl}**\n----\n{html}")
-
-        t1 = 'href="http://www.7-zip.org/"'
-        if t1 not in html:
-            raise AssertionError(html)
-
-        t1 = 'href="http://pandas.pydata.org/pandas-docs/stable/generated/DataFrame.to_html.html"'
-        if t1 not in html:
-            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function(self):
@@ -140,8 +97,6 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas:DataFrame:to_html` aaftera
-
-                    7za :epkg:`7z` 7zb
                     """.replace(
             "                    ", ""
         )
@@ -150,24 +105,7 @@ class TestEpkgExtension(ExtTestCase):
         def pandas_link(input):
             return "MYA", "|".join(input.split(":"))
 
-        html = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                    pandas_link,
-                ),
-                "7z": "http://www.7-zip.org/",
-            },
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = "abeforea"
         if t1 not in html:
@@ -183,11 +121,7 @@ class TestEpkgExtension(ExtTestCase):
         if t1 in html:
             raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
-        t1 = 'href="http://www.7-zip.org/"'
-        if t1 not in html:
-            raise AssertionError(html)
-
-        t1 = 'href="pandas|DataFrame|to_html"'
+        t1 = "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_html.html"
         if t1 not in html:
             raise AssertionError(html)
 
@@ -199,7 +133,7 @@ class TestEpkgExtension(ExtTestCase):
 
                     abeforea :epkg:`pandas:DataFrame:to_html` aaftera
 
-                    7za :epkg:`7z` 7zb
+                    7za :epkg:`Pandoc` 7zb
                     """.replace(
             "                    ", ""
         )
@@ -209,46 +143,17 @@ class TestEpkgExtension(ExtTestCase):
             def __call__(self, input):
                 return "MYA", "|".join(input.split(":"))
 
-        html = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                    pandas_link,
-                ),
-                "7z": "http://www.7-zip.org/",
-            },
+        html = rst2html(content, writer_name="html")
+
+        self.assertIn("abeforea", html)
+        self.assertIn("aftera", html)
+
+        self.assertNotIn("`", html)
+        self.assertIn('https://johnmacfarlane.net/pandoc/"', html)
+        self.assertIn(
+            "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_html.html",
+            html,
         )
-
-        t1 = "abeforea"
-        if t1 not in html:
-            raise AssertionError(html)
-
-        t1 = "aftera"
-        if t1 not in html:
-            raise AssertionError(html)
-
-        spl = html.split("abeforea")[-1].split("aftera")[0]
-
-        t1 = "`"
-        if t1 in html:
-            raise AssertionError(f"\n**{spl}**\n----\n{html}")
-
-        t1 = 'href="http://www.7-zip.org/"'
-        if t1 not in html:
-            raise AssertionError(html)
-
-        t1 = 'href="pandas|DataFrame|to_html"'
-        if t1 not in html:
-            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function_string(self):
@@ -257,34 +162,12 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas:DataFrame:to_html` aaftera
-
-                    7za :epkg:`7z` 7zb
                     """.replace(
             "                    ", ""
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                    (
-                        "pyquickhelper.sphinxext._private_for_unittest._private_unittest",
-                        None,
-                    ),
-                ),
-                "7z": "http://www.7-zip.org/",
-            },
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = "abeforea"
         if t1 not in html:
@@ -300,11 +183,7 @@ class TestEpkgExtension(ExtTestCase):
         if t1 in html:
             raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
-        t1 = 'href="http://www.7-zip.org/"'
-        if t1 not in html:
-            raise AssertionError(html)
-
-        t1 = 'href="pandas|DataFrame|to_html"'
+        t1 = "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_html.html"
         if t1 not in html:
             raise AssertionError(html)
 
@@ -321,13 +200,7 @@ class TestEpkgExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = 'href="http://first.part/secondpart"'
         if t1 not in html:

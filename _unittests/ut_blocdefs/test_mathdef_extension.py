@@ -1,31 +1,9 @@
-"""
-@brief      test log(time=4s)
-@author     Xavier Dupre
-"""
-import os
 import unittest
-from docutils.parsers.rst import directives
-from pyquickhelper.pycode import get_temp_folder
-from pyquickhelper.helpgen import rst2html
+from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
-from sphinx_runpython.blocdefs.sphinx_mathdef_extension import (
-    MathDef,
-    MathDefList,
-    mathdef_node,
-    visit_mathdef_node,
-    depart_mathdef_node,
-    mathdeflist,
-    visit_mathdeflist_node,
-    depart_mathdeflist_node,
-)
 
 
 class TestMathDefExtension(ExtTestCase):
-    @ignore_warnings(PendingDeprecationWarning)
-    def test_post_parse_sn_todoext(self):
-        directives.register_directive("mathdef", MathDef)
-        directives.register_directive("mathdeflist", MathDefList)
-
     @ignore_warnings(PendingDeprecationWarning)
     def test_mathdef(self):
         content = """
@@ -47,21 +25,10 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
-        ]
-
         html = rst2html(
             content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            extlinks={"issue": ("http://%s", "_issue_%s")},
+            writer_name="rst",
         )
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(os.path.join(temp, "test_mathdef.html"), "w", encoding="utf8") as f:
-            f.write(html)
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -100,17 +67,7 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(
-            os.path.join(temp, "test_mathdeflist.html"), "w", encoding="utf8"
-        ) as f:
-            f.write(html)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -150,17 +107,7 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
-        ]
-
-        html = rst2html(content, writer="custom", keep_warnings=True, directives=tives)
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(
-            os.path.join(temp, "test_mathdeflist_contents.html"), "w", encoding="utf8"
-        ) as f:
-            f.write(html)
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -206,65 +153,22 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node),
-            (
-                "mathdeflist",
-                MathDefList,
-                mathdeflist,
-                visit_mathdeflist_node,
-                depart_mathdeflist_node,
-            ),
-        ]
-
         html = rst2html(
             content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
+            writer_name="rst",
         )
-
-        body = rst2html(
-            content,
-            writer="custom",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx_body",
-        )
-        if "<body>" in body:
-            raise AssertionError("ISSUE in \n" + body)
-        if "</body>" in body:
-            raise AssertionError("ISSUE in \n" + body)
-
-        temp = get_temp_folder(__file__, "temp_mathdef", clean=False)
-        with open(
-            os.path.join(temp, "test_mathdeflist_contents_sphinx.html"),
-            "w",
-            encoding="utf8",
-        ) as f:
-            f.write(html)
-
-        # not yet ready
-
-        if "alabaster" in html:
-            raise AssertionError("ISSUE in \n" + html)
 
         t1 = "this code should appear"
-        if t1 not in body:
-            raise AssertionError("ISSUE in \n" + body)
+        if t1 not in html:
+            raise AssertionError("ISSUE in \n" + html)
 
         t1 = "after"
-        if t1 not in body:
-            raise AssertionError("ISSUE in \n" + body)
+        if t1 not in html:
+            raise AssertionError("ISSUE in \n" + html)
 
         t1 = "first def2"
-        if t1 not in body:
-            raise AssertionError("ISSUE in \n" + body)
-
-        # t1 = 'class="reference internal"'
-        # if t1 not in body:
-        #    raise AssertionError("ISSUE in \n" + body)
+        if t1 not in html:
+            raise AssertionError("ISSUE in \n" + html)
 
 
 if __name__ == "__main__":

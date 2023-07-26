@@ -35,7 +35,7 @@ The library is released on
 `pypi/sphinx-runpython <https://pypi.org/project/sphinx-runpython/>`_
 and its documentation is published at
 `sphinx-runpython
-<https://sdpython.github.io/doc/sphinx-runpython/>`_.
+<https://sdpython.github.io/doc/sphinx-runpython/dev/>`_.
 
 epkg
 ++++
@@ -80,11 +80,12 @@ Executes code in the documentation and adds it to documentation.
 List of directives
 ++++++++++++++++++
 
-* `blocref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>`_
-* `collapse <https://sdpython.github.io/doc/sphinx-runpython/api/collapse.html>`_
-* `docassert <https://sdpython.github.io/doc/sphinx-runpython/api/docassert.html>`_
-* `epkg <https://sdpython.github.io/doc/sphinx-runpython/api/epkg.html>`_
-* `exref <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>`_
-* `gdot <https://sdpython.github.io/doc/sphinx-runpython/api/gdot.html>`_
-* `mathdef <https://sdpython.github.io/doc/sphinx-runpython/api/blocdefs.html>`_
-* `runpython <https://sdpython.github.io/doc/sphinx-runpython/api/runpython.html>`_
+* `blocref <https://sdpython.github.io/doc/sphinx-runpython/dev/api/blocdefs.html>`_
+* `collapse <https://sdpython.github.io/doc/sphinx-runpython/dev/api/collapse.html>`_
+* `docassert <https://sdpython.github.io/doc/sphinx-runpython/dev/api/docassert.html>`_
+* `epkg <https://sdpython.github.io/doc/sphinx-runpython/dev/api/epkg.html>`_
+* `exref <https://sdpython.github.io/doc/sphinx-runpython/dev/api/blocdefs.html>`_
+* `gdot <https://sdpython.github.io/doc/sphinx-runpython/dev/api/gdot.html>`_
+* `mathdef <https://sdpython.github.io/doc/sphinx-runpython/dev/api/blocdefs.html>`_
+* `runpython <https://sdpython.github.io/doc/sphinx-runpython/dev/api/runpython.html>`_
+* `sphinx_rst_builder <https://sdpython.github.io/doc/sphinx-runpython/dev/api/rst_builder.html>`_
