@@ -65,7 +65,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         t1 = "this code shoud appear___"
         if t1 not in html:
@@ -324,7 +324,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         t1 = "this code shoud appear___"
         for t in t1.split():
@@ -377,7 +377,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
         if t2 not in html:
@@ -422,7 +422,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
         if t2 not in html:
@@ -490,7 +490,7 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
         if t2 not in html:

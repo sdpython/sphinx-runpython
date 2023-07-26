@@ -60,7 +60,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
         content = content.replace('u"', '"')
 
         # HTML
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         t1 = "button"
         if t1 not in html:

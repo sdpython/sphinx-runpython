@@ -58,7 +58,7 @@ class TestRunPythonExtensionImage(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer_name="rst")
+        html = rst2html(content, writer_name="html")
 
         with open(os.path.join(temp, "out.html"), "w", encoding="utf8") as f:
             f.write(html)

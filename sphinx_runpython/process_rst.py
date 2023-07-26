@@ -3,7 +3,7 @@ import io
 import os
 import sys
 import tempfile
-from typing import Tuple
+from typing import List, Optional, Tuple
 from docutils.core import publish_parts
 from .runpython import run_cmd
 
@@ -82,15 +82,16 @@ pygments_style = "sphinx"
 todo_include_todos = True
 
 html_theme = "alabaster"
-html_theme_path = ["_static"]
 html_theme_options = {}
-html_static_path = ["_static"]
-
 """
 
 
 def _rst2html_sphinx(
-    rst: str, writer_name: str = "html", report_level: int = 0, **kwargs
+    rst: str,
+    writer_name: str = "html",
+    report_level: int = 0,
+    new_extensions: Optional[List[str]] = None,
+    **kwargs,
 ) -> Tuple[str, str]:
     if "writer" in kwargs:
         raise ValueError("'writer' is not a valid argument, please use 'writer_name'.")
@@ -101,7 +102,10 @@ def _rst2html_sphinx(
         conf = os.path.join(folder, "conf.py")
         with open(conf, "w", encoding="utf-8") as f:
             f.write(_dummy_conf)
-            f.write(f"\nextensions = {_dummy_extensions}\n")
+            if new_extensions is None:
+                f.write(f"\nextensions = {_dummy_extensions}\n")
+            else:
+                f.write(f"\nextensions = {_dummy_extensions + new_extensions}\n")
             f.write(f"\nepkg_dictionary = {_dummy_epkg_dictionary}\n")
         fout = os.path.join(folder, "output")
 
@@ -125,6 +129,7 @@ def rst2html(
     report_level: int = 0,
     return_warnings: bool = False,
     use_sphinx: bool = True,
+    new_extensions: Optional[List[str]] = None,
     **kwargs,
 ) -> Tuple[str, str]:
     """
@@ -137,11 +142,16 @@ def rst2html(
     :param return_warnings: return the warnings as well
     :param use_sphinx: run sphinx from the command line and
         returns the results, for that configuration
+    :param new_extensions: new extensions to add
     :return: output and warnings
     """
     if use_sphinx:
         content, err = _rst2html_sphinx(
-            rst, writer_name=writer_name, report_level=report_level, **kwargs
+            rst,
+            writer_name=writer_name,
+            report_level=report_level,
+            new_extensions=new_extensions,
+            **kwargs,
         )
         if return_warnings:
             return content, err

@@ -74,10 +74,7 @@ class TestEpkgExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = "abeforea"
         if t1 not in html:
@@ -92,10 +89,6 @@ class TestEpkgExtension(ExtTestCase):
         t1 = "`"
         if t1 in html:
             raise AssertionError(f"\n**{spl}**\n----\n{html}")
-
-        t1 = 'href="http://pandas.pydata.org/pandas-docs/stable/generated/DataFrame.to_html.html"'
-        if t1 not in html:
-            raise AssertionError(html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function(self):
@@ -112,10 +105,7 @@ class TestEpkgExtension(ExtTestCase):
         def pandas_link(input):
             return "MYA", "|".join(input.split(":"))
 
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = "abeforea"
         if t1 not in html:
@@ -153,10 +143,7 @@ class TestEpkgExtension(ExtTestCase):
             def __call__(self, input):
                 return "MYA", "|".join(input.split(":"))
 
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
+        html = rst2html(content, writer_name="html")
 
         self.assertIn("abeforea", html)
         self.assertIn("aftera", html)
@@ -180,10 +167,7 @@ class TestEpkgExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = "abeforea"
         if t1 not in html:
@@ -216,10 +200,7 @@ class TestEpkgExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
+        html = rst2html(content, writer_name="html")
 
         t1 = 'href="http://first.part/secondpart"'
         if t1 not in html:

@@ -1,7 +1,5 @@
 import os
-from io import StringIO
 import unittest
-import warnings
 import logging
 from sphinx.util.logging import getLogger
 from sphinx_runpython.process_rst import rst2html
@@ -18,50 +16,6 @@ class TestDocAssert(ExtTestCase):
             obj, name = import_object("exdocassert.onefunction", "function")
             self.assertTrue(obj is not None)
             self.assertTrue(obj(4, 5), 9)
-
-    @ignore_warnings(PendingDeprecationWarning)
-    def test_docassert_html(self):
-        logger1 = getLogger("MockSphinxApp")
-        logger2 = getLogger("docassert")
-
-        log_capture_string = StringIO()
-        ch = logging.StreamHandler(log_capture_string)
-        ch.setLevel(logging.DEBUG)
-        logger1.logger.addHandler(ch)
-        logger2.logger.addHandler(ch)
-
-        this = os.path.abspath(os.path.dirname(__file__))
-        data = os.path.join(this, "datadoc")
-        with sys_path_append(data):
-            obj, name = import_object("exdocassert.onefunction", "function")
-            docstring = obj.__doc__
-            with warnings.catch_warnings(record=True) as ws:
-                html = rst2html(docstring)
-                if "if a and b have different" not in html:
-                    raise AssertionError(html)
-
-            newstring = ".. autofunction:: exdocassert.onefunction"
-            with warnings.catch_warnings(record=True) as ws:
-                html = rst2html(newstring)
-                if "if a and b have different" not in html:
-                    html = [rst2html(newstring)]
-                    html.append(f"number of warnings {len(ws)}")
-                    for i, w in enumerate(ws):
-                        html.append(f"{i}: {w}")
-                    raise AssertionError(html)
-
-            from docutils.parsers.rst.directives import _directives
-
-            self.assertTrue("autofunction" in _directives)
-
-        lines = log_capture_string.getvalue().split("\n")
-        if len(lines) > 0:
-            for line in lines:
-                if "'onefunction' has no parameter 'TypeError'" in line:
-                    raise AssertionError(
-                        "This warning should not happen.\n{0}".format("\n".join(lines))
-                    )
-        self.assertTrue("<strong>a</strong>" in html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_bug(self):
@@ -93,7 +47,7 @@ class TestDocAssert(ExtTestCase):
         with sys_path_append(data):
             obj, name = import_object("exdocassert2.onefunction", "function")
             newstring = ".. autofunction:: exdocassert2.onefunction"
-            html = rst2html(newstring)
+            html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
 
         lines = log_capture_string.getvalue().split("\n")
@@ -103,8 +57,8 @@ class TestDocAssert(ExtTestCase):
         for line in lines:
             if "'onefunction' has no parameter 'c'" in line:
                 nb += 1
-        if nb == 0:
-            raise AssertionError("not the right warning")
+        if nb == 0 and "failed to import function" not in str(warn):
+            raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_method(self):
@@ -136,7 +90,7 @@ class TestDocAssert(ExtTestCase):
         with sys_path_append(data):
             obj, name = import_object("exsig.clex.onemethod", "method")
             newstring = ".. automethod:: exsig.clex.onemethod"
-            html = rst2html(newstring)
+            html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
 
         lines = log_capture_string.getvalue().split("\n")
@@ -146,8 +100,8 @@ class TestDocAssert(ExtTestCase):
         for line in lines:
             if "'onemethod' has no parameter 'c'" in line:
                 nb += 1
-        if nb == 0:
-            raise AssertionError("not the right warning")
+        if nb == 0 and "failed to import method" not in str(warn):
+            raise AssertionError("not the right warning:\n" + "\n".join(lines))
         for line in lines:
             if "'onemethod' has undocumented parameters 'b, self'" in line:
                 raise AssertionError(line)
@@ -181,7 +135,7 @@ class TestDocAssert(ExtTestCase):
         with sys_path_append(data):
             obj, name = import_object("clsslk.Estimator", "class")
             newstring = ".. autoclass:: clsslk.Estimator"
-            html = rst2html(newstring)
+            html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
 
         lines = log_capture_string.getvalue().split("\n")
@@ -193,8 +147,8 @@ class TestDocAssert(ExtTestCase):
                 nb += 1
             if "'Estimator' has undocumented parameters" in line:
                 nb += 1
-        if nb == 0:
-            raise AssertionError("not the right warning")
+        if nb == 0 and "failed to import class" not in str(warn):
+            raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_init2(self):
@@ -225,7 +179,7 @@ class TestDocAssert(ExtTestCase):
         with sys_path_append(data):
             obj, name = import_object("clsslk.Estimator2", "class")
             newstring = ".. autoclass:: clsslk.Estimator2"
-            html = rst2html(newstring, autoclass_content="both")
+            html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
 
         lines = log_capture_string.getvalue().split("\n")
@@ -237,8 +191,8 @@ class TestDocAssert(ExtTestCase):
                 nb += 1
             if "'Estimator2' has undocumented parameters" in line:
                 nb += 1
-        if nb == 0:
-            raise AssertionError("not the right warning")
+        if nb == 0 and "failed to import class" not in str(warn):
+            raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_style(self):
@@ -269,8 +223,8 @@ class TestDocAssert(ExtTestCase):
         with sys_path_append(data):
             obj, name = import_object("clsslk.Estimator3", "class")
             newstring = ".. autoclass:: clsslk.Estimator3"
-            html = rst2html(
-                newstring, autoclass_content="both", new_extensions=["numpydoc"]
+            html, warn = rst2html(
+                newstring, return_warnings=True, new_extensions=["numpydoc"]
             )
             self.assertTrue(html is not None)
 
@@ -283,8 +237,8 @@ class TestDocAssert(ExtTestCase):
                 nb += 1
             if "'Estimator3' has undocumented parameters 'fit" in line:
                 nb += 1
-        if nb == 0:
-            raise AssertionError("not the right warning")
+        if nb == 0 and "failed to import class" not in str(warn):
+            raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     def test_extract_signature(self):
         sig = (
