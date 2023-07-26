@@ -37,8 +37,7 @@ sphinx-runpython: (Numpy) Array API for ONNX
     license
 
 Sources available on
-`github/sphinx-runpython <https://github.com/sdpython/sphinx-runpython>`_,
-see also `code coverage <cov/index.html>`_.
+`github/sphinx-runpython <https://github.com/sdpython/sphinx-runpython>`_.
 
 .. runpython::
     :showcode:
@@ -49,4 +48,4 @@ see also `code coverage <cov/index.html>`_.
 Older versions
 ++++++++++++++
 
-* `0.1.0 <v0.1.0/index.html>`_
+* `0.1.0 <../v0.1.0/index.html>`_
