@@ -2,6 +2,8 @@
 import os
 import sys
 from sphinx_runpython import __version__
+from sphinx_runpython.github_link import make_linkcode_resolve
+from sphinx_runpython.conf_helper import has_dvipng, has_dvisvgm
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -26,6 +28,15 @@ extensions = [
     "sphinx_runpython.runpython",
     "sphinx_runpython.sphinx_rst_builder",
 ]
+
+if has_dvisvgm():
+    extensions.append("sphinx.ext.imgmath")
+    imgmath_image_format = "svg"
+elif has_dvipng():
+    extensions.append("sphinx.ext.pngmath")
+    imgmath_image_format = "png"
+else:
+    extensions.append("sphinx.ext.mathjax")
 
 templates_path = ["_templates"]
 html_logo = "_static/logo.png"
