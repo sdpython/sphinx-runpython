@@ -22,17 +22,17 @@ Classes
 RstBuilder
 ++++++++++
 
-.. autoclass:: sphinx_runpython.gdot.sphinx_gdot_extension.RstBuilder
+.. autoclass:: sphinx_runpython.sphinx_rst_builder.RstBuilder
     :members:
 
 RstTranslator
 +++++++++++++
 
-.. autoclass:: sphinx_runpython.gdot.sphinx_gdot_extension.RstTranslator
+.. autoclass:: sphinx_runpython.sphinx_rst_builder.RstTranslator
     :members:
 
 RstWriter
 +++++++++
 
-.. autoclass:: sphinx_runpython.gdot.sphinx_gdot_extension.RstWriter
+.. autoclass:: sphinx_runpython.sphinx_rst_builder.RstWriter
     :members:
