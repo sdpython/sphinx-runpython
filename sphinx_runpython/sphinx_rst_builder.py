@@ -53,7 +53,7 @@ except ImportError:  # pragma: no cover
     from sphinx.locale import versionlabels
 from sphinx.writers.text import TextTranslator, MAXWIDTH, STDINDENT
 
-from .ext_io_helpers import InternetException, get_url_content_timeout
+from .ext_io_helper import InternetException, get_url_content_timeout
 
 
 class CommonSphinxWriterHelpers:
@@ -86,7 +86,8 @@ class CommonSphinxWriterHelpers:
         """
         Processes an image. By default, it writes the image on disk.
         Inspired from
-        `visit_image <https://github.com/docutils-mirror/docutils/blob/master/docutils/writers/html4css1/__init__.py#L1019>`_
+        `visit_image
+        <https://github.com/docutils/docutils/blob/master/docutils/docutils/writers/html4css1/__init__.py#L1019>`_
         implemented in :epkg:`docutils`.
 
         :param node: image node

@@ -105,7 +105,7 @@ class TestRunPythonExtension(ExtTestCase):
             "                    ", ""
         )
 
-        html = rst2html(content, writer="rst")
+        html = rst2html(content, writer_name="rst")
         if "[1.12 1.99]" not in html:
             raise AssertionError(html)
 
@@ -133,12 +133,12 @@ class TestRunPythonExtension(ExtTestCase):
             "                    ", ""
         )
 
-        html = rst2html(content, writer="rst")
+        html = rst2html(content, writer_name="rst")
         if "[1.12 1.99]" not in html:
             raise AssertionError(html)
         self.assertIn(":linenos:", html)
 
-        html = rst2html(content, writer="html")
+        html = rst2html(content, writer_name="html")
         self.assertIn('class="linenos">', html)
 
     def test_runpython_catch_warning(self):
@@ -422,16 +422,6 @@ class TestRunPythonExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            (
-                "runpythonthis",
-                RunPythonThisDirective,
-                runpythonthis_node,
-                visit_rp_node,
-                depart_rp_node,
-            )
-        ]
-
         html = rst2html(content, writer_name="rst")
 
         t2 = "<p>&lt;&lt;&lt;</p>"
@@ -459,8 +449,6 @@ class TestRunPythonExtension(ExtTestCase):
             html = rst2html(
                 content,
                 writer_name="rst",
-                keep_warnings=True,
-                directives=tives,
             )
         except Exception as e:
             if "Condition 'z == 1.2' failed" not in str(e):

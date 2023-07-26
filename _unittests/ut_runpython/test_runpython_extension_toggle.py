@@ -67,7 +67,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
             raise AssertionError(html)
 
         # RST
-        html = rst2html(content, writer="rst")
+        html = rst2html(content, writer_name="rst")
 
         t1 = "<<<::"
         t2 = "<<<.. code-block:: python"

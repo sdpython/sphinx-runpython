@@ -46,7 +46,7 @@ class TestRunPythonStoreInFile(ExtTestCase):
         temp = os.path.abspath(os.path.dirname(__file__))
         dest = os.path.join(temp, "exescript.py")
         content = content.replace("__DEST__", dest)
-        rst = rst2html(content, writer="rst")
+        rst = rst2html(content, writer_name="rst")
         self.assertIn("def fctfct():", rst)
         self.assertIn("return math.pi", rst)
         self.assertExists(dest)

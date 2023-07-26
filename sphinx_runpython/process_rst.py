@@ -3,7 +3,7 @@ import io
 import os
 import sys
 import tempfile
-from typing import Any, Dict, Optional, Tuple
+from typing import Tuple
 from docutils.core import publish_parts
 from .runpython import run_cmd
 
@@ -90,7 +90,7 @@ html_static_path = ["_static"]
 
 
 def _rst2html_sphinx(
-    rst: str, report_level: int = 0, writer_name: str = "html", **kwargs
+    rst: str, writer_name: str = "html", report_level: int = 0, **kwargs
 ) -> Tuple[str, str]:
     if "writer" in kwargs:
         raise ValueError("'writer' is not a valid argument, please use 'writer_name'.")
@@ -121,26 +121,22 @@ def _rst2html_sphinx(
 
 def rst2html(
     rst: str,
-    directives: Optional[Dict[str, Any]],
-    report_level: int = 0,
     writer_name: str = "html",
+    report_level: int = 0,
     return_warnings: bool = False,
     use_sphinx: bool = True,
     **kwargs,
 ) -> Tuple[str, str]:
     """
-    Converts a RST string into HTML or RST (simplified with no sphinx directives).
+    Converts a RST string into HTML or RST.
 
     :param rst: RST string
-    :param directives: directives to load or None for all
-        implemented in this package
     :param report_level: filter output, 0 means everything
     :param writer_name: writer name
     :param kwargs: additional values to add to the configuration
     :param return_warnings: return the warnings as well
     :param use_sphinx: run sphinx from the command line and
-        returns the results, for that configuration, argument
-        *directives* is ignore
+        returns the results, for that configuration
     :return: output and warnings
     """
     if use_sphinx:

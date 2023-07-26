@@ -44,7 +44,7 @@ class TestRunPythoncontext(ExtTestCase):
             "                    ", ""
         )
 
-        rst = rst2html(content, writer="rst")
+        rst = rst2html(content, writer_name="rst")
         self.assertIn("restored saved for later", rst)
         self.assertNotIn("failed", rst)
 

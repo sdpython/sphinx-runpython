@@ -1,22 +1,9 @@
 import unittest
-from docutils.parsers.rst import directives
 from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
-from sphinx_runpython.blocdefs.sphinx_blocref_extension import (
-    BlocRef,
-    BlocRefList,
-    blocref_node,
-    visit_blocref_node,
-    depart_blocref_node,
-)
 
 
 class TestBlocRefExtension(ExtTestCase):
-    @ignore_warnings(PendingDeprecationWarning)
-    def test_post_parse_blocref(self):
-        directives.register_directive("blocref", BlocRef)
-        directives.register_directive("blocreflist", BlocRefList)
-
     @ignore_warnings(PendingDeprecationWarning)
     def test_blocref_rst(self):
         content = """
@@ -38,16 +25,9 @@ class TestBlocRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("blocref", BlocRef, blocref_node, visit_blocref_node, depart_blocref_node)
-        ]
-
         html = rst2html(
             content,
-            writer="rst",
-            keep_warnings=True,
-            directives=tives,
-            extlinks={"issue": ("http://%s", "_issue_%s")},
+            writer_name="rst",
         )
 
         t1 = "this code should appear"
@@ -86,16 +66,9 @@ class TestBlocRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("blocref", BlocRef, blocref_node, visit_blocref_node, depart_blocref_node)
-        ]
-
         html = rst2html(
             content,
-            writer="rst",
-            keep_warnings=True,
-            directives=tives,
-            extlinks={"issue": ("http://%s", "_issue_%s")},
+            writer_name="rst",
         )
 
         t1 = "this code should appear"
@@ -134,16 +107,9 @@ class TestBlocRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("blocref", BlocRef, blocref_node, visit_blocref_node, depart_blocref_node)
-        ]
-
         html = rst2html(
             content,
-            writer="rst",
-            keep_warnings=True,
-            directives=tives,
-            extlinks={"issue": ("http://%s", "_issue_%s")},
+            writer_name="rst",
         )
 
         t1 = "this code shoud appear"
@@ -186,7 +152,7 @@ class TestBlocRefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer="html")
+        html = rst2html(content, writer_name="html")
 
         t1 = "this code should appear"
         if t1 not in html:

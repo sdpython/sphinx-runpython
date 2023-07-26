@@ -1,25 +1,9 @@
 import unittest
-from docutils.parsers.rst import directives
 from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
-from sphinx_runpython.blocdefs.sphinx_mathdef_extension import (
-    MathDef,
-    MathDefList,
-    mathdef_node,
-    visit_mathdef_node,
-    depart_mathdef_node,
-    mathdeflist,
-    visit_mathdeflist_node,
-    depart_mathdeflist_node,
-)
 
 
 class TestMathDefExtension(ExtTestCase):
-    @ignore_warnings(PendingDeprecationWarning)
-    def test_post_parse_sn_todoext(self):
-        directives.register_directive("mathdef", MathDef)
-        directives.register_directive("mathdeflist", MathDefList)
-
     @ignore_warnings(PendingDeprecationWarning)
     def test_mathdef(self):
         content = """
@@ -41,16 +25,9 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node)
-        ]
-
         html = rst2html(
             content,
-            writer="rst",
-            keep_warnings=True,
-            directives=tives,
-            extlinks={"issue": ("http://%s", "_issue_%s")},
+            writer_name="rst",
         )
 
         t1 = "this code should appear"
@@ -90,7 +67,7 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer="rst")
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -130,7 +107,7 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(content, writer="rst")
+        html = rst2html(content, writer_name="rst")
 
         t1 = "this code should appear"
         if t1 not in html:
@@ -176,23 +153,9 @@ class TestMathDefExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        tives = [
-            ("mathdef", MathDef, mathdef_node, visit_mathdef_node, depart_mathdef_node),
-            (
-                "mathdeflist",
-                MathDefList,
-                mathdeflist,
-                visit_mathdeflist_node,
-                depart_mathdeflist_node,
-            ),
-        ]
-
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
         )
 
         t1 = "this code should appear"

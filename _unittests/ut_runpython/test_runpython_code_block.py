@@ -31,7 +31,7 @@ class TestRunPythonCodeBlock(ExtTestCase):
             "                    ", ""
         )
 
-        rst = rst2html(content, writer="doctree")
+        rst = rst2html(content, writer_name="rst")
         self.assertIn("csharp", str(rst))
 
     def test_runpython_csharp(self):
@@ -39,15 +39,6 @@ class TestRunPythonCodeBlock(ExtTestCase):
 
         class runpythonthis_node(nodes.Structural, nodes.Element):
             pass
-
-        class RunPythonThisDirective(RunPythonDirective):
-            runpython_class = runpythonthis_node
-
-        def visit_rp_node(self, node):
-            self.add_text("<p><b>visit_rp_node</b></p>")
-
-        def depart_rp_node(self, node):
-            self.add_text("<p><b>depart_rp_node</b></p>")
 
         content = """
                     test a directive
@@ -68,7 +59,7 @@ class TestRunPythonCodeBlock(ExtTestCase):
             "                    ", ""
         )
 
-        rst = rst2html(content, writer="rst")
+        rst = rst2html(content, writer_name="rst")
         self.assertIn(".. code-block:: csharp", rst)
 
 

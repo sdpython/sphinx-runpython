@@ -25,7 +25,7 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="rst", keep_warnings=True)
+        content = rst2html(content, writer_name="rst")
         self.assertIn(
             'digraphfoo{"bar"->"baz";}', content.replace("\n", "").replace(" ", "")
         )
@@ -45,7 +45,7 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="rst", keep_warnings=True)
+        content = rst2html(content, writer_name="rst")
         self.assertIn('digraph foo { "bar" -> "baz"; }', content)
 
     @ignore_warnings(PendingDeprecationWarning)
@@ -63,7 +63,7 @@ class TestGDotExtension(ExtTestCase):
             "            ", ""
         )
 
-        content = rst2html(content, writer="rst", keep_warnings=True)
+        content = rst2html(content, writer_name="rst")
         self.assertIn('digraph foo { "bar" -> "baz"; }', content)
         self.assertNotIn("BEGIN", content)
 
@@ -84,7 +84,7 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="html", keep_warnings=True)
+        content = rst2html(content, writer_name="html")
         self.assertIn("document.getElementById('gdot-", content)
         self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
 
@@ -106,7 +106,7 @@ class TestGDotExtension(ExtTestCase):
             "                    ", ""
         )
 
-        content = rst2html(content, writer="html", keep_warnings=True)
+        content = rst2html(content, writer_name="html")
         self.assertIn("document.getElementById('gdot-", content)
         self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
 
@@ -128,7 +128,7 @@ class TestGDotExtension(ExtTestCase):
         )
 
         try:
-            content = rst2html(content, writer="html", keep_warnings=True)
+            content = rst2html(content, writer_name="html")
         except FileNotFoundError:
             # This class cannot write on disk.
             return

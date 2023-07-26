@@ -28,18 +28,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                )
-            },
         )
 
         t1 = "abeforea"
@@ -71,12 +59,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": "http://pandas.pydata.org/pandas-docs/stable/generated/",
-            },
         )
         self.assertIn("https://pandas.pydata.org/pandas-docs/stable/", html)
 
@@ -95,18 +77,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                ),
-            },
         )
 
         t1 = "abeforea"
@@ -145,19 +115,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                    pandas_link,
-                ),
-            },
         )
 
         t1 = "abeforea"
@@ -199,19 +156,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                    pandas_link,
-                ),
-            },
         )
 
         self.assertIn("abeforea", html)
@@ -239,18 +183,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
-            epkg_dictionary={
-                "pandas": (
-                    "http://pandas.pydata.org/pandas-docs/stable/generated/",
-                    (
-                        "http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html",
-                        1,
-                    ),
-                ),
-            },
         )
 
         t1 = "abeforea"
@@ -287,9 +219,6 @@ class TestEpkgExtension(ExtTestCase):
         html = rst2html(
             content,
             writer_name="rst",
-            keep_warnings=True,
-            directives=tives,
-            layout="sphinx",
         )
 
         t1 = 'href="http://first.part/secondpart"'
