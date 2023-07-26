@@ -4,7 +4,7 @@ from docutils import nodes
 import sphinx
 from sphinx.util import logging
 from sphinx.util.docfields import DocFieldTransformer, _is_single_paragraph
-from ..import_object_helper import import_any_object
+from ..import_object_helper import import_any_object, import_object
 
 
 class Parameter:
@@ -38,10 +38,16 @@ class Signature:
         els.extend([")", " -> ", self.result_type])
         return "".join(els)
 
+    @property
+    def param_names(self):
+        return set(el.name for el in self.params)
+
 
 def parse_signature(text: str) -> Signature:
     reg = re.compile("([_a-zA-Z][_a-zA-Z0-9]*?)[(](.*?)[)] -> ([a-zA-Z0-9]+)")
     res = reg.search(text)
+    if res is None:
+        return None
     name, params, result = res.groups(0)
     spl = [_.strip() for _ in params.split(",")]
     sig = Signature(name.strip(), result.strip())
@@ -49,8 +55,6 @@ def parse_signature(text: str) -> Signature:
         k, v = p.split(":", maxsplit=1)
         sig.append(Parameter(k.strip(), v.strip()))
     return sig
-
-    print(params, result)
 
 
 def check_typed_make_field(
@@ -110,13 +114,25 @@ def check_typed_make_field(
         "local function"
         if fieldarg not in check_params:
             if function_name is not None:
-                logger.warning(
-                    "[docassert] %r has no parameter %r (in %r)%s.",
-                    function_name,
-                    fieldarg,
-                    docname,
-                    " (no detected signature) " if parameters is None else "",
+                idocname = (
+                    docname.replace(".PyCapsule.", ".")
+                    if ".PyCapsule." in docname
+                    else docname
                 )
+                if kind is None:
+                    obj = import_any_object(idocname)
+                else:
+                    obj = import_object(idocname, kind=kind)
+                tsig = getattr(obj[0], "__text_signature__")
+                if tsig != "($self, /, *args, **kwargs)":
+                    logger.warning(
+                        "[docassert] %r has no parameter %r (in %r) [sig=%r]%s.",
+                        function_name,
+                        fieldarg,
+                        docname,
+                        tsig,
+                        " (no detected signature) " if parameters is None else "",
+                    )
         else:
             check_params[fieldarg] += 1
             if check_params[fieldarg] > 1:
@@ -139,12 +155,42 @@ def check_typed_make_field(
                     # Behavior should be improved.
                     pass
                 else:
-                    logger.warning(
-                        "[docassert] %r has undocumented parameters %r (in %r).",
-                        function_name,
-                        ", ".join(nodoc),
-                        docname,
+                    idocname = (
+                        docname.replace(".PyCapsule.", ".")
+                        if ".PyCapsule." in docname
+                        else docname
                     )
+                    if kind is None:
+                        obj = import_any_object(idocname)
+                    else:
+                        obj = import_object(idocname, kind=kind)
+                    tsig = getattr(obj[0], "__text_signature__", None)
+                    if tsig != "($self, /, *args, **kwargs)":
+                        if tsig is None:
+                            alt_sig = parse_signature(obj[0].__doc__)
+                            if alt_sig is None:
+                                nodoc2 = nodoc
+                            else:
+                                ps = alt_sig.param_names
+                                nodoc2 = [n for n in nodoc if n not in ps]
+                            if len(nodoc2) > 0:
+                                logger.warning(
+                                    "[docassert] %r has undocumented parameters (1) "
+                                    "[%s] (in %r) [sig=%r].",
+                                    function_name,
+                                    ", ".join(nodoc2),
+                                    docname,
+                                    tsig,
+                                )
+                        else:
+                            logger.warning(
+                                "[docassert] %r has undocumented parameters (2) "
+                                "[%s] (in %r) [sig=%r].",
+                                function_name,
+                                ", ".join(nodoc),
+                                docname,
+                                tsig,
+                            )
     else:
         # Documentation related to the return.
         pass
@@ -290,9 +336,18 @@ class OverrideDocFieldTransformer:
                 except (TypeError, ValueError):
                     # built-in function
                     logger = logging.getLogger("docassert")
-                    logger.warning("[docassert] unable to get signature of %r", docs)
-                    signature = None
-                    parameters = None
+                    if myfunc.__text_signature__:
+                        logger.warning(
+                            "[docassert] unable to get signature (1) of %r: %s",
+                            docs,
+                            myfunc.__text_signature__,
+                        )
+                        signature = None
+                        parameters = None
+                    else:
+                        alt_sig = parse_signature(myfunc.__doc__)
+                        signature = alt_sig
+                        parameters = alt_sig.params
 
             # grouped entries need to be collected in one entry, while others
             # get one entry per field
