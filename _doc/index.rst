@@ -14,7 +14,7 @@ sphinx-runpython: (Numpy) Array API for ONNX
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :alt: MIT License
-    :target: http://opensource.org/licenses/MIT
+    :target: https://opensource.org/license/MIT/
 
 .. image:: https://img.shields.io/github/repo-size/sdpython/sphinx-runpython
     :target: https://github.com/sdpython/sphinx-runpython/
