@@ -45,6 +45,43 @@ Which gives:
 A reference can be added to this example :ref:`Example 1 <l-this-example>`.
 The title needs to be recalled.
 
+faqref
+======
+
+Location: :class:`faqref <sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef>`.
+
+In *conf.py*:
+
+::
+
+    extensions = [ ...
+        'sphinx_runpython.blocdefs.sphinx_faqref_extension']
+
+    faqref_include_faqrefs = True
+
+An example:
+
+::
+
+    .. faqref::
+        :title: How to add an example?
+        :tag: faq1
+        :label: l-this-faq
+
+        This example, a piece of code...
+
+Which gives:
+
+.. faqref::
+    :title: How to add an example?
+    :tag: faq1
+    :label: l-this-faq
+
+    This example, a piece of code...
+
+A reference can be added to this example :ref:`Faq 1 <l-this-faq>`.
+The title needs to be recalled.
+
 blocref
 =======
 

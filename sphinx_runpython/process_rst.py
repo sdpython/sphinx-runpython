@@ -20,6 +20,7 @@ _dummy_extensions = [
     "sphinx_issues",
     "sphinx_runpython.blocdefs.sphinx_blocref_extension",
     "sphinx_runpython.blocdefs.sphinx_exref_extension",
+    "sphinx_runpython.blocdefs.sphinx_faqref_extension",
     "sphinx_runpython.blocdefs.sphinx_mathdef_extension",
     "sphinx_runpython.collapse",
     "sphinx_runpython.docassert",

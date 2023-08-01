@@ -85,6 +85,7 @@ List of directives
 * `docassert <https://sdpython.github.io/doc/sphinx-runpython/dev/api/docassert.html>`_
 * `epkg <https://sdpython.github.io/doc/sphinx-runpython/dev/api/epkg.html>`_
 * `exref <https://sdpython.github.io/doc/sphinx-runpython/dev/api/blocdefs.html>`_
+* `faqref <https://sdpython.github.io/doc/sphinx-runpython/dev/api/blocdefs.html>`_
 * `gdot <https://sdpython.github.io/doc/sphinx-runpython/dev/api/gdot.html>`_
 * `mathdef <https://sdpython.github.io/doc/sphinx-runpython/dev/api/blocdefs.html>`_
 * `runpython <https://sdpython.github.io/doc/sphinx-runpython/dev/api/runpython.html>`_
