@@ -85,10 +85,12 @@ class BlocRef(BaseAdmonition):
         :sort: title
 
     This directive is used to highlight a bloc about
-    anything @see cl BlocRef, a question @see cl FaqRef,
-    a magic command @see cl NbRef, an example @see cl ExRef.
-    It supports option *index* in most of the extensions
-    so that the documentation can refer to it.
+    anything :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`,
+    a question :class:`sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef`,
+    an example :class:`sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef`.
+    It supports option *index*
+    in most of the extensions so that the documentation
+    can refer to it.
     """
 
     node_class = blocref_node

@@ -48,7 +48,7 @@ The title needs to be recalled.
 faqref
 ======
 
-Location: :class:`faqref <sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef>`.
+Location: :class:`FaqRef <sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef>`.
 
 In *conf.py*:
 
