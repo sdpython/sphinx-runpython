@@ -16,15 +16,14 @@ from .run_cmd import run_cmd
 from ..collapse.sphinx_collapse_extension import collapse_node
 
 
-def remove_extra_spaces_and_pep8(
-    filename, apply_pep8=True, aggressive=False, is_string=None
-):
+def remove_extra_spaces_and_black(
+    filename: str, apply_black=True, is_string=None
+) -> str:
     """
     Removes extra spaces in a filename, replaces the file in place.
 
     :param filename: file name or string (but it assumes it is python).
-    :param apply_pep8: if True, calls :epkg:`autopep8` on the file
-    :param aggressive: more aggressive
+    :param apply_black: if True, calls :epkg:`black` on the file
     :param is_string: force *filename* to be a string
     :return: number of removed extra spaces
     """
@@ -110,13 +109,11 @@ def remove_extra_spaces_and_pep8(
 
     if filename is not None:
         ext = os.path.splitext(filename)[-1]
-    if ext in (".py",) and apply_pep8:
+    if ext in (".py",) and apply_black:
         # delayed import to speed up import of pycode
-        import autopep8
+        from black import format_str, FileMode
 
-        options = ["", "-a"] if aggressive else [""]
-        options.extend(["--ignore=E402,E731"])
-        r = autopep8.fix_code("\n".join(lines2), options=autopep8.parse_args(options))
+        r = format_str("\n".join(lines2), mode=FileMode())
 
         if len(lines) > 0 and (len(lines2) == 0 or len(lines2) < len(lines) // 2):
             raise ValueError(  # pragma: no cover
@@ -195,7 +192,7 @@ def remove_extra_spaces_and_pep8(
 
     if not os.path.exists(filename):
         raise FileNotFoundError(  # pragma: no cover
-            f"Issue when applying autopep8 with filename: '{filename}'."
+            f"Issue when applying black with filename: '{filename}'."
         )
     return diff
 
@@ -519,9 +516,8 @@ class RunPythonDirective(Directive):
     * ``:indent:<int>`` to indent the output
     * ``:language:``: changes ``::`` into ``.. code-block:: language``
     * ``:linenos:`` to show line numbers
-    * ``:nopep8:`` if present, leaves the code as it is and does
-      not apply pep8 by default,
-      see :func:`remove_extra_spaces_and_pep8`.
+    * ``:noblack:`` if present, leaves the code as it is and does
+      not apply black by default,
     * ``:numpy_precision: <precision>``, run ``numpy.set_printoptions(precision=...)``,
       precision is 3 by default
     * ``:process:`` run the script in an another process
@@ -612,7 +608,7 @@ class RunPythonDirective(Directive):
         "setsysvar": directives.unchanged,
         "process": directives.unchanged,
         "exception": directives.unchanged,
-        "nopep8": directives.unchanged,
+        "noblack": directives.unchanged,
         "warningout": directives.unchanged,
         "toggle": directives.unchanged,
         "current": directives.unchanged,
@@ -672,7 +668,8 @@ class RunPythonDirective(Directive):
             and self.options["process"] in bool_set_,
             "exception": "exception" in self.options
             and self.options["exception"] in bool_set_,
-            "nopep8": "nopep8" in self.options and self.options["nopep8"] in bool_set_,
+            "noblack": "noblack" in self.options
+            and self.options["noblack"] in bool_set_,
             "warningout": self.options.get("warningout", "").strip(),
             "toggle": self.options.get("toggle", "").strip(),
             "current": "current" in self.options
@@ -746,9 +743,9 @@ class RunPythonDirective(Directive):
 
         script = "\n".join(content)
         script_disp = "\n".join(self.content)
-        if not p["nopep8"]:
+        if not p["noblack"]:
             try:
-                script_disp = remove_extra_spaces_and_pep8(script_disp, is_string=True)
+                script_disp = remove_extra_spaces_and_black(script_disp, is_string=True)
             except Exception as e:
                 logger = logging.getLogger("runpython")
                 if "." in docname:
@@ -759,7 +756,7 @@ class RunPythonDirective(Directive):
                         f'\n  File "{docname}.py", line {1}\n'
                     )
                 logger.warning(
-                    f"Pep8 ({e}) issue with {docname!r}\n---SCRIPT---\n{script}"
+                    f"Black ({e}) issue with {docname!r}\n---SCRIPT---\n{script}"
                 )
 
         # if an exception is raised, the documentation should report a warning
