@@ -11,7 +11,7 @@ differs depending on the content.
 exref
 =====
 
-Location: :class:`exref <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`.
+Location: :class:`ExRef <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`.
 
 In *conf.py*:
 
@@ -85,7 +85,7 @@ The title needs to be recalled.
 blocref
 =======
 
-Location: :class:`blocref <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`.
+Location: :class:`BlocRef <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`.
 
 In *conf.py*:
 
@@ -122,7 +122,7 @@ The title needs to be recalled.
 mathdef
 =======
 
-Location: :class:`mathdef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef>`.
+Location: :class:`MathDef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef>`.
 
 In *conf.py*:
 
@@ -160,7 +160,13 @@ Directives
 ==========
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef
+    :members:
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef
+    :members:
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef
+    :members:
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef
+    :members:

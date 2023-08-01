@@ -82,7 +82,8 @@ class FaqRef(BlocRef):
 
     def run(self):
         """
-        Calls run from @see cl BlocRef and add defaut tag.
+        Calls run from :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`
+        and add defaut tag.
         """
         if "tag" not in self.options:
             self.options["tag"] = "faq"
@@ -117,7 +118,9 @@ class FaqRefList(BlocRefList):
 
     def run(self):
         """
-        calls run from @see cl BlocRefList and add default tag if not present
+        calls run from
+        :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRefList`
+        and add default tag if not present
         """
         if "tag" not in self.options:
             self.options["tag"] = "faq"
