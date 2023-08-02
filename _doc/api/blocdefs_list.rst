@@ -22,6 +22,23 @@ Which gives:
     :tag: example
     :contents:
 
+faqreflist
+==========
+
+Example:
+
+::
+
+    .. faqreflist::
+        :tag: faq
+        :contents:
+
+Which gives:
+
+.. faqreflist::
+    :tag: faq
+    :contents:
+
 blocreflist
 ===========
 

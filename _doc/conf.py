@@ -20,6 +20,7 @@ extensions = [
     "sphinx_issues",
     "sphinx_runpython.blocdefs.sphinx_blocref_extension",
     "sphinx_runpython.blocdefs.sphinx_exref_extension",
+    "sphinx_runpython.blocdefs.sphinx_faqref_extension",
     "sphinx_runpython.blocdefs.sphinx_mathdef_extension",
     "sphinx_runpython.collapse",
     "sphinx_runpython.docassert",
@@ -104,7 +105,7 @@ sphinx_gallery_conf = {
 }
 
 epkg_dictionary = {
-    "autopep8": "https://pypi.org/project/autopep8/",
+    "black": "https://black.readthedocs.io/en/stable/index.html",
     "dot": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
     "DOT": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
     "JIT": "https://en.wikipedia.org/wiki/Just-in-time_compilation",

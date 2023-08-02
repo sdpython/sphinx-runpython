@@ -8,6 +8,8 @@ ignore_directives = [
     "collapse",
     "exref",
     "exreflist",
+    "faqref",
+    "faqreflist",
     "gdot",
     "image-sg",
     "mathdef",

@@ -39,7 +39,7 @@ class ExRef(BlocRef):
 
         .. exref::
             :title: example of a blocref
-            :label: id-you-can-choose6
+            :label: id-you-can-choose7
 
             An example of code:
 
@@ -52,7 +52,7 @@ class ExRef(BlocRef):
     .. exref::
         :title: example of a exref
         :tag: dummy_example6
-        :label: id-you-can-choose6
+        :label: id-you-can-choose7
 
         An example of code:
 
@@ -68,8 +68,8 @@ class ExRef(BlocRef):
 
     Only blocs tagged as ``dummy_example`` will be inserted here.
     The option ``sort`` sorts items by *title*, *number*, *file*.
-    You also link to it by typing ``:ref:'anchor <id-you-can-choose6>'`` which gives
-    something like :ref:`link_to_blocref <id-you-can-choose6>`.
+    You also link to it by typing ``:ref:'anchor <id-you-can-choose7>'`` which gives
+    something like :ref:`link_to_blocref <id-you-can-choose7>`.
     The link must receive a name.
 
     .. exreflist::

@@ -189,7 +189,7 @@ Interesting functions
 
 .. autofunction:: sphinx_runpython.runpython.run_cmd
 
-.. autofunction:: sphinx_runpython.runpython.sphinx_runpython_extension.remove_extra_spaces_and_pep8
+.. autofunction:: sphinx_runpython.runpython.sphinx_runpython_extension.remove_extra_spaces_and_black
 
 Directive
 =========

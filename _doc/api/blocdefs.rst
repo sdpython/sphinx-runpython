@@ -11,7 +11,7 @@ differs depending on the content.
 exref
 =====
 
-Location: :class:`exref <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`.
+Location: :class:`ExRef <sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef>`.
 
 In *conf.py*:
 
@@ -45,10 +45,47 @@ Which gives:
 A reference can be added to this example :ref:`Example 1 <l-this-example>`.
 The title needs to be recalled.
 
+faqref
+======
+
+Location: :class:`FaqRef <sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef>`.
+
+In *conf.py*:
+
+::
+
+    extensions = [ ...
+        'sphinx_runpython.blocdefs.sphinx_faqref_extension']
+
+    faqref_include_faqrefs = True
+
+An example:
+
+::
+
+    .. faqref::
+        :title: How to add an example?
+        :tag: faq1
+        :label: l-this-faq
+
+        This example, a piece of code...
+
+Which gives:
+
+.. faqref::
+    :title: How to add an example?
+    :tag: faq1
+    :label: l-this-faq
+
+    This example, a piece of code...
+
+A reference can be added to this example :ref:`Faq 1 <l-this-faq>`.
+The title needs to be recalled.
+
 blocref
 =======
 
-Location: :class:`blocref <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`.
+Location: :class:`BlocRef <sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef>`.
 
 In *conf.py*:
 
@@ -85,7 +122,7 @@ The title needs to be recalled.
 mathdef
 =======
 
-Location: :class:`mathdef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef>`.
+Location: :class:`MathDef <sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef>`.
 
 In *conf.py*:
 
@@ -123,7 +160,24 @@ Directives
 ==========
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef
+    :members:
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef
+    :members:
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef
+    :members:
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef
+    :members:
+
+Nodes
+=====
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_blocref_extension.blocref_node
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_exref_extension.exref_node
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_faqref_extension.faqref_node
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_mathdef_extension.mathdef_node
