@@ -82,7 +82,8 @@ class FaqRef(BlocRef):
 
     def run(self):
         """
-        Calls run from :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`
+        Calls run from
+        :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`
         and add defaut tag.
         """
         if "tag" not in self.options:
