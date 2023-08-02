@@ -170,3 +170,14 @@ Directives
 
 .. autoclass:: sphinx_runpython.blocdefs.sphinx_mathdef_extension.MathDef
     :members:
+
+Nodes
+=====
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_blocref_extension.blocref_node
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_exref_extension.exref_node
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_faqref_extension.faqref_node
+
+.. autoclass:: sphinx_runpython.blocdefs.sphinx_mathdef_extension.mathdef_node
