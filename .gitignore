@@ -11,7 +11,7 @@ build/*
 *egg-info/*
 temp_*
 _doc/CHANGELOGS*
-_doc/LICENSE
+_doc/LICENSE.txt
 _doc/api/oo.png
 _doc/auto_examples/*
 _doc/examples/_cache/*
