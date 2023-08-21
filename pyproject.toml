@@ -14,6 +14,7 @@ ignore_directives = [
     "image-sg",
     "mathdef",
     "mathdeflist",
+    "quote",
     "runpython",
 ]
 ignore_roles = ["epkg"]
