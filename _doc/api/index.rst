@@ -15,6 +15,7 @@ Extensions
     docassert
     epkg
     gdot
+    quote
     runpython
     tools
     rst_builder
