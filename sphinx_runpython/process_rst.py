@@ -26,6 +26,7 @@ _dummy_extensions = [
     "sphinx_runpython.docassert",
     "sphinx_runpython.epkg",
     "sphinx_runpython.runpython",
+    "sphinx_runpython.quote",
     "sphinx_runpython.sphinx_rst_builder",
 ]
 

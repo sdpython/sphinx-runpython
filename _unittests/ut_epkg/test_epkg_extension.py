@@ -24,11 +24,7 @@ class TestEpkgExtension(ExtTestCase):
             "                    ", ""
         )
         content = content.replace('u"', '"')
-
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
+        html = rst2html(content, writer_name="rst")
 
         t1 = "abeforea"
         if t1 not in html:
