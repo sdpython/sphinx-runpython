@@ -4,7 +4,7 @@ Change Logs
 0.2.0
 +++++
 
-* :pr:`23`: add sphinx extension quote
+* :pr:`23`, :pr:`24`, :pr:`25`: add sphinx extension quote
 * :pr:`21`: add sphinx extension faqref, runpython uses black
 * :pr:`17`: add RST writer to output the documentation into pure RST format
 * :pr:`16`: add command line nb2py to convert notebook to python files
