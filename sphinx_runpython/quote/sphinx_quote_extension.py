@@ -222,7 +222,7 @@ class QuoteNode(BaseAdmonition):
             tnl.append(f"({year})")
         if source:
             if source.startswith("http"):
-                tnl.append(f", `source <{source}>`_")
+                tnl.append(f", `source <{source}>`__")
             else:
                 tnl.append(f", {source}")
         tnl.append("")
