@@ -217,9 +217,9 @@ class QuoteNode(BaseAdmonition):
         if pages:
             tnl.append(f", {pages}")
         if date:
-            tnl.append(f" ({date})")
+            tnl.append(f"({date})")
         if year:
-            tnl.append(f" ({year})")
+            tnl.append(f"({year})")
         if source:
             if source.startswith("http"):
                 tnl.append(f", `source <{source}>`_")
