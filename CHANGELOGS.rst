@@ -1,6 +1,11 @@
 Change Logs
 ===========
 
+0.3.0
++++++
+
+* :pr:`27`: fix missing __text_signature__ in docassert
+
 0.2.0
 +++++
 

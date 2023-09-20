@@ -54,4 +54,6 @@ Sources available on
 Older versions
 ++++++++++++++
 
+* `0.3.0 <../v0.3.0/index.html>`_
+* `0.2.0 <../v0.2.0/index.html>`_
 * `0.1.0 <../v0.1.0/index.html>`_
