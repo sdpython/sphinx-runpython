@@ -131,7 +131,10 @@ def check_typed_make_field(
                     obj = import_any_object(idocname)
                 else:
                     obj = import_object(idocname, kind=kind)
-                tsig = getattr(obj[0], "__text_signature__")
+                try:
+                    tsig = getattr(obj[0], "__text_signature__")
+                except AttributeError:
+                    tsig = "?"
                 if tsig != "($self, /, *args, **kwargs)":
                     logger.warning(
                         "[docassert] %r has no parameter %r (in %r) [sig=%r]%s.",
