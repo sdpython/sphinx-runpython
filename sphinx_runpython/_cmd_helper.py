@@ -1,6 +1,7 @@
 import glob
 import os
 from argparse import ArgumentParser
+from tempfile import TemporaryDirectory
 from .convert import convert_ipynb_to_gallery
 
 
@@ -10,12 +11,17 @@ def get_parser():
         description="A collection of quick tools.",
         epilog="",
     )
-    parser.add_argument("command", help="Command to run, only nb2py is available")
     parser.add_argument(
-        "-p", "--path", help="Folder which contains the files to process"
+        "command", help="Command to run, only 'nb2py' or 'readme' are available"
     )
     parser.add_argument(
-        "-r", "--recursive", help="Recursive search.", action="store_true"
+        "-p", "--path", help="Folder or file which contains the files to process"
+    )
+    parser.add_argument(
+        "-r",
+        "--recursive",
+        help="Recursive search.",
+        action="store_true",
     )
     parser.add_argument("-v", "--verbose", help="verbosity", default=1, type=int)
     return parser
@@ -40,6 +46,12 @@ def process_args(args):
     cmd = args.command
     if cmd == "nb2py":
         nb2py(args.path, recursive=args.recursive, verbose=args.verbose)
+        return
+    if cmd == "readme":
+        from .readme import check_readme_syntax
+
+        with TemporaryDirectory() as temp:
+            check_readme_syntax(args.path, verbose=args.verbose, folder=temp)
         return
     raise ValueError(f"Command {cmd!r} is unknown.")
 
