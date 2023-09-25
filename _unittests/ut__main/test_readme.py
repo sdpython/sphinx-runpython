@@ -1,5 +1,6 @@
 import os
 import unittest
+import sys
 from io import StringIO
 from contextlib import redirect_stdout
 from tempfile import TemporaryDirectory
@@ -8,6 +9,9 @@ from sphinx_runpython.readme import check_readme_syntax
 
 
 class TestReadme(ExtTestCase):
+    @unittest.skipIf(
+        sys.plarform == "win32", reason="Fails on windows due to tempoerary path"
+    )
     def test_venv_docutils08_readme(self):
         fold = os.path.dirname(os.path.abspath(__file__))
         readme = os.path.join(fold, "..", "..", "README.rst")
