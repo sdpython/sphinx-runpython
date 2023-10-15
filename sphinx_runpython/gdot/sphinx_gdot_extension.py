@@ -356,7 +356,7 @@ def copy_js_files(app):
             else:
                 logger.warning("[gdot] unable to find %r", path)
         else:
-            logger.warning("[gdot] viz.js, use %r", GDotDirective._default_url)
+            logger.info("[gdot] viz.js, use %r", GDotDirective._default_url)
 
             file_dest = os.path.join(destf, "require.js")
             try:

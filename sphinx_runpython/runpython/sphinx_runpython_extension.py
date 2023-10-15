@@ -535,8 +535,8 @@ class RunPythonDirective(Directive):
     * ``:sout:<text_for_in>`` which text to display before the output (by default *Out*)
     * ``:sphinx:`` by default, function :epkg:`nested_parse_with_titles` is
       used to parse the output of the script, if this option is set to false,
-      `public_doctree <http://code.nabla.net/doc/docutils/api/
-      docutils/core/docutils.core.publish_doctree.html>`_.
+      `publish-doctree
+      <https://docutils.sourceforge.io/docs/api/publisher.html#publish-doctree>`_.
     * ``:store:`` stores the local context in :epkg:`sphinx`
       application to restore it later by another call to *runpython*
     * ``:toggle:`` add a button to hide or show the code, it takes the values
@@ -628,7 +628,7 @@ class RunPythonDirective(Directive):
         Extracts the information in a dictionary,
         runs the script.
 
-        @return      a list of nodes
+        :return: a list of nodes
         """
         # settings
         sett = self.state.document.settings
