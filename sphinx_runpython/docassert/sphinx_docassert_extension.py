@@ -49,8 +49,13 @@ class Signature:
 
 
 def parse_signature(text: str) -> Signature:
+    if text is None:
+        return None
     reg = re.compile("([_a-zA-Z][_a-zA-Z0-9]*?)[(](.*?)[)]( -> ([a-zA-Z0-9]+))?")
-    res = reg.search(text)
+    try:
+        res = reg.search(text)
+    except TypeError as e:
+        raise TypeError(f"Unexpected type {type(text)} for text.") from e
     if res is None:
         return None
     name, params, _, result = res.groups()
