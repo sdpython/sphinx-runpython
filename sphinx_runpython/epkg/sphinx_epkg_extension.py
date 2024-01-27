@@ -10,7 +10,6 @@ from ..import_object_helper import import_any_object
 
 
 class epkg_node(nodes.TextElement):
-
     """
     Defines *epkg* node.
     """
