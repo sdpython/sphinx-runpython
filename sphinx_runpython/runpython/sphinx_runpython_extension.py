@@ -472,7 +472,6 @@ def run_python_script(
 
 
 class runpython_node(nodes.Structural, nodes.Element):
-
     """
     Defines *runpython* node.
     """
@@ -481,7 +480,6 @@ class runpython_node(nodes.Structural, nodes.Element):
 
 
 class RunPythonDirective(Directive):
-
     """
     Extracts script to run described by ``.. runpython::``
     and modifies the documentation.
