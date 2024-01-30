@@ -4,6 +4,7 @@ Change Logs
 0.3.0
 +++++
 
+* :pr:`33`: add simple command line to convert images to pdf
 * :pr:`28`: add syntax to check the readme syntax
 * :pr:`27`: fix missing __text_signature__ in docassert
 
