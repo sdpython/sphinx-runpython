@@ -61,8 +61,9 @@ def images2pdf(
         convert(all_images, outputstream=st, with_pdfrw=False)
     except TypeError as e:
         raise TypeError(
-            f"Unable to process container type {type(all_images)} and type {type(all_images[0])}."
-        )
+            f"Unable to process container type {type(all_images)} "
+            f"and type {type(all_images[0])}."
+        ) from e
 
     if close:
         st.close()
