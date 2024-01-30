@@ -2,7 +2,6 @@ import glob
 import os
 from argparse import ArgumentParser
 from tempfile import TemporaryDirectory
-from .convert import convert_ipynb_to_gallery
 
 
 def get_parser():
@@ -12,7 +11,8 @@ def get_parser():
         epilog="",
     )
     parser.add_argument(
-        "command", help="Command to run, only 'nb2py' or 'readme' are available"
+        "command",
+        help="Command to run, only 'nb2py', 'readme', 'img2pdf' are available",
     )
     parser.add_argument(
         "-p", "--path", help="Folder or file which contains the files to process"
@@ -23,11 +23,18 @@ def get_parser():
         help="Recursive search.",
         action="store_true",
     )
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="output",
+    )
     parser.add_argument("-v", "--verbose", help="verbosity", default=1, type=int)
     return parser
 
 
 def nb2py(infolder: str, recursive: bool = False, verbose: int = 0):
+    from .convert import convert_ipynb_to_gallery
+
     if not os.path.exists(infolder):
         raise FileNotFoundError(f"Unable to find {infolder!r}.")
     patterns = [infolder + "/*.ipynb", infolder + "/**/*.ipynb"]
@@ -46,6 +53,11 @@ def process_args(args):
     cmd = args.command
     if cmd == "nb2py":
         nb2py(args.path, recursive=args.recursive, verbose=args.verbose)
+        return
+    if cmd == "img2pdf":
+        from .tools.img_export import images2pdf
+
+        images2pdf(args.path, args.output, verbose=args.verbose)
         return
     if cmd == "readme":
         from .readme import check_readme_syntax

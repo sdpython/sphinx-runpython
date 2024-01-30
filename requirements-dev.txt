@@ -2,6 +2,7 @@ black
 coverage
 flake8
 furo
+img2pdf
 isort
 matplotlib
 numpydoc
