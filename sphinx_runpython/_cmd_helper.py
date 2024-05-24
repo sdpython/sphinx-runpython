@@ -28,6 +28,16 @@ def get_parser():
         "--output",
         help="output",
     )
+    parser.add_argument(
+        "--zoom",
+        default=1.0,
+        help="reduce images when img2pdf is used",
+    )
+    parser.add_argument(
+        "--rotate",
+        default=0.0,
+        help="rotate the image",
+    )
     parser.add_argument("-v", "--verbose", help="verbosity", default=1, type=int)
     return parser
 
@@ -57,7 +67,13 @@ def process_args(args):
     if cmd == "img2pdf":
         from .tools.img_export import images2pdf
 
-        images2pdf(args.path, args.output, verbose=args.verbose)
+        images2pdf(
+            args.path,
+            args.output,
+            verbose=args.verbose,
+            zoom=float(args.zoom),
+            rotate=float(args.rotate),
+        )
         return
     if cmd == "readme":
         from .readme import check_readme_syntax
