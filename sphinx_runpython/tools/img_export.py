@@ -68,6 +68,7 @@ def images2pdf(
     )
 
     all_images.sort()
+    layout_fun = None
     if zoom != 1 or rotate != 0:
         # See https://github.com/myollie/img2pdf/blob/master/src/img2pdf.py
         from PIL import Image
