@@ -31,7 +31,7 @@ def images2pdf(
 
         python -m img2pdf --output doc.pdf img/* -S A4 --auto-orient
     """
-    from img2pdf import convert, Rotation
+    from img2pdf import convert, Rotation, default_layout_fun
 
     if isinstance(images, str):
         if "," in images:
@@ -68,7 +68,7 @@ def images2pdf(
     )
 
     all_images.sort()
-    layout_fun = None
+    layout_fun = default_layout_fun
     if zoom != 1 or rotate != 0:
         # See https://github.com/myollie/img2pdf/blob/master/src/img2pdf.py
         from PIL import Image
