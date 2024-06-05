@@ -22,6 +22,14 @@ class TestImgExport(ExtTestCase):
         self.assertExists(dest)
         self.assertEqual(len(res), 3)
 
+    def test_export_zoom(self):
+        dest = "test_export_zoom.pdf"
+        data = os.path.join(os.path.dirname(__file__), "data", "mazures1.jpg")
+        datap = os.path.join(os.path.dirname(__file__), "data", "*.jpg")
+        res = images2pdf(",".join([data, datap]), dest, zoom=0.5)
+        self.assertExists(dest)
+        self.assertEqual(len(res), 3)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

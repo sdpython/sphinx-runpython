@@ -1,10 +1,15 @@
 import glob
+import io
 import os
 from typing import List, Optional, Sequence, Union
 
 
 def images2pdf(
-    images: Union[str, Sequence[str]], output: Optional[str], verbose: int = 0
+    images: Union[str, Sequence[str]],
+    output: Optional[str],
+    zoom: float = 1,
+    rotate: float = 0,
+    verbose: int = 0,
 ) -> List[str]:
     """
     Merges multiples images into one single pdf.
@@ -13,10 +18,20 @@ def images2pdf(
     uses :mod:`glob`.
 
     :param images: images to merge, it can be a comma separated values or a folder
+    :param zoom: reduce or make the image bigger
+    :param rotate: rotate the image
     :param output: output filename or stream
     :param verbose: verbosity
+
+    Note:
+
+    Using img2pdf directly is probably better.
+
+    ::
+
+        python -m img2pdf --output doc.pdf img/* -S A4 --auto-orient
     """
-    from img2pdf import convert
+    from img2pdf import convert, Rotation, default_layout_fun
 
     if isinstance(images, str):
         if "," in images:
@@ -52,13 +67,53 @@ def images2pdf(
         (open(output, "wb"), True) if isinstance(output, str) else (output, False)
     )
 
+    all_images.sort()
+    layout_fun = default_layout_fun
+    if zoom != 1 or rotate != 0:
+        # See https://github.com/myollie/img2pdf/blob/master/src/img2pdf.py
+        from PIL import Image
+        from img2pdf import get_layout_fun, FitMode
+
+        layout_fun = get_layout_fun(
+            pagesize=(595.2755905511812, 841.8897637795276),
+            imgsize=None,
+            border=None,
+            fit=FitMode.into,
+            auto_orient=True,
+        )
+
+        data = []
+        for img in all_images:
+            im = Image.open(img)
+            ext = os.path.splitext(img)[-1].lower()
+            fmt = Image.EXTENSION[ext]
+            if zoom != 1:
+                size0 = im.size
+                size = tuple(int(s * zoom) for s in size0)
+                if verbose:
+                    print(f"resizes from {size0} to {size} (formt={fmt!r}) for {img!r}")
+                im = im.resize(size)
+            if rotate != 0:
+                if verbose:
+                    print(f"rotates {rotate} (formt={fmt!r}) for {img!r}")
+                im = im.rotate(rotate)
+            buffer = io.BytesIO()
+            im.save(buffer, format=fmt)
+            data.append(buffer.getvalue())
+        all_images = data
+
     for img in all_images:
         assert not isinstance(img, str) or os.path.exists(
             img
         ), f"Unable to find image {img!r}."
 
     try:
-        convert(all_images, outputstream=st, with_pdfrw=False)
+        convert(
+            all_images,
+            outputstream=st,
+            rotation=Rotation.auto,
+            layout_fun=layout_fun,
+        )
     except TypeError as e:
         raise TypeError(
             f"Unable to process container type {type(all_images)} "
