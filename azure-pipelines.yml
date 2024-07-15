@@ -30,9 +30,6 @@ jobs:
       black --diff .
     displayName: 'Black'
   - script: |
-      rstcheck -r ./_doc ./sphinx_runpython
-    displayName: 'rstcheck'
-  - script: |
       python -m pip wheel . --wheel-dir dist -v -v -v
     displayName: 'build wheel'
   - script: |

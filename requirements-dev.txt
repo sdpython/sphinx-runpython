@@ -15,7 +15,6 @@ ruff
 sphinx
 sphinx-gallery
 sphinx-issues
-rstcheck[sphinx,toml]
 tomli
 tqdm
 wheel
