@@ -1,28 +1,3 @@
-[tool.rstcheck]
-report_level = "INFO"
-ignore_directives = [
-    "autoclass",
-    "autofunction",
-    "blocref",
-    "blocreflist",
-    "collapse",
-    "exref",
-    "exreflist",
-    "faqref",
-    "faqreflist",
-    "gdot",
-    "image-sg",
-    "mathdef",
-    "mathdeflist",
-    "quote",
-    "runpython",
-]
-ignore_roles = ["epkg"]
-ignore_messages = [
-    ".*Hyperlink target .l-blocdefs. is not referenced.*",
-    ".*Hyperlink target .l-sphinx-epkg. is not referenced.*",
-]
-
 [tool.ruff]
 
 # Exclude a variety of commonly ignored directories.

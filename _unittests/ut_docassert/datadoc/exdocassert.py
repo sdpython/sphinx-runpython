@@ -7,6 +7,6 @@ def onefunction(a, b: int = 4):
     :return: ``a + b``
     :raises TypeError: if a and b have different types.
     """
-    if type(a) != type(b):
+    if type(a) != type(b):  # noqa: E721
         raise TypeError(f"Different type {a} != {b}")
     return a + b

@@ -8,6 +8,6 @@ def onefunction(a, b):
     :return: ``a + b``
     :raises TypeError: guess
     """
-    if type(a) != type(b):
+    if type(a) != type(b):  # noqa: E721
         raise TypeError(f"Different type {a} != {b}")
     return a + b
