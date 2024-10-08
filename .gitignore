@@ -19,6 +19,7 @@ _doc/examples/*.html
 _doc/examples/plot_*.png
 _doc/_static/require.js
 _doc/_static/viz.js
+_doc/sg_execution_times.rst
 _unittests/ut__main/*.png
 _unittests/ut__main/data/*.rst
 _unittests/ut__main/data/*.py
