@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from docutils import nodes
 from docutils.parsers.rst import directives
 
@@ -99,14 +98,14 @@ class QuoteNode(BaseAdmonition):
             self.options["class"] = ["admonition-quote"]
 
         # body
-        (quote,) = super(QuoteNode, self).run()
+        (quote,) = super(QuoteNode, self).run()  # noqa: UP008
         if isinstance(quote, nodes.system_message):
-            return [quote]  # pragma: no cover
+            return [quote]
 
         # mid
         tag = self.options.get("tag", "quotetag").strip()
         if len(tag) == 0:
-            raise ValueError("tag is empty")  # pragma: no cover
+            raise ValueError("tag is empty")
 
         def __(text):
             if text:
@@ -138,14 +137,14 @@ class QuoteNode(BaseAdmonition):
 
         indexes = []
         if index:
-            indexes.append(index)  # pragma: no cover
+            indexes.append(index)
 
         # add a label
         lid = self.options.get("lid", self.options.get("label", None))
         if lid:
             tnl = ["", f".. _{lid}:", ""]
         else:
-            tnl = []  # pragma: no cover
+            tnl = []
 
         if title1:
             if ado:
@@ -235,7 +234,7 @@ class QuoteNode(BaseAdmonition):
 
         try:
             nested_parse_with_titles(self.state, content, node)
-        except Exception as e:  # pragma: no cover
+        except Exception as e:
             from sphinx.util import logging
 
             logger = logging.getLogger("blogpost")

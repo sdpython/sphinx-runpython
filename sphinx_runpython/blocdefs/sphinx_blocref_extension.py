@@ -143,7 +143,7 @@ class BlocRef(BaseAdmonition):
             self.options["class"] = [f"admonition-{name_desc}"]
 
         # body
-        (blocref,) = super(BlocRef, self).run()
+        (blocref,) = super(BlocRef, self).run()  # noqa: UP008
         if isinstance(blocref, nodes.system_message):
             return [blocref]
 
@@ -160,7 +160,7 @@ class BlocRef(BaseAdmonition):
         # mid
         breftag = self.options.get("tag", "").strip()
         if len(breftag) == 0:
-            raise ValueError("tag is empty")  # pragma: no cover
+            raise ValueError("tag is empty")
         if env is not None:
             mid = int(env.new_serialno(f"index{name_desc}-{breftag}")) + 1
         else:
@@ -169,7 +169,7 @@ class BlocRef(BaseAdmonition):
         # title
         titleo = self.options.get("title", "").strip()
         if len(titleo) == 0:
-            raise ValueError("title is empty")  # pragma: no cover
+            raise ValueError("title is empty")
         title = self._update_title(titleo, breftag, mid)
 
         # main node
@@ -205,9 +205,9 @@ class BlocRef(BaseAdmonition):
             set_source_info(self, targetnode)
             try:
                 self.state.add_target(targetid, "", targetnode, lineno)
-            except Exception as e:  # pragma: no cover
+            except Exception as e:
                 raise RuntimeError(
-                    "Issue in \n  File '{0}', line "
+                    "Issue in \n  File '{0}', line "  # noqa: UP030
                     "{1}\ntitle={2}\ntag={3}\ntargetid={4}".format(
                         docname, lineno, title, breftag, targetid
                     )
@@ -258,8 +258,8 @@ def process_blocrefs_generic(app, doctree, bloc_name, class_node):
         try:
             targetnode = node.parent[node.parent.index(node) - 1]
             if not isinstance(targetnode, nodes.target):
-                raise IndexError  # pragma: no cover
-        except IndexError:  # pragma: no cover
+                raise IndexError
+        except IndexError:
             targetnode = None
         newnode = node.deepcopy()
         breftag = newnode["breftag"]
@@ -507,14 +507,14 @@ def process_blocref_nodes_generic(
                     fromdocname, blocref_info["docname"]
                 )
                 if blocref_info["target"] is None:
-                    raise NoUri  # pragma: no cover
+                    raise NoUri
                 try:
                     newnode["refuri"] += "#" + blocref_info["target"]["refid"]
-                except Exception as e:  # pragma: no cover
+                except Exception as e:
                     raise KeyError(
-                        "refid in not present in '{0}'".format(blocref_info["target"])
+                        f"refid in not present in {blocref_info['target']!r}"
                     ) from e
-            except NoUri:  # pragma: no cover
+            except NoUri:
                 # ignore if no URI can be determined, e.g. for LaTeX output
                 pass
 
@@ -540,7 +540,7 @@ def process_blocref_nodes_generic(
                         fromdocname, brefdocname
                     )
                     newnode["refuri"] += "#" + idss[0]
-                except NoUri:  # pragma: no cover
+                except NoUri:
                     # ignore if no URI can be determined, e.g. for LaTeX output
                     pass
                 p += newnode

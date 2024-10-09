@@ -50,7 +50,7 @@ from sphinx.util.osutil import ensuredir
 # from sphinx.locale import admonitionlabels, _
 try:
     from sphinx.domains.changeset import versionlabels
-except ImportError:  # pragma: no cover
+except ImportError:
     from sphinx.locale import versionlabels
 from sphinx.writers.text import TextTranslator, MAXWIDTH, STDINDENT
 
@@ -128,9 +128,9 @@ class CommonSphinxWriterHelpers:
                             os.path.join(srcdir, builder.current_docname)
                         )
                     if current is None or not os.path.exists(current):
-                        raise FileNotFoundError(  # pragma: no cover
-                            "Unable to find document '{0}' current_docname='{1}'"
-                            "".format(current, builder.current_docname)
+                        raise FileNotFoundError(
+                            f"Unable to find document {current!r} "
+                            f"current_docname={builder.current_docname!r}"
                         )
                     dest = os.path.dirname(
                         os.path.join(outdir, builder.current_docname)
@@ -153,8 +153,8 @@ class CommonSphinxWriterHelpers:
                 if "*" in full:
                     files = glob.glob(full)
                     if len(files) == 0:
-                        raise FileNotFoundError(  # pragma: no cover
-                            f"Unable to find any file matching pattern '{full}'."
+                        raise FileNotFoundError(
+                            f"Unable to find any file matching pattern {full!r}."
                         )
                     full = files[0]
 
@@ -178,7 +178,7 @@ class CommonSphinxWriterHelpers:
 
             dest = os.path.join(fold, name) if fold else None
             if dest is not None and "*" in dest:
-                raise RuntimeError(  # pragma: no cover
+                raise RuntimeError(
                     "Wrong destination '{} // {}' image_dest='{}' atts['src']='{}' "
                     "srcdir='{}' full='{}'.".format(
                         fold, name, image_dest, atts["src"], srcdir, full
@@ -221,7 +221,7 @@ class CommonSphinxWriterHelpers:
                         try:
                             shutil.copy(full, dest)
                         except (FileNotFoundError, OSError) as e:
-                            raise FileNotFoundError(  # pragma: no cover
+                            raise FileNotFoundError(
                                 f"Unable to copy from '{full}' to '{dest}'."
                             ) from e
                         full = dest
@@ -236,10 +236,8 @@ class CommonSphinxWriterHelpers:
             atts["full"] = full
             atts["dest"] = dest
         else:
-            raise ValueError(  # pragma: no cover
-                "No image was found in node (class='{1}')\n{0}".format(
-                    node, self.__class__.__name__
-                )
+            raise ValueError(
+                f"No image was found in node (class={self.__class__.__name__!r})\n{node}"
             )
 
         # image size
@@ -256,7 +254,7 @@ class CommonSphinxWriterHelpers:
                 imagepath = urllib.request.url2pathname(uri)
                 try:
                     img = PIL.Image.open(imagepath.encode(sys.getfilesystemencoding()))
-                except (IOError, UnicodeEncodeError):  # pragma: no cover
+                except (OSError, UnicodeEncodeError):
                     pass  # TODO: warn?
                 else:
                     self.settings.record_dependencies.add(  # pylint: disable=E1101
@@ -339,7 +337,7 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
         self.states.append([])
         self.stateindent.append(indent)
 
-    def end_state(self, wrap=True, end=[""], first=None):
+    def end_state(self, wrap=True, end=[""], first=None):  # noqa: B006
         content = self.states.pop()
         maxindent = sum(self.stateindent)
         indent = self.stateindent.pop()
@@ -523,7 +521,7 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
 
     def visit_desc_annotation(self, node):
         content = node.astext()
-        if len(content) > MAXWIDTH:  # pragma: no cover
+        if len(content) > MAXWIDTH:
             h = int(MAXWIDTH / 3)
             content = content[:h] + " ... " + content[-h:]
             self.add_text(content)
@@ -683,7 +681,7 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
     def visit_entry(self, node):
         if hasattr(node, "morerows") or hasattr(node, "morecols"):
             raise NotImplementedError(
-                "Column or row spanning cells are " "not implemented."
+                "Column or row spanning cells are not implemented."
             )
         self.new_state(0)
 
@@ -702,7 +700,7 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
         lines = self._table[1:]
         fmted_rows = []
         colwidths = self._table[0]
-        realwidths = list(map(lambda x: x if isinstance(x, int) else 1, colwidths[:]))
+        realwidths = [(x if isinstance(x, int) else 1) for x in colwidths[:]]
         separator = 0
         # don't allow paragraphs in table cells for now
         for line in lines:
@@ -1079,7 +1077,7 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
         if "refuri" not in node:
             if "name" in node.attributes:
                 self.add_text(f"`{node['name']}`_")
-            elif "refid" in node and node["refid"]:
+            elif "refid" in node and node["refid"]:  # noqa: RUF019
                 self.add_text(f":ref:`{node['refid']}`")
             else:
                 self.log_unknown(type(node), node)
@@ -1231,11 +1229,13 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
         html = False
         latex = False
         if not (rst or html or latex or md):
-            raise ValueError("One of them should be True")  # pragma: no cover
+            raise ValueError("One of them should be True")
         try:
             ev = eval(expr)
-        except Exception as e:  # pragma: no cover
-            raise ValueError(f"Unable to interpret expression '{expr}' due to {e}.")
+        except Exception as e:
+            raise ValueError(
+                f"Unable to interpret expression '{expr}' due to {e}."
+            ) from e
         return ev
 
     def visit_only(self, node):
@@ -1404,7 +1404,7 @@ class RstBuilder(Builder):
                 srcmtime = os.path.getmtime(sourcename)
                 if srcmtime > targetmtime:
                     yield docname
-            except EnvironmentError:
+            except OSError:
                 # source doesn't exist anymore
                 pass
 

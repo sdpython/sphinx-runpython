@@ -137,7 +137,7 @@ def check_typed_make_field(
                 else:
                     obj = import_object(idocname, kind=kind)
                 try:
-                    tsig = getattr(obj[0], "__text_signature__")
+                    tsig = getattr(obj[0], "__text_signature__")  # noqa: B009
                 except AttributeError:
                     tsig = "?"
                 if tsig != "($self, /, *args, **kwargs)":
