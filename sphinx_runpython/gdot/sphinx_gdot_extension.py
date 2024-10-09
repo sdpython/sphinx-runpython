@@ -112,7 +112,7 @@ class GDotDirective(Directive):
         Builds the collapse text.
         """
         # retrieves the parameters
-        if "format" in self.options:
+        if "format" in self.options:  # noqa: SIM401
             format = self.options["format"]
         else:
             format = "png"
@@ -349,7 +349,7 @@ def copy_js_files(app):
                 try:
                     shutil.copy(path, file_dest)
                     logger.info("[gdot] copy %r to %r.", path, file_dest)
-                except PermissionError as e:  # pragma: no cover
+                except PermissionError as e:
                     logger.warning(
                         "[gdot] permission error (%r), unable to use local viz.js", e
                     )

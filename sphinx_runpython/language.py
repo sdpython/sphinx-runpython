@@ -5,7 +5,7 @@ TITLES = {
         "author": "author",
         "blocref_node": "",
         "blog_entry": (
-            "The original entry is located in " "<<%s>>, line %d and can be found "
+            "The original entry is located in <<%s>>, line %d and can be found "
         ),
         "blogpost": "blogpost",
         "book": "book",

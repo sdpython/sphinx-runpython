@@ -70,12 +70,12 @@ def sphinx_lang(env, default_value="en"):
     if hasattr(env, "settings"):
         settings = env.settings
         if hasattr(settings, "language_code"):
-            lang = env.settings.language_code  # pragma: no cover
+            lang = env.settings.language_code
         else:
             lang = "en"
     else:
-        settings = None  # pragma: no cover
-        lang = "en"  # pragma: no cover
+        settings = None
+        lang = "en"
     return lang
 
 
@@ -134,7 +134,7 @@ def traverse(node, depth=0):
     yield (depth, ne)
     yield (depth, node)
     for n in node.children:
-        for r in traverse(n, depth + 1):
+        for r in traverse(n, depth + 1):  # noqa: UP028
             yield r
     yield (depth, nl)
 
@@ -197,12 +197,12 @@ def get_env_state_info(self):
     elif hasattr(self.state.document.settings, "env"):
         env = self.state.document.settings.env
     else:
-        env = None  # pragma: no cover
+        env = None
 
     reporter = self.state.document.reporter
     try:
         docname, lineno = reporter.get_source_and_line(self.lineno)
-    except AttributeError:  # pragma: no cover
+    except AttributeError:
         docname = lineno = None
 
     if docname is not None:

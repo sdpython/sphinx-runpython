@@ -276,12 +276,12 @@ def run_venv_script(
     else:
         exe = os.path.join(venv, "bin", "python")
     if is_cmd:
-        cmd = " ".join([exe] + script)
+        cmd = " ".join([exe, *script])
         out, err = run_cmd(cmd, wait=True, logf=print if verbose else None, **kwargs)
         err = filter_err(err)
         if len(err) > 0 and (skip_err_if is None or skip_err_if not in out):
             raise VirtualEnvError(
-                "unable to run cmd at {2}\n--CMD--\n{3}\n--OUT--\n{0}\n[pyqerror]"
+                "unable to run cmd at {2}\n--CMD--\n{3}\n--OUT--\n{0}\n[pyqerror]"  # noqa: UP030
                 "\n{1}".format(out, err, venv, cmd)
             )
         return out
@@ -290,9 +290,9 @@ def run_venv_script(
     if is_file:
         if not os.path.exists(script):
             raise FileNotFoundError(script)
-        cmd = " ".join([exe, "-u", '"{0}"'.format(script)])
+        cmd = " ".join([exe, "-u", f'"{script}"'])
     else:
-        cmd = " ".join([exe, "-u", "-c", '"{0}"'.format(script)])
+        cmd = " ".join([exe, "-u", "-c", f'"{script}"'])
     out, err = run_cmd(cmd, wait=True, logf=print if verbose else None, **kwargs)
     err = filter_err(err)
     if len(err) > 0:
@@ -363,7 +363,7 @@ def run_base_script(
             exe = os.path.join(exe, "bin", "python")
 
     if is_cmd:
-        cmd = " ".join([exe] + script)
+        cmd = " ".join([exe, *script])
         if argv is not None:
             cmd += " " + " ".join(argv)
         out, err = run_cmd(cmd, wait=True, verbose=verbose, **kwargs)
@@ -383,9 +383,9 @@ def run_base_script(
     if is_file:
         if not os.path.exists(script):
             raise FileNotFoundError(script)
-        cmd = " ".join([exe, "-u", '"{0}"'.format(script)])
+        cmd = " ".join([exe, "-u", f'"{script}"'])
     else:
-        cmd = " ".join([exe, "-u", "-c", '"{0}"'.format(script)])
+        cmd = " ".join([exe, "-u", "-c", f'"{script}"'])
     if argv is not None:
         cmd += " " + " ".join(argv)
     out, err = run_cmd(cmd, wait=True, verbose=verbose, **kwargs)
@@ -432,18 +432,16 @@ def check_readme_syntax(
         "from docutils.parsers.rst.directives import _directives",
         "from docutils.writers.html4css1 import Writer",
         "_directives['image'] = Image",
-        "with open('{0}', 'r', encoding='utf8') as g: s = g.read()".format(
-            readme.replace("\\", "\\\\")
-        ),
+        "with open('{0}', 'r', encoding='utf8') as g: "  # noqa: UP030
+        "s = g.read()".format(readme.replace("\\", "\\\\")),
         "settings_overrides = {'output_encoding': 'unicode', 'doctitle_xform': True,",
         "            'initial_header_level': 2, 'warning_stream': io.StringIO()}",
         "parts = core.publish_parts(source=s, parser=Parser(), "
         "            reader=Reader(), source_path=None,",
         "            destination_path=None, writer=Writer(),",
         "            settings_overrides=settings_overrides)",
-        "with open('{0}', 'w', encoding='utf8') as f: f.write(parts['whole'])".format(
-            outfile.replace("\\", "\\\\")
-        ),
+        "with open('{0}', 'w', encoding='utf8') as f: "  # noqa: UP030
+        "f.write(parts['whole'])".format(outfile.replace("\\", "\\\\")),
     ]
 
     file_script = os.path.join(folder, "test_" + os.path.split(readme)[-1])

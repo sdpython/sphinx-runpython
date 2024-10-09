@@ -59,7 +59,7 @@ def build_regex(text: Optional[str] = None) -> Dict[str, Union[str, Tuple[str, s
             look = f"\\\\{name} *" + "\\{(.+)\\}" * int(n)
             for c in "\\":
                 pat = pat.replace(c, f"\\{c}")
-            for k in range(0, int(n)):
+            for k in range(int(n)):
                 pat = pat.replace(f"#{k+1}", f"\\{k+1}")
             res[name] = (look, pat)
     return res

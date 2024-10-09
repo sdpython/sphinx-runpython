@@ -122,7 +122,7 @@ def visit_collapse_node_html(self, node):
     script = """function myFunction__ID__() {
                     var x = document.getElementById("collapse__ID__");
                     var b = document.getElementById("colidb__ID__");
-                    if (x.style.display === "none") { 
+                    if (x.style.display === "none") {
                         x.style.display = "block"; b.innerText = '__HIDE__';
                     }
                     else { x.style.display = "none"; b.innerText = '__UNHIDE__'; }

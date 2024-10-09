@@ -8,7 +8,7 @@ from sphinx.locale import _
 
 try:
     from sphinx.errors import NoUri
-except ImportError:  # pragma: no cover
+except ImportError:
     from sphinx.environment import NoUri
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives.admonitions import BaseAdmonition
@@ -95,15 +95,13 @@ class MathDef(BaseAdmonition):
         elif hasattr(env, "config") and hasattr(env.config, "mathdef_link_number"):
             number_format = env.config.mathdef_link_number
         else:
-            raise ValueError(  # pragma: no cover
-                "mathdef_link_number is not defined in the configuration"
-            )
+            raise ValueError("mathdef_link_number is not defined in the configuration")
 
         if not self.options.get("class"):
             self.options["class"] = ["admonition-mathdef"]
 
         # body
-        (mathdef,) = super(MathDef, self).run()
+        (mathdef,) = super(MathDef, self).run()  # noqa: UP008
         if isinstance(mathdef, nodes.system_message):
             return [mathdef]
 
@@ -120,7 +118,7 @@ class MathDef(BaseAdmonition):
         # mid
         mathtag = self.options.get("tag", "").strip()
         if len(mathtag) == 0:
-            raise ValueError("tag is empty")  # pragma: no cover
+            raise ValueError("tag is empty")
         if env is not None:
             mid = int(env.new_serialno(f"indexmathe-u-{mathtag}")) + 1
         else:
@@ -133,7 +131,7 @@ class MathDef(BaseAdmonition):
             label_number = number_format.format(
                 number=number, first_letter=first_letter
             )
-        except ValueError as e:  # pragma: no cover
+        except ValueError as e:
             raise RuntimeError(f"Unable to interpret format '{number_format}'.") from e
 
         # title
@@ -141,7 +139,7 @@ class MathDef(BaseAdmonition):
         if len(title) > 0:
             title = f"{mathtag} {label_number} : {title}"
         else:
-            raise ValueError("title is empty")  # pragma: no cover
+            raise ValueError("title is empty")
 
         # main node
         ttitle = title
@@ -165,9 +163,9 @@ class MathDef(BaseAdmonition):
             set_source_info(self, targetnode)
             try:
                 self.state.add_target(targetid, "", targetnode, lineno)
-            except Exception as e:  # pragma: no cover
+            except Exception as e:
                 raise RuntimeError(
-                    "Issue in\n  File '{0}', line {1}\ntid={2}\ntnode={3}".format(
+                    "Issue in\n  File '{0}', line {1}\ntid={2}\ntnode={3}".format(  # noqa: UP030
                         None if env is None else env.docname,
                         lineno,
                         targetid,
@@ -211,8 +209,8 @@ def process_mathdefs(app, doctree):
         try:
             targetnode = node.parent[node.parent.index(node) - 1]
             if not isinstance(targetnode, nodes.target):
-                raise IndexError  # pragma: no cover
-        except IndexError:  # pragma: no cover
+                raise IndexError
+        except IndexError:
             targetnode = None
         newnode = node.deepcopy()
         mathtag = newnode["mathtag"]
@@ -365,11 +363,11 @@ def process_mathdef_nodes(app, doctree, fromdocname):
                 )
                 try:
                     newnode["refuri"] += "#" + mathdef_info["target"]["refid"]
-                except Exception as e:  # pragma: no cover
+                except Exception as e:
                     raise KeyError(
-                        "refid in not present in '{0}'".format(mathdef_info["target"])
+                        f"refid in not present in {mathdef_info['target']!r}"
                     ) from e
-            except NoUri:  # pragma: no cover
+            except NoUri:
                 # ignore if no URI can be determined, e.g. for LaTeX output
                 pass
             newnode.append(innernode)
@@ -392,7 +390,7 @@ def process_mathdef_nodes(app, doctree, fromdocname):
                         fromdocname, mathdocname
                     )
                     newnode["refuri"] += "#" + idss[0]
-                except NoUri:  # pragma: no cover
+                except NoUri:
                     # ignore if no URI can be determined, e.g. for LaTeX output
                     pass
                 newnode.append(innernode)

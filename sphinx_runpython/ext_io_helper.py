@@ -57,7 +57,7 @@ def _first_more_recent(f1: str, path: str) -> bool:
     da = re.compile("Last[-]Modified: (.+) GMT").search(s)
     if da is None:
         return True
-    else:  # pragma: no cover
+    else:
         da = da.groups()[0]
         gr = re.compile(
             "[\\w, ]* ([ \\d]{2}) ([\\w]{3}) ([\\d]{4}) "
@@ -157,7 +157,9 @@ def read_url(url: str, encoding: Optional[str] = None) -> Union[bytes, str]:
         import urllib.parse as urlparse
 
         res = urlparse.urlparse(url)
-        raise ReadUrlException(f"unable to open url '{url}' scheme: {res}\nexc: {e}")
+        raise ReadUrlException(  # noqa: B904
+            f"unable to open url '{url}' scheme: {res}\nexc: {e}"
+        )
 
     if encoding is None:
         return content
@@ -218,7 +220,7 @@ def download(url: str, path_download: str = ".", outfile: Optional[str] = None) 
                 f1.close()
             except urllib_error.HTTPError as e:
                 raise ReadUrlException(f"Unable to fetch '{url}'") from e
-            except IOError as e:
+            except OSError as e:
                 raise ReadUrlException(f"Unable to download '{url}'") from e
         else:
             down = True
@@ -254,7 +256,7 @@ def download(url: str, path_download: str = ".", outfile: Optional[str] = None) 
                     fu = urllib_request.urlopen(request)
                 except urllib_error.HTTPError as e:
                     raise ReadUrlException(f"Unable to fetch '{url}'") from e
-                f = open(
+                f = open(  # noqa: SIM115
                     dest, format.replace("w", "a")  # pylint: disable=W1501
                 )  # pylint: disable=W1501
             else:
@@ -264,7 +266,7 @@ def download(url: str, path_download: str = ".", outfile: Optional[str] = None) 
                     fu = urllib_request.urlopen(url)
                 except urllib_error.HTTPError as e:
                     raise ReadUrlException(f"Unable to fetch '{url}'") from e
-                f = open(dest, format)
+                f = open(dest, format)  # noqa: SIM115
 
             open(nyet, "w").close()
             c = fu.read(2**21)
@@ -376,11 +378,13 @@ def get_url_content_timeout(
         if raise_exception:
             raise InternetException(f"Unable to retrieve content url='{url}'") from e
         warnings.warn(
-            f"Unable to retrieve content from '{url}' because of {e}", ResourceWarning
+            f"Unable to retrieve content from '{url}' because of {e}",
+            ResourceWarning,
+            stacklevel=0,
         )
         return None
     except Exception as e:
-        if raise_exception:  # pragma: no cover
+        if raise_exception:
             raise InternetException(
                 f"Unable to retrieve content, url='{url}', exc={e}"
             ) from e
@@ -388,6 +392,7 @@ def get_url_content_timeout(
             f"Unable to retrieve content from '{url}' "
             f"because of unknown exception: {e}",
             ResourceWarning,
+            stacklevel=0,
         )
         raise e
 
@@ -399,7 +404,7 @@ def get_url_content_timeout(
         if encoding is not None:
             try:
                 content = res.decode(encoding)
-            except UnicodeDecodeError as e:  # pragma: no cover
+            except UnicodeDecodeError as e:
                 # it tries different encoding
 
                 laste = [e]
@@ -415,11 +420,11 @@ def get_url_content_timeout(
 
                 if content is None:
                     mes = [f"Unable to parse text from '{url}'."]
-                    mes.append("tried:" + str([encoding] + othenc))
+                    mes.append("tried:" + str([encoding, *othenc]))
                     mes.append("beginning:\n" + str([res])[:50])
                     for e in laste:
                         mes.append("Exception: " + str(e))
-                    raise ValueError("\n".join(mes))
+                    raise ValueError("\n".join(mes))  # noqa: B904
         else:
             content = res
     else:
@@ -468,9 +473,7 @@ def download_requirejs(
         ]
         elocations = [loc for loc in locations if os.path.exists(loc)]
         if len(elocations) == 0:
-            raise FileNotFoundError(  # pragma: no cover
-                f"Unable to find requirejs in '{locations}'"
-            )
+            raise FileNotFoundError(f"Unable to find requirejs in '{locations}'")
         location = elocations[0]
         shutil.copy(location, to)
         return [os.path.join(to, "require.js")]
@@ -478,7 +481,7 @@ def download_requirejs(
         link = location
         try:
             page = read_url(link, encoding="utf8")
-        except ReadUrlException:  # pragma: no cover
+        except ReadUrlException:
             if logger.info:
                 logger.info("[download_requirejs] unable to read %r", location)
             return download_requirejs(to=to, location=None, clean=clean)
@@ -486,7 +489,7 @@ def download_requirejs(
         reg = re.compile('href=\\"(.*?minified/require[.]js)\\"')
         alls = reg.findall(page)
         if len(alls) == 0:
-            raise RuntimeError(  # pragma: no cover
+            raise RuntimeError(
                 f"Unable to find a link on require.js file on page {page!r}."
             )
 
@@ -494,7 +497,7 @@ def download_requirejs(
 
         try:
             local = download(filename, to)
-        except ReadUrlException as e:  # pragma: no cover
+        except ReadUrlException as e:
             # We implement a backup plan.
             new_filename = (
                 "https://requirejs.org/docs/release/2.3.6/minified/require.js"
@@ -503,7 +506,7 @@ def download_requirejs(
                 local = download(new_filename, to)
             except ReadUrlException:
                 raise ReadUrlException(
-                    "Unable to download '{0}' or '{1}'".format(filename, new_filename)
+                    "Unable to download {filename!r} or {new_filename!r}"
                 ) from e
 
         logger.info("[download_requirejs] local file %r", local)
