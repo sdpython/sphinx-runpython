@@ -71,6 +71,8 @@ def replace_latex_command(
     """
     Replaces a latex by its raw expression.
 
+    Uses pylatexenc.latexwalker
+
     :param text: text
     :param patterns: one in the known list or None for all
     :return: modified text
