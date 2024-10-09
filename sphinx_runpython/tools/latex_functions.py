@@ -72,7 +72,7 @@ def replace_latex_command(
     Replaces a latex by its raw expression.
 
     :param text: text
-    :param regex: one in the known list or None for all
+    :param patterns: one in the known list or None for all
     :return: modified text
 
     The default patterns are defined by:

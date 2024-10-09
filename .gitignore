@@ -27,3 +27,4 @@ _unittests/ut__main/_cache/*
 _unittests/ut__main/*.html
 _unittests/ut_runpython/*.png
 _unittests/ut_runpython/*.html
+test_latex/*

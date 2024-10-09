@@ -21,6 +21,21 @@ class TestLatexFunction(ExtTestCase):
         self.assertEqual(
             replace_latex_command("\\vecteur{a}{b}"), "\\left(a,\\dots,b\\right)"
         )
+        self.assertEqual(
+            replace_latex_command("\\pa{5\\pa{3i+3}}"), "\\left(5\\pa{3i+3}\\right)"
+        )
+        self.assertEqual(
+            replace_latex_command("\\pa{5+3i}\\pa{3i+3}"),
+            "\\left(5+3i\\right)\\left(3i+3}\\right)",
+        )
+        self.assertEqual(
+            replace_latex_command(
+                "\\indicatrice{ N \\supegal X } +  \\cro{ X (s-p) + N (q-s)} "
+                "\\indicatrice{ N < X }"
+            ),
+            "{1\\!\\!1}_{ N \\geqslant X } +  \\left[ X (s-p) + N (q-s)\\right]"
+            "  {1\\!\\!1}_{ N < X }",
+        )
 
 
 if __name__ == "__main__":
