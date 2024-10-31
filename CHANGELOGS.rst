@@ -4,6 +4,7 @@ Change Logs
 0.3.0
 +++++
 
+* :pr:`36`: add tools to remove the use of new commands in latex formula
 * :pr:`33`: add simple command line to convert images to pdf
 * :pr:`28`: add syntax to check the readme syntax
 * :pr:`27`: fix missing __text_signature__ in docassert

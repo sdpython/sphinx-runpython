@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 @file
 @brief Defines a way to reference a package or a page in this package.
@@ -110,7 +109,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
     except AttributeError as e:
         ma = "\n".join(sorted(str(_) for _ in app.config))
         raise AttributeError(
-            "unable to find 'epkg_dictionary' in configuration. Available:\n{0}"
+            "unable to find 'epkg_dictionary' in configuration. Available:\n{0}"  # noqa: UP030
             "".format(ma)
         ) from e
 
@@ -162,7 +161,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
 
         if found is None:
             msg = inliner.reporter.error(
-                "Unable to find a tuple with '{0}' parameters in epkg_dictionary['{1}']"
+                "Unable to find a tuple with '{0}' parameters in epkg_dictionary['{1}']"  # noqa: UP030
                 "".format(expected, modname)
             )
             prb = inliner.problematic(rawtext, rawtext, msg)
@@ -176,7 +175,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
                     anchor, url = found()(text)
                 except Exception as e:
                     raise ValueError(
-                        "epkg accepts function or classes with __call__ overloaded. "
+                        "epkg accepts function or classes with __call__ overloaded. "  # noqa: UP030
                         "Found '{0}'".format(found)
                     ) from e
         else:
@@ -196,7 +195,7 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
     processed, messages = inliner.parse(extref, lineno, memo, node)
     if len(messages) > 0:
         msg = inliner.reporter.error(
-            "unable to interpret '{0}', messages={1}".format(
+            "unable to interpret '{0}', messages={1}".format(  # noqa: UP030
                 text, ", ".join(str(_) for _ in messages)
             ),
             line=lineno,

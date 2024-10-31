@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """
-@file
-@brief Defines a :epkg:`sphinx` extension which if all parameters are documented.
+Defines a :epkg:`sphinx` extension which if all parameters are documented.
 """
+
 import inspect
 import warnings
 import sys
@@ -49,10 +48,8 @@ def import_object(docname, kind, use_init=True) -> Tuple[object, str]:
         try:
             exec(codeobj, context, context)
         except Exception as e:
-            mes = (
-                "Unable to compile and execute '{0}' due to \n{1}\ngiven:\n{2}".format(
-                    code.replace("\n", "\\n"), e, docname
-                )
+            mes = "Unable to compile and execute '{0}' due to \n{1}\ngiven:\n{2}".format(  # noqa: UP030
+                code.replace("\n", "\\n"), e, docname
             )
             raise RuntimeError(mes) from e
 
@@ -169,9 +166,9 @@ def import_path(obj, class_name=None, err_msg=None):
     """
     try:
         _ = obj.__module__
-    except AttributeError:
+    except AttributeError as e:
         # This is a method.
-        raise TypeError(f"obj is a method or a property ({obj})")
+        raise TypeError(f"obj is a method or a property ({obj})") from e
 
     if class_name is None:
         name = obj.__name__
@@ -195,7 +192,7 @@ def import_path(obj, class_name=None, err_msg=None):
 
     if found is None:
         raise RuntimeError(
-            "Unable to import object '{0}' ({1}). Full path: '{2}'{3}".format(
+            "Unable to import object '{0}' ({1}). Full path: '{2}'{3}".format(  # noqa: UP030
                 name,
                 obj,
                 ".".join(elements),

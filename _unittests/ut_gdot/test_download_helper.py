@@ -17,7 +17,7 @@ class TestDownloadHelper(ExtTestCase):
         except InternetException:
             return
 
-        assert False
+        raise AssertionError(f"No exception raised for url={url!r}")
 
 
 if __name__ == "__main__":

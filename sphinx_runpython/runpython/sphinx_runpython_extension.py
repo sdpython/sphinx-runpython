@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sys
 import os
 from contextlib import redirect_stdout, redirect_stderr
@@ -40,9 +39,9 @@ def remove_extra_spaces_and_black(
                 with open(filename, "r") as f:
                     lines = f.readlines()
                 encoding = None
-            except PermissionError as e:  # pragma: no cover
+            except PermissionError as e:
                 raise PermissionError(filename) from e
-            except UnicodeDecodeError as e:  # pragma: no cover
+            except UnicodeDecodeError as e:
                 try:
                     with open(filename, "r", encoding="utf-8") as f:
                         lines = f.readlines()
@@ -57,9 +56,9 @@ def remove_extra_spaces_and_black(
                 with open(filename, "r", encoding="utf-8-sig") as f:
                     lines = f.readlines()
                 encoding = "utf-8"
-            except PermissionError as e:  # pragma: no cover
+            except PermissionError as e:
                 raise PermissionError(filename) from e
-            except UnicodeDecodeError as e:  # pragma: no cover
+            except UnicodeDecodeError as e:
                 try:
                     with open(filename, "r") as f:
                         lines = f.readlines()
@@ -75,9 +74,7 @@ def remove_extra_spaces_and_black(
         and len(lines) == 0
         and not filename.endswith("__init__.py")
     ):
-        raise ValueError(  # pragma: no cover
-            f"File '{filename}' is empty, encoding='{encoding}'."
-        )
+        raise ValueError(f"File '{filename}' is empty, encoding='{encoding}'.")
 
     if filename is not None and ext in (".py", ".pyx", ".pxd"):
         if (
@@ -88,7 +85,7 @@ def remove_extra_spaces_and_black(
             with open(filename, "r", encoding="utf8") as f:
                 try:
                     lines = f.readlines()
-                except UnicodeDecodeError as e:  # pragma: no cover
+                except UnicodeDecodeError as e:
                     raise RuntimeError("unable to read: " + filename) from e
             encoding = "utf8"
         else:
@@ -116,8 +113,9 @@ def remove_extra_spaces_and_black(
         r = format_str("\n".join(lines2), mode=FileMode())
 
         if len(lines) > 0 and (len(lines2) == 0 or len(lines2) < len(lines) // 2):
-            raise ValueError(  # pragma: no cover
-                "Resulting file is empty for '{3}',\ninitial number of lines "
+            raise ValueError(
+                "Resulting file is empty for '{3}',"  # noqa: UP030
+                "\ninitial number of lines "
                 "{0} encoding='{1}' diff={2}".format(
                     len(lines), encoding, diff, filename
                 )
@@ -144,14 +142,14 @@ def remove_extra_spaces_and_black(
         lines2 = [_ for i, _ in enumerate(lines2) if i not in rem]
         if len(lines) > 0 and len(lines2[-1]) > 0:
             lines2.append("")
-        if len(lines) > 0 and len(lines2) == 0:  # pragma: no cover
+        if len(lines) > 0 and len(lines2) == 0:
             raise ValueError(
                 f"Resulting file is empty for {filename!r},"
                 f"\ninitial number of lines {len(lines)} encoding={encoding!r} "
                 f"len(rem)={len(rem)} diff={diff}\nBeginning:"
                 f"\n{''.join(lines[:5 if len(lines) > 5 else len(lines)])}"
             )
-        if len(lines2) < len(lines) // 2:  # pragma: no cover
+        if len(lines2) < len(lines) // 2:
             lines2_ = [_ for _ in lines2 if _ and _ != "\n"]
             lines_ = [_ for _ in lines if _ and _ != "\n"]
             if len(lines2_) < len(lines_) // 2:
@@ -191,7 +189,7 @@ def remove_extra_spaces_and_black(
                     f.write("\n".join(lines2))
 
     if not os.path.exists(filename):
-        raise FileNotFoundError(  # pragma: no cover
+        raise FileNotFoundError(
             f"Issue when applying black with filename: '{filename}'."
         )
     return diff
@@ -315,24 +313,16 @@ def run_python_script(
             header.append(f"sys.{setsysvar} = True")
         add = 0
         for path in sys.path:
-            if (
-                path.endswith("source")
-                or path.endswith("source/")
-                or path.endswith("source\\")
-            ):
+            if path.endswith(("source", "source/", "source\\")):
                 header.append(
-                    "sys.path.append('{0}')".format(path.replace("\\", "\\\\"))
+                    "sys.path.append('{}')".format(path.replace("\\", "\\\\"))
                 )
                 add += 1
         if add == 0:
             for path in sys.path:
-                if (
-                    path.endswith("src")
-                    or path.endswith("src/")
-                    or path.endswith("src\\")
-                ):
+                if path.endswith(("src", "src/", "src\\")):
                     header.append(
-                        "sys.path.append('{0}')".format(path.replace("\\", "\\\\"))
+                        "sys.path.append('{}')".format(path.replace("\\", "\\\\"))
                     )
                     add += 1
         if add == 0:
@@ -344,7 +334,9 @@ def run_python_script(
             path = os.path.join(path, "..", "..", "src")
             if os.path.exists(path):
                 header.append(
-                    "sys.path.append('{0}')".format(path.replace("\\", "\\\\"))
+                    "sys.path.append('{}')".format(
+                        path.replace("\\", "\\\\")
+                    )  # noqa: UP030
                 )
                 add += 1
             else:
@@ -352,14 +344,18 @@ def run_python_script(
                 path = os.path.join(path, "src")
                 if os.path.exists(path):
                     header.append(
-                        "sys.path.append('{0}')".format(path.replace("\\", "\\\\"))
+                        "sys.path.append('{}')".format(
+                            path.replace("\\", "\\\\")
+                        )  # noqa: UP030
                     )
                     add += 1
 
         if add == 0:
             # We do nothing unless the execution failed.
             exc_path = RunPythonExecutionError(
-                "Unable to find a path to add:\n{0}".format("\n".join(sys.path))
+                "Unable to find a path to add:\n{}".format(
+                    "\n".join(sys.path)
+                )  # noqa: UP030
             )
         else:
             exc_path = None
@@ -379,7 +375,7 @@ def run_python_script(
             return out, err, None
         except Exception as ee:
             if not exception:
-                message = (
+                message = (  # noqa: UP030
                     "--SCRIPT--\n{0}\n--PARAMS--\n{1}\n--COMMENT--\n"
                     "{2}\n--ERR--\n{3}\n--OUT--\n{4}\n--EXC--\n{5}"
                     ""
@@ -418,44 +414,42 @@ def run_python_script(
 
         sout = StringIO()
         serr = StringIO()
-        with redirect_stdout(sout):
-            with redirect_stderr(sout):
-                with warnings.catch_warnings():
-                    warning_filter(warningout)
+        with redirect_stdout(sout), redirect_stderr(sout), warnings.catch_warnings():
+            warning_filter(warningout)
 
-                    if chdir is not None:
-                        current = os.getcwd()
-                        os.chdir(chdir)
+            if chdir is not None:
+                current = os.getcwd()
+                os.chdir(chdir)
 
-                    try:
-                        exec(obj, globs, loc)
-                    except Exception as ee:
-                        if chdir is not None:
-                            os.chdir(current)
-                        if setsysvar is not None:
-                            del sys.__dict__[setsysvar]
-                        if comment is None:
-                            comment = ""
-                        gout = sout.getvalue()
-                        gerr = serr.getvalue()
+            try:
+                exec(obj, globs, loc)
+            except Exception as ee:
+                if chdir is not None:
+                    os.chdir(current)
+                if setsysvar is not None:
+                    del sys.__dict__[setsysvar]
+                if comment is None:
+                    comment = ""
+                gout = sout.getvalue()
+                gerr = serr.getvalue()
 
-                        excs = traceback.format_exc()
-                        lines = excs.split("\n")
-                        excs = "\n".join(
-                            _ for _ in lines if "sphinx_runpython_extension.py" not in _
-                        )
+                excs = traceback.format_exc()
+                lines = excs.split("\n")
+                excs = "\n".join(
+                    _ for _ in lines if "sphinx_runpython_extension.py" not in _
+                )
 
-                        if not exception:
-                            message = (
-                                "--SCRIPT--\n{0}\n--PARAMS--\n{1}\n--COMMENT--"
-                                "\n{2}\n--ERR--\n{3}\n--OUT--\n{4}\n--EXC--"
-                                "\n{5}\n--TRACEBACK--\n{6}"
-                            ).format(script, params, comment, gout, gerr, ee, excs)
-                            raise RunPythonExecutionError(message) from ee
-                        return (gout + "\n" + gerr), (gerr + "\n" + excs), None
+                if not exception:
+                    message = (  # noqa: UP030
+                        "--SCRIPT--\n{0}\n--PARAMS--\n{1}\n--COMMENT--"
+                        "\n{2}\n--ERR--\n{3}\n--OUT--\n{4}\n--EXC--"
+                        "\n{5}\n--TRACEBACK--\n{6}"
+                    ).format(script, params, comment, gout, gerr, ee, excs)
+                    raise RunPythonExecutionError(message) from ee
+                return (gout + "\n" + gerr), (gerr + "\n" + excs), None
 
-                    if chdir is not None:
-                        os.chdir(current)
+            if chdir is not None:
+                os.chdir(current)
 
         if setsysvar is not None:
             del sys.__dict__[setsysvar]
@@ -754,7 +748,7 @@ class RunPythonDirective(Directive):
                         f'\n  File "{docname}.py", line {1}\n'
                     )
                 logger.warning(
-                    f"Black ({e}) issue with {docname!r}\n---SCRIPT---\n{script}"
+                    "Black (%r) issue with %r\n---SCRIPT---\n%s", e, docname, script
                 )
 
         # if an exception is raised, the documentation should report a warning
@@ -798,10 +792,10 @@ class RunPythonDirective(Directive):
 
         if p["store"]:
             # Stores modified local context.
-            setattr(env, "runpython_context", context)
+            setattr(env, "runpython_context", context)  # noqa: B010
         else:
             context = {}
-            setattr(env, "runpython_context", context)
+            setattr(env, "runpython_context", context)  # noqa: B010
 
         if out is not None:
             out = out.rstrip(" \n\r\t")
@@ -875,7 +869,7 @@ class RunPythonDirective(Directive):
         if p["rst"]:
             settings_overrides = {}
             try:
-                sett.output_encoding
+                sett.output_encoding  # noqa: B018
             except KeyError:
                 settings_overrides["output_encoding"] = "unicode"
             # try:
@@ -883,7 +877,7 @@ class RunPythonDirective(Directive):
             # except KeyError:
             #     settings_overrides["doctitle_xform"] = True
             try:
-                sett.warning_stream
+                sett.warning_stream  # noqa: B018
             except KeyError:
                 settings_overrides["warning_stream"] = StringIO()
             # 'initial_header_level': 2,

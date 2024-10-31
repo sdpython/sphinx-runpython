@@ -1,4 +1,3 @@
-# coding: utf-8
 import os
 import sys
 from sphinx_runpython import __version__

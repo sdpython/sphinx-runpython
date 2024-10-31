@@ -43,7 +43,7 @@ def images2pdf(
         else:
             raise RuntimeError(f"Unable to deal with images={images!r}")
     elif not isinstance(images, (list, tuple)):
-        raise TypeError("Images must be a list.")  # pragma: no cover
+        raise TypeError("Images must be a list.")
 
     all_images = []
     for img in images:
@@ -64,7 +64,9 @@ def images2pdf(
             print(f"[images2pdf] {i + 1}/{len(all_images)} {img!r}")
 
     st, close = (
-        (open(output, "wb"), True) if isinstance(output, str) else (output, False)
+        (open(output, "wb"), True)  # noqa: SIM115
+        if isinstance(output, str)
+        else (output, False)
     )
 
     all_images.sort()

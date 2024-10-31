@@ -1,5 +1,6 @@
 import glob
 import os
+from typing import Optional
 from argparse import ArgumentParser
 from tempfile import TemporaryDirectory
 
@@ -12,7 +13,7 @@ def get_parser():
     )
     parser.add_argument(
         "command",
-        help="Command to run, only 'nb2py', 'readme', 'img2pdf' are available",
+        help="Command to run, only 'nb2py', 'readme', 'img2pdf', 'latex' are available",
     )
     parser.add_argument(
         "-p", "--path", help="Folder or file which contains the files to process"
@@ -50,7 +51,7 @@ def nb2py(infolder: str, recursive: bool = False, verbose: int = 0):
     patterns = [infolder + "/*.ipynb", infolder + "/**/*.ipynb"]
     for pattern in patterns:
         if verbose:
-            print(f"nb2py: look with pattern {pattern!r}, recursive={recursive}")
+            print(f"[nb2py] look with pattern {pattern!r}, recursive={recursive}")
         for name in glob.iglob(pattern, recursive=recursive):
             spl = os.path.splitext(name)
             out = spl[0] + ".py"
@@ -59,10 +60,50 @@ def nb2py(infolder: str, recursive: bool = False, verbose: int = 0):
                 convert_ipynb_to_gallery(name, outfile=out)
 
 
+def latex_process(
+    infolder: str,
+    recursive: bool = False,
+    output: Optional[str] = None,
+    verbose: int = 0,
+):
+    from .tools.latex_functions import replace_latex_command
+
+    if not os.path.exists(infolder):
+        raise FileNotFoundError(f"Unable to find {infolder!r}.")
+    patterns = [infolder + "/*.rst", infolder + "/**/*.py"]
+    for pattern in patterns:
+        if verbose:
+            print(f"[latex] look with pattern {pattern!r}, recursive={recursive}")
+        for name in glob.iglob(pattern, recursive=recursive):
+            with open(name, "r") as f:
+                content = f.read()
+            new_content = replace_latex_command(content)
+            if new_content != content:
+                if output:
+                    new_name = os.path.join(output, os.path.split(name)[-1])
+                    if verbose:
+                        print(f"[latex] write {new_name!r}")
+                    with open(new_name, "w") as f:
+                        f.write(new_content)
+                else:
+                    if verbose:
+                        print(f"[latex] replace inplace {name!r}")
+                    with open(name, "w") as f:
+                        f.write(new_content)
+
+
 def process_args(args):
     cmd = args.command
     if cmd == "nb2py":
         nb2py(args.path, recursive=args.recursive, verbose=args.verbose)
+        return
+    if cmd == "latex":
+        latex_process(
+            args.path,
+            recursive=args.recursive,
+            verbose=args.verbose,
+            ouptut=args.output,
+        )
         return
     if cmd == "img2pdf":
         from .tools.img_export import images2pdf
