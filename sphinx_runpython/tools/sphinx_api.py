@@ -4,7 +4,11 @@ from typing import Dict, List, Optional
 
 
 def _write_doc_folder(
-    folder: str, pyfiles: List[str], hidden: bool = False, prefix: str = ""
+    folder: str,
+    pyfiles: List[str],
+    hidden: bool = False,
+    prefix: str = "",
+    subfolders: Optional[List[str]] = None,
 ) -> Dict[str, str]:
     """
     Creates all the file in a dictionary.
@@ -24,9 +28,6 @@ def _write_doc_folder(
         """
     <full_module_name>
     <line>
-
-    .. toctree::
-        :maxdepth: 1
     """
     )
 
@@ -37,7 +38,21 @@ def _write_doc_folder(
         .replace("<full_module_name>", fullsubmodule)
         .replace("<line>", "=" * len(fullsubmodule)),
     ]
+    if subfolders:
+        rows.append(
+            textwrap.dedent(
+                """
+        .. toctree::
+            :maxdepth: 1
+            :caption: submodules
+            
+        """
+            )
+        )
+        for sub in subfolders:
+            rows.append(f"    {sub}/index")
     res = {}
+    has_module = False
     for name in sorted(pyfiles):
         if not name:
             continue
@@ -58,6 +73,19 @@ def _write_doc_folder(
             .replace("<line>", line)
         )
         res[key] = text
+        if not has_module:
+            has_module = True
+            rows.append(
+                textwrap.dedent(
+                    """
+
+            .. toctree::
+                :maxdepth: 1
+                :caption: modules
+
+            """
+                )
+            )
         rows.append(f"    {last}")
 
     rows.append(
@@ -92,18 +120,29 @@ def sphinx_api(
     :param verbose: verbosity
     :return: list of written file
     """
+    folder = folder.rstrip("/\\")
     root, package_name = os.path.split(folder)
     files = []
     if verbose:
         print(f"[sphinx_api] start creating API for {folder!r}")
+
     for racine, dossiers, fichiers in os.walk(folder):
         pyfiles = [f for f in fichiers if f.endswith(".py")]
         if not pyfiles:
             continue
-        mname = racine[len(root) + 1 :]
+        mname = racine[len(root) + 1 :] if root else racine
+        selected = [
+            d
+            for d in dossiers
+            if os.path.exists(os.path.join(racine, d, "__init__.py"))
+        ]
         if verbose:
             print(f"[sphinx_api] open {mname!r}")
-        content = _write_doc_folder(mname, pyfiles, hidden=hidden, prefix="")
+            if selected:
+                print(f"[sphinx_api]    submodules {selected!r}")
+        content = _write_doc_folder(
+            mname, pyfiles, hidden=hidden, prefix="", subfolders=selected
+        )
         if verbose:
             print(f"[sphinx_api] close {mname!r}")
         if simulate:

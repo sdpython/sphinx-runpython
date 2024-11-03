@@ -29,7 +29,6 @@ def get_parser():
         action="store_true",
     )
     parser.add_argument(
-        "-r",
         "--hidden",
         help="shows hidden submodules as well",
         action="store_true",
@@ -70,10 +69,16 @@ def nb2py(infolder: str, recursive: bool = False, verbose: int = 0):
                 convert_ipynb_to_gallery(name, outfile=out)
 
 
-def sphinx_api(infolder: str, output: str, recursive: bool = False, verbose: int = 0):
-    from .tools import sphinx_api as f
+def sphinx_api(
+    infolder: str,
+    output: str,
+    recursive: bool = False,
+    hidden: bool = False,
+    verbose: int = 0,
+):
+    from .tools.sphinx_api import sphinx_api as f
 
-    f(infolder, output, recursive=recursive, verbose=verbose)
+    f(infolder, output, verbose=verbose, hidden=hidden)
 
 
 def process_args(args):
