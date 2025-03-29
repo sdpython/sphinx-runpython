@@ -1,7 +1,7 @@
 import glob
 import os
 from typing import Optional
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawTextHelpFormatter
 from tempfile import TemporaryDirectory
 
 
@@ -9,11 +9,18 @@ def get_parser():
     parser = ArgumentParser(
         prog="sphinx-runpython command line",
         description="A collection of quick tools.",
+        formatter_class=RawTextHelpFormatter,
         epilog="",
     )
     parser.add_argument(
         "command",
-        help="Command to run, only 'nb2py', 'readme', 'img2pdf', 'latex' are available",
+        help="Command to run, only 'nb2py', 'readme', 'img2pdf', 'api', "
+        "'latex' are available\n"
+        "- api     - generates sphinx documentation api\n"
+        "- latex   - improves latex rendering\n"
+        "- img2pdf - converts impage to pdf\n"
+        "- nb2py   - converts notebooks into python\n"
+        "- readme  - checks readme syntax",
     )
     parser.add_argument(
         "-p", "--path", help="Folder or file which contains the files to process"
@@ -22,6 +29,11 @@ def get_parser():
         "-r",
         "--recursive",
         help="Recursive search.",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--hidden",
+        help="shows hidden submodules as well",
         action="store_true",
     )
     parser.add_argument(
@@ -92,10 +104,31 @@ def latex_process(
                         f.write(new_content)
 
 
+def sphinx_api(
+    infolder: str,
+    output: str,
+    recursive: bool = False,
+    hidden: bool = False,
+    verbose: int = 0,
+):
+    from .tools.sphinx_api import sphinx_api as f
+
+    f(infolder, output, verbose=verbose, hidden=hidden)
+
+
 def process_args(args):
     cmd = args.command
     if cmd == "nb2py":
         nb2py(args.path, recursive=args.recursive, verbose=args.verbose)
+        return
+    if cmd == "api":
+        sphinx_api(
+            args.path,
+            recursive=args.recursive,
+            verbose=args.verbose,
+            output=args.output,
+            hidden=args.hidden,
+        )
         return
     if cmd == "latex":
         latex_process(

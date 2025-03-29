@@ -105,6 +105,7 @@ sphinx_gallery_conf = {
 }
 
 epkg_dictionary = {
+    "automodule": "https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-automodule",
     "black": "https://black.readthedocs.io/en/stable/index.html",
     "dot": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
     "DOT": "https://en.wikipedia.org/wiki/DOT_(graph_description_language)",
