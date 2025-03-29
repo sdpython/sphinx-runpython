@@ -397,7 +397,7 @@ def get_url_content_timeout(
         raise e
 
     if chunk is None:
-        if len(res) >= 2 and res[:2] == b"\x1f\x8B":
+        if len(res) >= 2 and res[:2] == b"\x1f\x8b":
             # gzip format
             res = gzip.decompress(res)
 
@@ -487,13 +487,13 @@ def download_requirejs(
             return download_requirejs(to=to, location=None, clean=clean)
 
         reg = re.compile('href=\\"(.*?minified/require[.]js)\\"')
-        alls = reg.findall(page)
-        if len(alls) == 0:
+        ralls = reg.findall(page)
+        if len(ralls) == 0:
             raise RuntimeError(
                 f"Unable to find a link on require.js file on page {page!r}."
             )
 
-        filename = alls[0]
+        filename = ralls[0]
 
         try:
             local = download(filename, to)

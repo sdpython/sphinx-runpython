@@ -113,7 +113,7 @@ def import_object(docname, kind, use_init=True) -> Tuple[object, str]:
         name = spl[-1]
         myfunc = myfunc.__init__ if use_init else myfunc
     else:
-        raise ValueError("Unknwon value for 'kind'")
+        raise ValueError("Unknown value for 'kind'")
 
     return myfunc, name
 

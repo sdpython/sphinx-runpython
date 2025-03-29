@@ -118,7 +118,7 @@ class WrappedNode:
 def traverse(node, depth=0):
     """
     Enumerates through all children but insert a node whenever
-    digging or leaving the childrens nodes.
+    digging or leaving the children's nodes.
 
     :param node: node (from doctree)
     :param depth: current depth

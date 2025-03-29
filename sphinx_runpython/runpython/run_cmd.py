@@ -347,7 +347,7 @@ def run_cmd(
                     if change_path is not None:
                         os.chdir(current)
                     try:
-                        # we try to close the ressources
+                        # we try to close the resources
                         stdout.close()
                         stderr.close()
                     except Exception:

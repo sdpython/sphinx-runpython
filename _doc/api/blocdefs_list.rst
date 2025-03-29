@@ -2,7 +2,7 @@
 blocreflist, exreflist, mathdeflist
 ===================================
 
-These extensions can recall the blocs defined by
+These extensions can recall the blocks defined by
 :ref:`l-blocdefs`.
 
 exreflist
@@ -47,13 +47,13 @@ An example:
 ::
 
     .. blocreflist::
-        :tag: bloc
+        :tag: block
         :contents:
 
 Which gives:
 
 .. blocreflist::
-    :tag: bloc
+    :tag: block
     :contents:
 
 mathdeflist

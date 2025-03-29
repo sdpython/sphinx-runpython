@@ -19,7 +19,7 @@ In *conf.py*:
 Documentation means many examples which needs to be updated when a change
 happen unless the documentation runs the example itself and update its output.
 That's what this directive does. It adds as raw text whatever comes out
-throught the standard output.
+through the standard output.
 
 One example:
 

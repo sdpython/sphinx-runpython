@@ -17,7 +17,7 @@ class TestFaqRefExtension(ExtTestCase):
                         :tag: bug
                         :lid: id3
 
-                        this code shoud appear___
+                        this code should appear___
 
                     after
                     """.replace(
@@ -30,7 +30,7 @@ class TestFaqRefExtension(ExtTestCase):
             writer_name="rst",
         )
 
-        t1 = "this code shoud appear"
+        t1 = "this code should appear"
         if t1 not in html:
             raise AssertionError("ISSUE in " + html)
 
@@ -55,7 +55,7 @@ class TestFaqRefExtension(ExtTestCase):
                         :tag: freg
                         :lid: id3
 
-                        this code shoud appear___
+                        this code should appear___
 
                     middle
 
@@ -71,7 +71,7 @@ class TestFaqRefExtension(ExtTestCase):
 
         html = rst2html(content, writer_name="rst")
 
-        t1 = "this code shoud appear"
+        t1 = "this code should appear"
         if t1 not in html:
             raise AssertionError("ISSUE in " + html)
 
@@ -96,7 +96,7 @@ class TestFaqRefExtension(ExtTestCase):
                         :tag: freg
                         :lid: id3
 
-                        this code shoud appear___
+                        this code should appear___
 
                     middle
 

@@ -116,7 +116,7 @@ def create_virtual_env(
     out, err = run_cmd(cmd, wait=True, logf=print if verbose else None)
     if len(err) > 0:
         raise VirtualEnvError(
-            f"Unable to create virtual environement at {where!r}"
+            f"Unable to create virtual environment at {where!r}"
             f"\nCMD:\n{cmd}\nOUT:\n{out}\n[pyqerror]\n{err}"
         )
 
@@ -236,7 +236,7 @@ def run_venv_script(
     **kwargs: Dict[str, Any],
 ) -> str:
     """
-    Runs a script on a vritual environment (the script should be simple).
+    Runs a script on a virtual environment (the script should be simple).
 
     :param venv: virtual environment
     :param script: script as a string (not a file)
@@ -314,7 +314,7 @@ def run_base_script(
     **kwargs: Dict[str, Any],
 ) -> str:
     """
-    Runs a script with the original intepreter even if this function
+    Runs a script with the original interpreter even if this function
     is run from a virtual environment.
 
     :param script: script as a string (not a file)

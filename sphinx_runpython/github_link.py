@@ -37,7 +37,7 @@ def _linkcode_resolve(domain, info, package, url_fmt, revision):
         module = __import__(info["module"], fromlist=[class_name])
     except ImportError as e:
         raise ImportError(
-            f"Unable to find {info['module']!r} wich class={class_name!r}."
+            f"Unable to find {info['module']!r} which class={class_name!r}."
         ) from e
     obj = attrgetter(info["fullname"])(module)
 

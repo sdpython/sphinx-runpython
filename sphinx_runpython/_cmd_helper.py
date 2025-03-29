@@ -102,7 +102,7 @@ def process_args(args):
             args.path,
             recursive=args.recursive,
             verbose=args.verbose,
-            ouptut=args.output,
+            output=args.output,
         )
         return
     if cmd == "img2pdf":

@@ -412,7 +412,7 @@ class RstTranslator(TextTranslator, CommonSphinxWriterHelpers):
         self.end_state()
 
     def visit_compound(self, node):
-        # self.log_unknown("compount", node)
+        # self.log_unknown("compound", node)
         pass
 
     def depart_compound(self, node):

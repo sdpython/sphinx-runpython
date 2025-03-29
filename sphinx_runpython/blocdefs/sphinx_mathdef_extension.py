@@ -237,7 +237,7 @@ class MathDefList(Directive):
     A list of all mathdef entries, for a specific tag.
 
     * tag: a tag to have several categories of mathdef
-    * contents: add a bullet list with links to added blocs
+    * contents: add a bullet list with links to added blocks
 
     Example::
 

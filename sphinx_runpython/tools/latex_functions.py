@@ -15,7 +15,7 @@ PREAMBLE = """
 \\newcommand{\\ensemble}[2]{\\left\\{#1,\\dots,#2\\right\\}}
 \\newcommand{\\fleche}[1]{\\overrightarrow{#1}}
 \\newcommand{\\intervalle}[2]{\\left\\{#1,\\cdots,#2\\right\\}}
-\\newcommand{\\independant}[0]{\\perp \\!\\!\\! \\perp}
+\\newcommand{\\independent}[0]{\\perp \\!\\!\\! \\perp}
 \\newcommand{\\esp}{\\mathbb{E}}
 \\newcommand{\\espf}[2]{\\mathbb{E}_{#1}\\left(#2\\right)}
 \\newcommand{\\var}{\\mathbb{V}}

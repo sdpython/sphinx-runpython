@@ -39,7 +39,7 @@ class TestCollapseExtension(ExtTestCase):
 
                     .. collapse::
 
-                        this code shoud appear___
+                        this code should appear___
 
                     after
                     """.replace(
@@ -50,7 +50,7 @@ class TestCollapseExtension(ExtTestCase):
         # RST
         html = rst2html(content, writer_name="rst")
 
-        t1 = "  this code shoud appear___"
+        t1 = "  this code should appear___"
         if t1 not in html:
             raise AssertionError(html)
 
@@ -72,7 +72,7 @@ class TestCollapseExtension(ExtTestCase):
 
         html = rst2html(content, writer_name="rst")
 
-        t1 = "this code shoud appear"
+        t1 = "this code should appear"
         if t1 not in html:
             raise AssertionError(html)
 
@@ -98,7 +98,7 @@ class TestCollapseExtension(ExtTestCase):
                     .. collapse::
                         :legend: ABC/abcd
 
-                        this code shoud appear___
+                        this code should appear___
 
                     after
                     """.replace(
@@ -133,7 +133,7 @@ class TestCollapseExtension(ExtTestCase):
                         :legend: ABC/abcd
                         :hide:
 
-                        this code shoud appear___
+                        this code should appear___
 
                     after
                     """.replace(

@@ -93,11 +93,13 @@ def images2pdf(
                 size0 = im.size
                 size = tuple(int(s * zoom) for s in size0)
                 if verbose:
-                    print(f"resizes from {size0} to {size} (formt={fmt!r}) for {img!r}")
+                    print(
+                        f"resizes from {size0} to {size} (format={fmt!r}) for {img!r}"
+                    )
                 im = im.resize(size)
             if rotate != 0:
                 if verbose:
-                    print(f"rotates {rotate} (formt={fmt!r}) for {img!r}")
+                    print(f"rotates {rotate} (format={fmt!r}) for {img!r}")
                 im = im.rotate(rotate)
             buffer = io.BytesIO()
             im.save(buffer, format=fmt)

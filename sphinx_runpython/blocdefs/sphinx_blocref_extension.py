@@ -41,8 +41,8 @@ class BlocRef(BaseAdmonition):
     A ``blocref`` entry, displayed in the form of an admonition.
     It takes the following options:
 
-    * *title*: a title for the bloc
-    * *tag*: a tag to have several categories of blocs
+    * *title*: a title for the block
+    * *tag*: a tag to have several categories of blocks
     * *lid* or *label*: a label to refer to
     * *index*: to add an entry to the index (comma separated)
 
@@ -68,7 +68,7 @@ class BlocRef(BaseAdmonition):
 
             print("mignon")
 
-    All blocs can be displayed in another page by using ``blocreflist``::
+    All blocks can be displayed in another page by using ``blocreflist``::
 
         .. blocreflist::
             :tag: dummy_example
@@ -84,7 +84,7 @@ class BlocRef(BaseAdmonition):
         :tag: dummy_example
         :sort: title
 
-    This directive is used to highlight a bloc about
+    This directive is used to highlight a block about
     anything :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`,
     a question :class:`sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef`,
     an example :class:`sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef`.
@@ -110,7 +110,7 @@ class BlocRef(BaseAdmonition):
 
     def _update_title(self, title, tag, lid):
         """
-        Updates the title for the bloc itself.
+        Updates the title for the block itself.
         """
         return title
 
@@ -289,9 +289,9 @@ class BlocRefList(Directive):
     """
     A list of all blocref entries, for a specific tag.
 
-    * tag: a tag to filter bloc having this tag
-    * sort: a way to sort the blocs based on the title, file, number, default: *title*
-    * contents: add a bullet list with links to added blocs
+    * tag: a tag to filter block having this tag
+    * sort: a way to sort the blocks based on the title, file, number, default: *title*
+    * contents: add a bullet list with links to added blocks
 
     Example::
 
@@ -520,7 +520,7 @@ def process_blocref_nodes_generic(
 
             newnode.append(nodes.Text(newnode["name"]))
 
-            # para is duplicate of the content of the bloc
+            # para is duplicate of the content of the block
             para += newnode
             para += nodes.Text(desc2, desc2)
 
