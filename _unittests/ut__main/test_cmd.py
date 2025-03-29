@@ -18,7 +18,7 @@ class TestCmd(ExtTestCase):
         expected = os.path.join(data, "float_and_double_rouding.py")
         self.assertExists(expected)
 
-    @hide_stdout()
+    #@hide_stdout()
     def test_latex(self):
         data = os.path.join(os.path.dirname(__file__), "data")
         folder = "test_latex"
