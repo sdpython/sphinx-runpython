@@ -37,7 +37,7 @@ _dummy_epkg_dictionary = {
     "git": "https://git-scm.com/",
     "Graphviz": "https://graphviz.org/",
     "HTML": "https://simple.wikipedia.org/wiki/HTML",
-    "nested_parse_with_titles": "http://sphinx-doc.org/extdev/markupapi.html?highlight=nested_parse_with_titles",
+    "nested_parse_with_titles": "https://www.sphinx-doc.org/en/master/extdev/markupapi.html?highlight=nested_parse_with_titles",
     "numpy": (
         "https://www.numpy.org/",
         ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.html", 1),

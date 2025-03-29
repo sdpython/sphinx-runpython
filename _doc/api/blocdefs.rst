@@ -101,22 +101,22 @@ An example:
 ::
 
     .. blocref::
-        :title: How to add a bloc?
-        :tag: bloc
-        :label: l-this-bloc
+        :title: How to add a block?
+        :tag: block
+        :label: l-this-block
 
-        A bloc...
+        A block...
 
 Which gives:
 
 .. blocref::
-    :title: How to add a bloc?
-    :tag: bloc
-    :label: l-this-bloc
+    :title: How to add a block?
+    :tag: block
+    :label: l-this-block
 
-    A bloc...
+    A block...
 
-A reference can be added to this bloc :ref:`Bloc A <l-this-bloc>`.
+A reference can be added to this block :ref:`Block A <l-this-block>`.
 The title needs to be recalled.
 
 mathdef

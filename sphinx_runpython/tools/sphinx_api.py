@@ -45,7 +45,7 @@ def _write_doc_folder(
         .. toctree::
             :maxdepth: 1
             :caption: submodules
-            
+
         """
             )
         )
@@ -147,7 +147,7 @@ def sphinx_api(
             print(f"[sphinx_api] close {mname!r}")
         if simulate:
             print(f"--+ {mname}")
-            for k, v in content.items():
+            for k, _v in content.items():
                 print(f"  | {k}")
         else:
             assert output_folder, "output_folder is empty"

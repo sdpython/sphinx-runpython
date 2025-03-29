@@ -2,7 +2,7 @@
 quote
 =====
 
-A bloc to insert a quote from a book, a film...
+A block to insert a quote from a book, a film...
 
 Usage
 =====

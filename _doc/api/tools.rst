@@ -2,7 +2,6 @@
 tools
 =====
 
-
 Checks the readme syntax
 ========================
 
@@ -28,3 +27,10 @@ into examples which can be used into a sphinx gallery.
 ::
 
     python -m sphinx_runpython --help
+
+Tools related to latex
+======================
+
+.. autofunction:: sphinx_runpython.tools.latex_functions.build_regex
+
+.. autofunction:: sphinx_runpython.tools.latex_functions.replace_latex_command

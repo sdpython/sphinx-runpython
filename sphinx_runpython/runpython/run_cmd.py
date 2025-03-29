@@ -318,10 +318,9 @@ def run_cmd(
                 delta = time.perf_counter() - last_update
                 if tell_if_no_output is not None and delta >= tell_if_no_output:
                     logf(
-                        prefix_log
-                        + "[run_cmd] No update in {0} seconds for cmd: {1}".format(
-                            "%5.1f" % (last_update - begin), cmd
-                        )
+                        prefix_log + "[run_cmd] No update in %5.1f seconds for cmd: %s",
+                        last_update - begin,
+                        cmd,
                     )
                     last_update = time.perf_counter()
                 full_delta = time.perf_counter() - begin
@@ -329,9 +328,9 @@ def run_cmd(
                     runloop = False
                     logf(
                         prefix_log
-                        + "[run_cmd] Timeout after {0} seconds for cmd: {1}".format(
-                            "%5.1f" % full_delta, cmd
-                        )
+                        + "[run_cmd] Timeout after %5.1f seconds for cmd: %s",
+                        full_delta,
+                        cmd,
                     )
                     break
 
@@ -348,12 +347,14 @@ def run_cmd(
                     if change_path is not None:
                         os.chdir(current)
                     try:
-                        # we try to close the ressources
+                        # we try to close the resources
                         stdout.close()
                         stderr.close()
                     except Exception:
                         warnings.warn(
-                            "Unable to close stdout and sterr.", RuntimeWarning
+                            "Unable to close stdout and sterr.",
+                            RuntimeWarning,
+                            stacklevel=0,
                         )
                     if catch_exit:
                         mes = (

@@ -37,7 +37,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
                 self.add_text(".. endrunpython." + self.nl)
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -49,7 +49,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
                         :showcode:
                         :toggle: both
 
-                        print(u"this code shoud appear" + u"___")
+                        print(u"this code should appear" + u"___")
                         import sys
                         print(u"setsysvar: " + str(
                             sys.__dict__.get(

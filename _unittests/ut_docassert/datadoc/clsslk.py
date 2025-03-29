@@ -3,7 +3,7 @@ class Estimator:
     Dummy estimator.
 
     :param lr: learning rate
-    :param alph: gradient coefficient
+    :param alpha: gradient coefficient
     """
 
     def __init__(self, lr=0.1, alpha=0.2, beta=0.3):

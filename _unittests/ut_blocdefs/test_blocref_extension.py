@@ -99,7 +99,7 @@ class TestBlocRefExtension(ExtTestCase):
                         :tag: bug
                         :label: id3
 
-                        this code shoud appear___
+                        this code should appear___
 
                     after
                     """.replace(
@@ -112,7 +112,7 @@ class TestBlocRefExtension(ExtTestCase):
             writer_name="rst",
         )
 
-        t1 = "this code shoud appear"
+        t1 = "this code should appear"
         if t1 not in html:
             raise Exception(html)
 

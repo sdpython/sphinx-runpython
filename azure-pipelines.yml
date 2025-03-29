@@ -4,8 +4,8 @@ jobs:
     vmImage: 'ubuntu-latest'
   strategy:
     matrix:
-      Python311-Linux:
-        python.version: '3.11'
+      Python312-Linux:
+        python.version: '3.12'
     maxParallel: 3
 
   steps:
@@ -15,6 +15,8 @@ jobs:
       architecture: 'x64'
   - script: sudo apt-get update
     displayName: 'AptGet Update'
+  - script: sudo apt-get install -y pandoc
+    displayName: 'Install Pandoc'
   - script: sudo apt-get install -y graphviz
     displayName: 'Install Graphviz'
   - script: python -m pip install --upgrade pip setuptools wheel
@@ -36,6 +38,7 @@ jobs:
       python -m pip install . -v -v -v
     displayName: 'install wheel'
   - script: |
+      python -m pytest --durations=10 --ignore-glob=**LONG*.py --ignore-glob=**notebook*.py
     displayName: 'Runs Unit Tests'
   - task: PublishPipelineArtifact@0
     inputs:
@@ -47,8 +50,8 @@ jobs:
     vmImage: 'ubuntu-latest'
   strategy:
     matrix:
-      Python310-Linux:
-        python.version: '3.10'
+      Python312-Linux:
+        python.version: '3.12'
     maxParallel: 3
 
   steps:
@@ -77,7 +80,7 @@ jobs:
       black --diff .
     displayName: 'Black'
   - script: |
-      python -m pytest -v
+      python -m pytest --durations=10 --ignore-glob=**LONG*.py --ignore-glob=**notebook*.py
     displayName: 'Runs Unit Tests'
   - script: |
       python -u setup.py bdist_wheel
@@ -95,8 +98,8 @@ jobs:
     vmImage: 'windows-latest'
   strategy:
     matrix:
-      Python310-Windows:
-        python.version: '3.10'
+      Python312-Windows:
+        python.version: '3.12'
     maxParallel: 3
 
   steps:
@@ -111,7 +114,7 @@ jobs:
   - script: pip install -r requirements-dev.txt
     displayName: 'Install Requirements dev'
   - script: |
-      python -m pytest -v
+      python -m pytest --durations=10 --ignore-glob=**LONG*.py --ignore-glob=**notebook*.py
     displayName: 'Runs Unit Tests'
   - script: |
       python -u setup.py bdist_wheel
@@ -126,8 +129,8 @@ jobs:
     vmImage: 'macOS-latest'
   strategy:
     matrix:
-      Python310-Mac:
-        python.version: '3.10'
+      Python312-Mac:
+        python.version: '3.12'
     maxParallel: 3
 
   steps:
@@ -155,7 +158,7 @@ jobs:
   - script: pip install -r requirements-dev.txt
     displayName: 'Install Requirements dev'
   - script: |
-      python -m pytest -v -v
+      python -m pytest --durations=10 --ignore-glob=**LONG*.py --ignore-glob=**notebook*.py
     displayName: 'Runs Unit Tests'
   - script: |
       python -u setup.py bdist_wheel

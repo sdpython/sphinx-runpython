@@ -44,7 +44,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -55,7 +55,7 @@ class TestRunPythonExtension(ExtTestCase):
                         :rst:
                         :showcode:
 
-                        print(u"this code shoud appear" + u"___")
+                        print(u"this code should appear" + u"___")
                         import sys
                         print(u"setsysvar: " + str(
                             sys.__dict__.get(
@@ -67,7 +67,7 @@ class TestRunPythonExtension(ExtTestCase):
 
         html = rst2html(content, writer_name="html")
 
-        t1 = "this code shoud appear___"
+        t1 = "this code should appear___"
         if t1 not in html:
             raise AssertionError(html)
         t2 = "setsysvar: True"
@@ -80,14 +80,14 @@ class TestRunPythonExtension(ExtTestCase):
         if t2 not in html:
             raise AssertionError(html)
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
     def test_runpython_numpy(self):
         """
         this test also test the extension runpython
         """
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -114,7 +114,7 @@ class TestRunPythonExtension(ExtTestCase):
         this test also test the extension runpython
         """
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -160,7 +160,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -204,7 +204,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -247,7 +247,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -256,7 +256,7 @@ class TestRunPythonExtension(ExtTestCase):
                     .. runpython::
                         :setsysvar:
 
-                        print(u"this code shoud appear" + u"___")
+                        print(u"this code should appear" + u"___")
                         import sys
                         print(u"setsysvar: " + str(sys.__dict__.get(
                             'enable_disabled_documented_pieces_of_code', None)))
@@ -267,7 +267,7 @@ class TestRunPythonExtension(ExtTestCase):
 
         html = rst2html(content, writer_name="rst")
 
-        t1 = "this code shoud appear___"
+        t1 = "this code should appear___"
         for t in t1.split():
             if t not in html:
                 raise AssertionError(html)
@@ -282,7 +282,7 @@ class TestRunPythonExtension(ExtTestCase):
         if t2 in html:
             raise AssertionError(html)
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
     def test_runpython_process(self):
         """
@@ -303,7 +303,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -315,7 +315,7 @@ class TestRunPythonExtension(ExtTestCase):
                         :showcode:
 
                         import sphinx_runpython
-                        print(u"this code shoud appear" + u"___")
+                        print(u"this code should appear" + u"___")
                         import sys
                         print(u"setsysvar: " + str(sys.__dict__.get(
                             'enable_disabled_documented_pieces_of_code', None)))
@@ -326,7 +326,7 @@ class TestRunPythonExtension(ExtTestCase):
 
         html = rst2html(content, writer_name="html")
 
-        t1 = "this code shoud appear___"
+        t1 = "this code should appear___"
         for t in t1.split():
             if t not in html:
                 raise AssertionError(html)
@@ -341,7 +341,7 @@ class TestRunPythonExtension(ExtTestCase):
         if t2 not in html:
             raise AssertionError(html)
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
     def test_runpython_exception(self):
         from docutils import nodes
@@ -359,7 +359,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -369,7 +369,7 @@ class TestRunPythonExtension(ExtTestCase):
                         :showcode:
                         :exception:
 
-                        print(u"this code shoud" + u" appear")
+                        print(u"this code should" + u" appear")
                         z = 1/0
                         print(u"this one should" + u" not")
                     """.replace(
@@ -404,7 +404,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -414,7 +414,7 @@ class TestRunPythonExtension(ExtTestCase):
                         :showcode:
                         :assert: z == 1.1
 
-                        print(u"this code shoud" + u" appear")
+                        print(u"this code should" + u" appear")
                         z = 0.5 + 0.6
                         print(u"this one should" + u" not")
                     """.replace(
@@ -471,7 +471,7 @@ class TestRunPythonExtension(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         content = """
                     test a directive
@@ -482,7 +482,7 @@ class TestRunPythonExtension(ExtTestCase):
                         :exception:
                         :process:
 
-                        print(u"this code shoud" + u" appear")
+                        print(u"this code should" + u" appear")
                         z = 1/0
                         print(u"this one should" + u" not")
                     """.replace(

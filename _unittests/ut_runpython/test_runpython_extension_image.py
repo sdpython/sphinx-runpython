@@ -30,7 +30,7 @@ class TestRunPythonExtensionImage(ExtTestCase):
             self.body.append("<p><b>depart_rp_node</b></p>")
 
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
-            raise AssertionError("this case shoud not be")
+            raise AssertionError("this case should not be")
 
         temp = os.path.abspath(os.path.dirname(__file__))
         content = """

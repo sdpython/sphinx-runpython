@@ -30,8 +30,8 @@ class FaqRef(BlocRef):
     A ``faqref`` entry, displayed in the form of an admonition.
     It takes the following options:
 
-    * *title*: a title for the bloc
-    * *tag*: a tag to have several categories of blocs (optional)
+    * *title*: a title for the block
+    * *tag*: a tag to have several categories of blocks (optional)
     * *lid* or *label*: a label to refer to
     * *index*: to add an entry to the index (comma separated)
 
@@ -60,13 +60,13 @@ class FaqRef(BlocRef):
 
             print("mignon")
 
-    All blocs can be displayed in another page by using ``faqreflist``::
+    All blocks can be displayed in another page by using ``faqreflist``::
 
         .. faqreflist::
             :tag: dummy_example6
             :sort: title
 
-    Only blocs tagged as ``dummy_example`` will be inserted here.
+    Only blocks tagged as ``dummy_example`` will be inserted here.
     The option ``sort`` sorts items by *title*, *number*, *file*.
     You also link to it by typing ``:ref:'anchor <id-you-can-choose6>'`` which gives
     something like :ref:`link_to_blocref <id-you-can-choose6>`.
@@ -84,7 +84,7 @@ class FaqRef(BlocRef):
         """
         Calls run from
         :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`
-        and add defaut tag.
+        and add default tag.
         """
         if "tag" not in self.options:
             self.options["tag"] = "faq"
@@ -104,9 +104,9 @@ class FaqRefList(BlocRefList):
     """
     A list of all *faqref* entries, for a specific tag.
 
-    * tag: a tag to filter bloc having this tag
-    * sort: a way to sort the blocs based on the title, file, number, default: *title*
-    * contents: add a bullet list with links to added blocs
+    * tag: a tag to filter block having this tag
+    * sort: a way to sort the blocks based on the title, file, number, default: *title*
+    * contents: add a bullet list with links to added blocks
 
     Example::
 

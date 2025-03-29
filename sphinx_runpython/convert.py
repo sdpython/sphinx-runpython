@@ -43,7 +43,7 @@ def convert_ipynb_to_gallery(nbfile: str, outfile: Optional[str] = None) -> str:
     python_file = "".join(python_file)
 
     python_file = python_file.replace("\n%", "\n# %")
-    python_file = python_file.replace("’", "'")
+    python_file = python_file.replace("’", "'")  # noqa: RUF001
     python_file = python_file.replace("# %matplotlib inline", "")
     python_file = python_file.replace("# \n", "\n")
     python_file = python_file.replace(">`__", ">`_")

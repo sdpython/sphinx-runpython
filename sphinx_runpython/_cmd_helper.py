@@ -1,5 +1,6 @@
 import glob
 import os
+from typing import Optional
 from argparse import ArgumentParser, RawTextHelpFormatter
 from tempfile import TemporaryDirectory
 
@@ -13,11 +14,13 @@ def get_parser():
     )
     parser.add_argument(
         "command",
-        help="Command to run, only 'nb2py', 'readme', 'img2pdf', 'api' are available\n"
-        "- nb2py   - converts notebooks into python\n"
-        "- readme  - checks readme syntax\n"
+        help="Command to run, only 'nb2py', 'readme', 'img2pdf', 'api', "
+        "'latex' are available\n"
+        "- api     - generates sphinx documentation api\n"
+        "- latex   - improves latex rendering\n"
         "- img2pdf - converts impage to pdf\n"
-        "- api     - generates sphinx documentation api",
+        "- nb2py   - converts notebooks into python\n"
+        "- readme  - checks readme syntax",
     )
     parser.add_argument(
         "-p", "--path", help="Folder or file which contains the files to process"
@@ -60,13 +63,45 @@ def nb2py(infolder: str, recursive: bool = False, verbose: int = 0):
     patterns = [infolder + "/*.ipynb", infolder + "/**/*.ipynb"]
     for pattern in patterns:
         if verbose:
-            print(f"nb2py: look with pattern {pattern!r}, recursive={recursive}")
+            print(f"[nb2py] look with pattern {pattern!r}, recursive={recursive}")
         for name in glob.iglob(pattern, recursive=recursive):
             spl = os.path.splitext(name)
             out = spl[0] + ".py"
             if verbose:
                 print(f"process {name!r} -> {out!r}")
                 convert_ipynb_to_gallery(name, outfile=out)
+
+
+def latex_process(
+    infolder: str,
+    recursive: bool = False,
+    output: Optional[str] = None,
+    verbose: int = 0,
+):
+    from .tools.latex_functions import replace_latex_command
+
+    if not os.path.exists(infolder):
+        raise FileNotFoundError(f"Unable to find {infolder!r}.")
+    patterns = [infolder + "/*.rst", infolder + "/*.py"]
+    for pattern in patterns:
+        if verbose:
+            print(f"[latex] look with pattern {pattern!r}, recursive={recursive}")
+        for name in glob.iglob(pattern, recursive=recursive):
+            with open(name, "r") as f:
+                content = f.read()
+            new_content = replace_latex_command(content)
+            if new_content != content:
+                if output:
+                    new_name = os.path.join(output, os.path.split(name)[-1])
+                    if verbose:
+                        print(f"[latex] write {new_name!r}")
+                    with open(new_name, "w") as f:
+                        f.write(new_content)
+                else:
+                    if verbose:
+                        print(f"[latex] replace inplace {name!r}")
+                    with open(name, "w") as f:
+                        f.write(new_content)
 
 
 def sphinx_api(
@@ -93,6 +128,14 @@ def process_args(args):
             verbose=args.verbose,
             output=args.output,
             hidden=args.hidden,
+        )
+        return
+    if cmd == "latex":
+        latex_process(
+            args.path,
+            recursive=args.recursive,
+            verbose=args.verbose,
+            output=args.output,
         )
         return
     if cmd == "img2pdf":

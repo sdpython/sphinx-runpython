@@ -41,8 +41,8 @@ class BlocRef(BaseAdmonition):
     A ``blocref`` entry, displayed in the form of an admonition.
     It takes the following options:
 
-    * *title*: a title for the bloc
-    * *tag*: a tag to have several categories of blocs
+    * *title*: a title for the block
+    * *tag*: a tag to have several categories of blocks
     * *lid* or *label*: a label to refer to
     * *index*: to add an entry to the index (comma separated)
 
@@ -68,7 +68,7 @@ class BlocRef(BaseAdmonition):
 
             print("mignon")
 
-    All blocs can be displayed in another page by using ``blocreflist``::
+    All blocks can be displayed in another page by using ``blocreflist``::
 
         .. blocreflist::
             :tag: dummy_example
@@ -84,7 +84,7 @@ class BlocRef(BaseAdmonition):
         :tag: dummy_example
         :sort: title
 
-    This directive is used to highlight a bloc about
+    This directive is used to highlight a block about
     anything :class:`sphinx_runpython.blocdefs.sphinx_blocref_extension.BlocRef`,
     a question :class:`sphinx_runpython.blocdefs.sphinx_faqref_extension.FaqRef`,
     an example :class:`sphinx_runpython.blocdefs.sphinx_exref_extension.ExRef`.
@@ -110,7 +110,7 @@ class BlocRef(BaseAdmonition):
 
     def _update_title(self, title, tag, lid):
         """
-        Updates the title for the bloc itself.
+        Updates the title for the block itself.
         """
         return title
 
@@ -143,7 +143,7 @@ class BlocRef(BaseAdmonition):
             self.options["class"] = [f"admonition-{name_desc}"]
 
         # body
-        (blocref,) = super(BlocRef, self).run()
+        (blocref,) = super(BlocRef, self).run()  # noqa: UP008
         if isinstance(blocref, nodes.system_message):
             return [blocref]
 
@@ -160,7 +160,7 @@ class BlocRef(BaseAdmonition):
         # mid
         breftag = self.options.get("tag", "").strip()
         if len(breftag) == 0:
-            raise ValueError("tag is empty")  # pragma: no cover
+            raise ValueError("tag is empty")
         if env is not None:
             mid = int(env.new_serialno(f"index{name_desc}-{breftag}")) + 1
         else:
@@ -169,7 +169,7 @@ class BlocRef(BaseAdmonition):
         # title
         titleo = self.options.get("title", "").strip()
         if len(titleo) == 0:
-            raise ValueError("title is empty")  # pragma: no cover
+            raise ValueError("title is empty")
         title = self._update_title(titleo, breftag, mid)
 
         # main node
@@ -205,9 +205,9 @@ class BlocRef(BaseAdmonition):
             set_source_info(self, targetnode)
             try:
                 self.state.add_target(targetid, "", targetnode, lineno)
-            except Exception as e:  # pragma: no cover
+            except Exception as e:
                 raise RuntimeError(
-                    "Issue in \n  File '{0}', line "
+                    "Issue in \n  File '{0}', line "  # noqa: UP030
                     "{1}\ntitle={2}\ntag={3}\ntargetid={4}".format(
                         docname, lineno, title, breftag, targetid
                     )
@@ -258,8 +258,8 @@ def process_blocrefs_generic(app, doctree, bloc_name, class_node):
         try:
             targetnode = node.parent[node.parent.index(node) - 1]
             if not isinstance(targetnode, nodes.target):
-                raise IndexError  # pragma: no cover
-        except IndexError:  # pragma: no cover
+                raise IndexError
+        except IndexError:
             targetnode = None
         newnode = node.deepcopy()
         breftag = newnode["breftag"]
@@ -289,9 +289,9 @@ class BlocRefList(Directive):
     """
     A list of all blocref entries, for a specific tag.
 
-    * tag: a tag to filter bloc having this tag
-    * sort: a way to sort the blocs based on the title, file, number, default: *title*
-    * contents: add a bullet list with links to added blocs
+    * tag: a tag to filter block having this tag
+    * sort: a way to sort the blocks based on the title, file, number, default: *title*
+    * contents: add a bullet list with links to added blocks
 
     Example::
 
@@ -507,20 +507,20 @@ def process_blocref_nodes_generic(
                     fromdocname, blocref_info["docname"]
                 )
                 if blocref_info["target"] is None:
-                    raise NoUri  # pragma: no cover
+                    raise NoUri
                 try:
                     newnode["refuri"] += "#" + blocref_info["target"]["refid"]
-                except Exception as e:  # pragma: no cover
+                except Exception as e:
                     raise KeyError(
-                        "refid in not present in '{0}'".format(blocref_info["target"])
+                        f"refid in not present in {blocref_info['target']!r}"
                     ) from e
-            except NoUri:  # pragma: no cover
+            except NoUri:
                 # ignore if no URI can be determined, e.g. for LaTeX output
                 pass
 
             newnode.append(nodes.Text(newnode["name"]))
 
-            # para is duplicate of the content of the bloc
+            # para is duplicate of the content of the block
             para += newnode
             para += nodes.Text(desc2, desc2)
 
@@ -540,7 +540,7 @@ def process_blocref_nodes_generic(
                         fromdocname, brefdocname
                     )
                     newnode["refuri"] += "#" + idss[0]
-                except NoUri:  # pragma: no cover
+                except NoUri:
                     # ignore if no URI can be determined, e.g. for LaTeX output
                     pass
                 p += newnode

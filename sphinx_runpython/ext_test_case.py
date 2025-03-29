@@ -4,7 +4,7 @@ import unittest
 import warnings
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
-from typing import Any, Callable, List
+from typing import Any, Callable, List, Optional
 
 import numpy
 from numpy.testing import assert_allclose
@@ -35,6 +35,42 @@ def ignore_warnings(warns: List[Warning]) -> Callable:
                 warnings.simplefilter("ignore", warns)
                 return fct(self)
 
+        return call_f
+
+    return wrapper
+
+
+def hide_stdout(f: Optional[Callable] = None) -> Callable:
+    """
+    Catches warnings, hides standard output.
+    The function may be disabled by setting ``UNHIDE=1``
+    before running the unit test.
+
+    :param f: the function is called with the stdout as an argument
+    """
+
+    def wrapper(fct):
+        def call_f(self):
+            if os.environ.get("UNHIDE", ""):
+                fct(self)
+                return
+            st = StringIO()
+            with redirect_stdout(st), warnings.catch_warnings():
+                warnings.simplefilter("ignore", (UserWarning, DeprecationWarning))
+                try:
+                    fct(self)
+                except AssertionError as e:
+                    if "torch is not recent enough, file" in str(e):
+                        raise unittest.SkipTest(str(e))  # noqa: B904
+                    raise
+            if f is not None:
+                f(st.getvalue())
+            return None
+
+        try:  # noqa: SIM105
+            call_f.__name__ = fct.__name__
+        except AttributeError:
+            pass
         return call_f
 
     return wrapper
@@ -108,7 +144,7 @@ class ExtTestCase(unittest.TestCase):
             fct()
         except exc_type as e:
             if not isinstance(e, exc_type):
-                raise AssertionError(f"Unexpected exception {type(e)!r}.")
+                raise AssertionError(f"Unexpected exception {type(e)!r}.")  # noqa: B904
             return
         raise AssertionError("No exception was raised.")
 
@@ -133,7 +169,7 @@ class ExtTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         for name, line, w in cls._warns:
-            warnings.warn(f"\n{name}:{line}: {type(w)}\n  {str(w)}")
+            warnings.warn(f"\n{name}:{line}: {type(w)}\n  {str(w)}", stacklevel=0)
 
     def capture(self, fct: Callable):
         """
@@ -144,7 +180,6 @@ class ExtTestCase(unittest.TestCase):
         """
         sout = StringIO()
         serr = StringIO()
-        with redirect_stdout(sout):
-            with redirect_stderr(serr):
-                res = fct()
+        with redirect_stdout(sout), redirect_stderr(serr):
+            res = fct()
         return res, sout.getvalue(), serr.getvalue()

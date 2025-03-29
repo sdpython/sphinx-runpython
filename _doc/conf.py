@@ -1,4 +1,3 @@
-# coding: utf-8
 import os
 import sys
 from sphinx_runpython import __version__
@@ -83,6 +82,8 @@ nitpicky = True
 nitpick_ignore = [
     ("py:class", "False"),
     ("py:class", "True"),
+    ("py:class", "SphinxPostTransform"),
+    ("py:meth", "Builder.get_relative_uri"),
 ]
 
 nitpick_ignore_regex = [
@@ -90,6 +91,7 @@ nitpick_ignore_regex = [
     ("py:func", ".*[.]PyCapsule[.].*"),
     ("py:func", ".*numpy[.].*"),
     ("py:func", ".*scipy[.].*"),
+    ("py:meth", "Builder[.].*"),
 ]
 
 intersphinx_mapping = {
