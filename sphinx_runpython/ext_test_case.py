@@ -4,7 +4,7 @@ import unittest
 import warnings
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
-from typing import Any, Callable, List
+from typing import Any, Callable, List, Optional
 
 import numpy
 from numpy.testing import assert_allclose
@@ -35,6 +35,42 @@ def ignore_warnings(warns: List[Warning]) -> Callable:
                 warnings.simplefilter("ignore", warns)
                 return fct(self)
 
+        return call_f
+
+    return wrapper
+
+
+def hide_stdout(f: Optional[Callable] = None) -> Callable:
+    """
+    Catches warnings, hides standard output.
+    The function may be disabled by setting ``UNHIDE=1``
+    before running the unit test.
+
+    :param f: the function is called with the stdout as an argument
+    """
+
+    def wrapper(fct):
+        def call_f(self):
+            if os.environ.get("UNHIDE", ""):
+                fct(self)
+                return
+            st = StringIO()
+            with redirect_stdout(st), warnings.catch_warnings():
+                warnings.simplefilter("ignore", (UserWarning, DeprecationWarning))
+                try:
+                    fct(self)
+                except AssertionError as e:
+                    if "torch is not recent enough, file" in str(e):
+                        raise unittest.SkipTest(str(e))  # noqa: B904
+                    raise
+            if f is not None:
+                f(st.getvalue())
+            return None
+
+        try:  # noqa: SIM105
+            call_f.__name__ = fct.__name__
+        except AttributeError:
+            pass
         return call_f
 
     return wrapper

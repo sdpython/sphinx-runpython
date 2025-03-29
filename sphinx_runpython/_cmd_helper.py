@@ -82,7 +82,7 @@ def latex_process(
 
     if not os.path.exists(infolder):
         raise FileNotFoundError(f"Unable to find {infolder!r}.")
-    patterns = [infolder + "/*.rst", infolder + "/**/*.py"]
+    patterns = [infolder + "/*.rst", infolder + "/*.py"]
     for pattern in patterns:
         if verbose:
             print(f"[latex] look with pattern {pattern!r}, recursive={recursive}")

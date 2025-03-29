@@ -55,8 +55,21 @@ def build_regex(text: Optional[str] = None) -> Dict[str, Union[str, Tuple[str, s
         name, n, pat = match.group(1), match.group(3), match.group(4)
         if n is None or int(n) == 0:
             res[name] = pat
+        elif name in {"pa", "cro", "acc", "abs"}:
+            # These can be nested expression.
+            spl = line.split("#1")
+            begin, end = spl[0][-1], spl[-1][-2]
+            if begin == "{":
+                begin = "\\{"
+            if end == "}":
+                end = "\\}"
+            res[name] = (
+                lambda s, name=name, begin=begin, end=end: replace_nested_bracked(
+                    s, name=name, begin=begin, end=end
+                )
+            )
         else:
-            look = f"\\\\{name} *" + "\\{(.+)\\}" * int(n)
+            look = f"\\\\{name} *" + "\\{(.+?)\\}" * int(n)
             for c in "\\":
                 pat = pat.replace(c, f"\\{c}")
             for k in range(int(n)):
@@ -65,16 +78,47 @@ def build_regex(text: Optional[str] = None) -> Dict[str, Union[str, Tuple[str, s
     return res
 
 
+def replace_nested_bracked(text: str, name: str, begin: str, end: str) -> str:
+    """
+    Replaces brackets, nested brackets...
+    """
+    find_left = f"\\{name}" + "{"
+    if find_left not in text:
+        return text
+    content = [[]]
+    i = 0
+    while i < len(text):
+        if i + len(find_left) < len(text) and text[i : i + len(find_left)] == find_left:
+            content.append([])
+            content[-1].append(f"\\left{begin}")
+            i += len(find_left)
+        elif text[i] == "{":
+            content.append([])
+            content[-1].append(text[i])
+            i += 1
+        elif text[i] == "}":
+            content[-1].append(
+                f"\\right{end}" if content[-1][0].startswith("\\left") else text[i]
+            )
+            content[-2].append("".join(content.pop()))
+            i += 1
+        else:
+            content[-1].append(text[i])
+            i += 1
+    return "".join(content[0])
+
+
 def replace_latex_command(
-    text: str, patterns: Optional[Dict[str, Union[str, Tuple[str, str]]]] = None
+    text: str,
+    patterns: Optional[Dict[str, Union[str, Tuple[str, str]]]] = None,
+    verbose: int = 0,
 ) -> str:
     """
     Replaces a latex by its raw expression.
 
-    Uses pylatexenc.latexwalker
-
     :param text: text
     :param patterns: one in the known list or None for all
+    :param verbose: verbosity
     :return: modified text
 
     The default patterns are defined by:
@@ -100,8 +144,12 @@ def replace_latex_command(
         patterns = build_regex()
 
     for k, v in patterns.items():
+        if verbose:
+            text0 = text
         if isinstance(v, str):
             text = text.replace(f"\\{k}", v)
+            if verbose and text != text0:
+                print(f"[replace_latex_command] (1) {k!r}:[{text0}] -> [{text}]")
         elif isinstance(v, tuple) and len(v) == 2:
             try:
                 text = re.sub(v[0], v[1], text)
@@ -109,6 +157,12 @@ def replace_latex_command(
                 raise AssertionError(
                     f"Unable to replace pattern {v[0]!r} by {v[1]!r} for text={text!r}"
                 ) from e
+            if verbose and text != text0:
+                print(f"[replace_latex_command] (2) {k!r}:[{text0}] -> [{text}]")
+        elif callable(v):
+            text = v(text)
+            if verbose and text != text0:
+                print(f"[replace_latex_command] (3) {k!r}:[{text0}] -> [{text}]")
         else:
             raise AssertionError(f"Unable to understand v={v!r} for k={k!r}")
     return text

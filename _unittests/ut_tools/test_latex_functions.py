@@ -1,5 +1,5 @@
 import unittest
-from sphinx_runpython.ext_test_case import ExtTestCase
+from sphinx_runpython.ext_test_case import ExtTestCase, hide_stdout
 from sphinx_runpython.tools.latex_functions import build_regex, replace_latex_command
 
 
@@ -9,6 +9,7 @@ class TestLatexFunction(ExtTestCase):
         regs = build_regex()
         self.assertEqual(regs["supegal"], "\\geqslant")
 
+    @hide_stdout()
     def test_replace_pattern(self):
         self.assertEqual(replace_latex_command("\\R"), "\\mathbb{R}")
         self.assertEqual(replace_latex_command("A\\R B"), "A\\mathbb{R} B")
@@ -22,19 +23,22 @@ class TestLatexFunction(ExtTestCase):
             replace_latex_command("\\vecteur{a}{b}"), "\\left(a,\\dots,b\\right)"
         )
         self.assertEqual(
-            replace_latex_command("\\pa{5\\pa{3i+3}}"), "\\left(5\\pa{3i+3}\\right)"
+            replace_latex_command("\\pa{5\\pa{3i+3}}"),
+            "\\left(5\\left(3i+3\\right)\\right)",
         )
         self.assertEqual(
             replace_latex_command("\\pa{5+3i}\\pa{3i+3}"),
-            "\\left(5+3i\\right)\\left(3i+3}\\right)",
+            "\\left(5+3i\\right)\\left(3i+3\\right)",
         )
         self.assertEqual(
             replace_latex_command(
                 "\\indicatrice{ N \\supegal X } +  \\cro{ X (s-p) + N (q-s)} "
-                "\\indicatrice{ N < X }"
+                "\\indicatrice{ N < X }",
+                verbose=1,
             ),
-            "{1\\!\\!1}_{ N \\geqslant X } +  \\left[ X (s-p) + N (q-s)\\right]"
-            "  {1\\!\\!1}_{ N < X }",
+            " {1\\!\\!1}_{\\left\\{ N \\geqslant X \\right\\}}  +  "
+            "\\left[ X (s-p) + N (q-s)\\right]"
+            "  {1\\!\\!1}_{\\left\\{ N < X \\right\\}} ",
         )
 
 
