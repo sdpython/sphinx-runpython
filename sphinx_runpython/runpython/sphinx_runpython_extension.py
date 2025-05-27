@@ -541,6 +541,8 @@ class RunPythonDirective(Directive):
         this trick is needed when the script to executes relies on
         function such :epkg:`*py:inspect:getsource` which requires
         the script to be stored somewhere in order to retrieve it.
+    * ``:debug:`` if ``:rst:`` is used, it shows some information to help
+      debugging.
 
     Option *rst* can be used the following way::
 
@@ -611,6 +613,7 @@ class RunPythonDirective(Directive):
         "numpy_precision": directives.unchanged,
         "store_in_file": directives.unchanged,
         "linenos": directives.unchanged,
+        "debug": directives.unchanged,
     }
     has_content = True
     runpython_class = runpython_node
@@ -650,6 +653,7 @@ class RunPythonDirective(Directive):
             "linenos": "linenos" in self.options,
             "showout": "showout" in self.options,
             "rst": "rst" in self.options,
+            "debug": "debug" in self.options,
             "sin": self.options.get("sin", TITLES[language_code]["In"]),
             "sout": self.options.get("sout", TITLES[language_code]["Out"]),
             "sout2": self.options.get("sout2", TITLES[language_code]["Out2"]),
@@ -897,9 +901,24 @@ class RunPythonDirective(Directive):
             elif len(p["sout"]) > 0:
                 secout += nodes.paragraph(text=p["sout"])
 
+            content_rows = content.replace("\r", "").split("\n")
+
+            if p["debug"]:
+                full_content = "\n".join(
+                    f"    {i+1:05d}: {row}" for i, row in enumerate(content_rows)
+                )
+                content_rows.extend(["", f"*n_rows: {len(content_rows)}*"])
+                for i, row in enumerate(content_rows):
+                    if set(row) in ({"+"}, {"="}, {"-"}):
+                        title = content_rows[i - 1]
+                        content_rows.append(f"* *{i}:{title}*")
+                content_rows.extend(
+                    ["", "", ".. code-block:: text", "", full_content, ""]
+                )
+
             try:
                 if p["sphinx"]:
-                    st = StringList(content.replace("\r", "").split("\n"))
+                    st = StringList(content_rows)
                     nested_parse_with_titles(self.state, st, secout)
                     dt = None
                 else:

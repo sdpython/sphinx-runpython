@@ -1,6 +1,11 @@
 Change Logs
 ===========
 
+0.4.0
++++++
+
+* :pr:``: add option ``:debug:`` to runpython to append rst code to a page
+
 0.3.0
 +++++
 
