@@ -50,8 +50,8 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
 
         epkg_dictionary = {
             'pandas': (
-                'http://pandas.pydata.org/pandas-docs/stable/generated/',
-                ('http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html', 1)
+                'https://pandas.pydata.org/docs/',
+                ('https://pandas.pydata.org/docs/reference/api/pandas.{0}.html', 1)),
             ),
             # 1 for one parameter
             '*py': (
@@ -72,8 +72,8 @@ def epkg_role(role, rawtext, text, lineno, inliner, options=None, content=None):
 
         epkg_dictionary = {
             'weird_package': (
-                'http://pandas.pydata.org/pandas-docs/stable/generated/',
-                ('http://pandas.pydata.org/pandas-docs/stable/generated/{0}.html', 1),
+                'https://pandas.pydata.org/docs/',
+                ('https://pandas.pydata.org/docs/reference/api/pandas.{0}.html', 1)),
                 my_custom_links
             )
 
