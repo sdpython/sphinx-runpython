@@ -123,12 +123,9 @@ epkg_dictionary = {
         ("https://docs.scipy.org/doc/numpy/reference/generated/numpy.{0}.{1}.html", 2),
     ),
     "pandas": (
-        "https://pandas.pydata.org/pandas-docs/stable/",
-        ("https://pandas.pydata.org/pandas-docs/stable/generated/pandas.{0}.html", 1),
-        (
-            "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.{0}.{1}.html",
-            2,
-        ),
+        "https://pandas.pydata.org/docs/reference/index.html",
+        ("https://pandas.pydata.org/docs/reference/api/pandas.{0}.html", 1),
+        ("https://pandas.pydata.org/docs/reference/api/pandas.{0}.{1}.html", 2),
     ),
     "pandoc": "https://pandoc.org/",
     "Pandoc": "https://pandoc.org/",
