@@ -34,7 +34,7 @@ class TestEpkgExtension(ExtTestCase):
         if t1 not in html:
             raise AssertionError(html)
 
-        t1 = "https://pandas.pydata.org/pandas-docs/stable/"
+        t1 = "https://pandas.pydata.org/docs/"
         if t1 not in html:
             raise AssertionError(html)
 
@@ -52,11 +52,8 @@ class TestEpkgExtension(ExtTestCase):
         )
         content = content.replace('u"', '"')
 
-        html = rst2html(
-            content,
-            writer_name="rst",
-        )
-        self.assertIn("https://pandas.pydata.org/pandas-docs/stable/", html)
+        html = rst2html(content, writer_name="rst")
+        self.assertIn("https://pandas.pydata.org/docs/", html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_sub(self):
@@ -117,7 +114,9 @@ class TestEpkgExtension(ExtTestCase):
         if t1 in html:
             raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
-        t1 = "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_html.html"
+        t1 = (
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_html.html"
+        )
         if t1 not in html:
             raise AssertionError(html)
 
@@ -143,13 +142,9 @@ class TestEpkgExtension(ExtTestCase):
 
         self.assertIn("abeforea", html)
         self.assertIn("aftera", html)
-
         self.assertNotIn("`", html)
-        self.assertIn('https://johnmacfarlane.net/pandoc/"', html)
-        self.assertIn(
-            "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_html.html",
-            html,
-        )
+        self.assertIn('https://pandoc.org/"', html)
+        self.assertIn("https://pandas.pydata.org/docs/reference/api/pandas.", html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_epkg_function_string(self):
@@ -179,7 +174,9 @@ class TestEpkgExtension(ExtTestCase):
         if t1 in html:
             raise AssertionError(f"\n**{spl}**\n----\n{html}")
 
-        t1 = "https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_html.html"
+        t1 = (
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_html.html"
+        )
         if t1 not in html:
             raise AssertionError(html)
 

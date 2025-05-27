@@ -19,9 +19,10 @@ In *conf.py*:
     ]
 
     epkg_dictionary = {
-        'pandoc': 'http://johnmacfarlane.net/pandoc/',                                       # 1
-        'pandas': ('http://pandas.pydata.org/pandas-docs/stable/',                           # 2
-            ('http://pandas.pydata.org/pandas-docs/stable/generated/pandas.{0}.html', 1)),   # 3
+        'pandoc': 'https://pandoc.org/',                                            # 1
+        'pandas': (
+            'https://pandas.pydata.org/docs/',                                      # 2
+            ('https://pandas.pydata.org/docs/reference/api/pandas.{0}.html', 1)),   # 3
         }
 
 The variable ``epkg_dictionary`` stores the list of url to display. It can be a simple
