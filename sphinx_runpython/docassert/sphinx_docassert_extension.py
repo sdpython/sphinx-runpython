@@ -336,9 +336,7 @@ class OverrideDocFieldTransformer:
                     reasons = "unknown"
                 logger = logging.getLogger("docassert")
                 logger.warning(
-                    "[docassert] unable to import object %r, reasons:\n%s",
-                    docs,
-                    reasons,
+                    "[docassert] unable to import object %r, reasons: %s", docs, reasons
                 )
 
             if myfunc is None:
