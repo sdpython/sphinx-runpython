@@ -4,6 +4,7 @@ Change Logs
 0.4.0
 +++++
 
+* :pr:`40`: error message inline
 * :pr:`39`: add option ``:debug:`` to runpython to append rst code to a page
 
 0.3.0
