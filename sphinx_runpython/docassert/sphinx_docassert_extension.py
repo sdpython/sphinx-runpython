@@ -319,6 +319,11 @@ class OverrideDocFieldTransformer:
             # Import object, get the list of parameters
             docs = fieldbody.parent.source.split("docstring of")[-1].strip()
             docs = docs.replace(".PyCapsule.", ".")
+            if (
+                "pybind11_detail_function_record_v1_system_libstdcpp_gxx_abi_1xxx_use_cxx11_abi_1"
+                in docs
+            ):
+                continue
 
             myfunc = None
             funckind = None
