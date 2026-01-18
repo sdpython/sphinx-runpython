@@ -40,9 +40,7 @@ class TestRunPythoncontext(ExtTestCase):
                             print("failed")
                             for k, v in sorted(locals().copy().items()):
                                 print(k, "=", [v])
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         rst = rst2html(content, writer_name="rst")
         self.assertIn("restored saved for later", rst)

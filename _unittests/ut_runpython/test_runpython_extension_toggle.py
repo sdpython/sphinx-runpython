@@ -54,9 +54,7 @@ class TestRunPythonExtensionToggle(ExtTestCase):
                         print(u"setsysvar: " + str(
                             sys.__dict__.get(
                                 'enable_disabled_documented_pieces_of_code', None)))
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         # HTML

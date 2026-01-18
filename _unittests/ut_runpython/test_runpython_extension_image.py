@@ -51,9 +51,7 @@ class TestRunPythonExtensionImage(ExtTestCase):
                         text = ".. image:: oo.png\\n    :width: 200px"
                         print(text)
 
-                    """.replace(
-            "                    ", ""
-        ).replace(
+                    """.replace("                    ", "").replace(
             "__FOLD__", temp.replace("\\", "/")
         )
         content = content.replace('u"', '"')

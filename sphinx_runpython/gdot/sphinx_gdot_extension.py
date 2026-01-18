@@ -217,17 +217,13 @@ def visit_gdot_node_html_svg(self, node):
 
     content = """
     <div id="gdot-{0}-cont"><div id="gdot-{0}" style="width:100%;height:100%;"></div>
-    """.format(
-        nid
-    )
+    """.format(nid)
 
     script = (
         """
     require(['__URL__'], function() { var svgGraph = Viz("__DOT__");
     document.getElementById('gdot-__ID__').innerHTML = svgGraph; });
-    """.replace(
-            "__ID__", nid
-        )
+    """.replace("__ID__", nid)
         .replace("__DOT__", process(node["code"]))
         .replace("__URL__", node["url"])
     )

@@ -20,9 +20,7 @@ class TestBlocRefExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -61,9 +59,7 @@ class TestBlocRefExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -102,9 +98,7 @@ class TestBlocRefExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -147,9 +141,7 @@ class TestBlocRefExtension(ExtTestCase):
                         :contents: 1
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")

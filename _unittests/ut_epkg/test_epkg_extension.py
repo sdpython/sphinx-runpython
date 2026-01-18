@@ -8,7 +8,6 @@ from sphinx_runpython.epkg.sphinx_epkg_extension import (
     depart_epkg_node,
 )
 
-
 tives = [("epkg", epkg_role, epkg_node, visit_epkg_node, depart_epkg_node)]
 
 
@@ -20,9 +19,7 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas` aaftera
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
         html = rst2html(content, writer_name="rst")
 
@@ -47,9 +44,7 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas` aaftera
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -62,9 +57,7 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas:DataFrame.to_html` aaftera
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
@@ -90,9 +83,7 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas:DataFrame:to_html` aaftera
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         def pandas_link(input):
@@ -129,9 +120,7 @@ class TestEpkgExtension(ExtTestCase):
                     abeforea :epkg:`pandas:DataFrame:to_html` aaftera
 
                     7za :epkg:`Pandoc` 7zb
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         class pandas_link:
@@ -153,9 +142,7 @@ class TestEpkgExtension(ExtTestCase):
                     ================
 
                     abeforea :epkg:`pandas:DataFrame:to_html` aaftera
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
@@ -188,9 +175,7 @@ class TestEpkgExtension(ExtTestCase):
 
                     `one link on two lines <http://first.part/
                     second part>`_.
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")

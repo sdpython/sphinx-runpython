@@ -281,10 +281,10 @@ def run_cmd(
             begin = time.perf_counter()
             last_update = begin
             # with threads
-            (stdoutReader, stdoutQueue) = _AsyncLineReader.getForFd(
+            stdoutReader, stdoutQueue = _AsyncLineReader.getForFd(
                 stdout, catch_exit=catch_exit
             )
-            (stderrReader, stderrQueue) = _AsyncLineReader.getForFd(
+            stderrReader, stderrQueue = _AsyncLineReader.getForFd(
                 stderr, catch_exit=catch_exit
             )
             runloop = True

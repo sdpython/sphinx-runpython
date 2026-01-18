@@ -42,9 +42,7 @@ class TestCollapseExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         # RST
@@ -101,9 +99,7 @@ class TestCollapseExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         # RST
@@ -136,9 +132,7 @@ class TestCollapseExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         # RST

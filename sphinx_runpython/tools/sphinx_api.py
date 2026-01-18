@@ -13,23 +13,19 @@ def _write_doc_folder(
     """
     Creates all the file in a dictionary.
     """
-    template = textwrap.dedent(
-        """
+    template = textwrap.dedent("""
     <full_module_name>
     <line>
 
     .. automodule:: <full_module_name>
         :members:
         :no-undoc-members:
-    """
-    )
+    """)
 
-    index = textwrap.dedent(
-        """
+    index = textwrap.dedent("""
     <full_module_name>
     <line>
-    """
-    )
+    """)
 
     submodule = ".".join(os.path.splitext(folder)[0].replace("\\", "/").split("/"))
     fullsubmodule = f"{prefix}.{submodule}" if prefix else submodule
@@ -39,16 +35,12 @@ def _write_doc_folder(
         .replace("<line>", "=" * len(fullsubmodule)),
     ]
     if subfolders:
-        rows.append(
-            textwrap.dedent(
-                """
+        rows.append(textwrap.dedent("""
         .. toctree::
             :maxdepth: 1
             :caption: submodules
 
-        """
-            )
-        )
+        """))
         for sub in subfolders:
             rows.append(f"    {sub}/index")
     res = {}
@@ -75,29 +67,21 @@ def _write_doc_folder(
         res[key] = text
         if not has_module:
             has_module = True
-            rows.append(
-                textwrap.dedent(
-                    """
+            rows.append(textwrap.dedent("""
 
             .. toctree::
                 :maxdepth: 1
                 :caption: modules
 
-            """
-                )
-            )
+            """))
         rows.append(f"    {last}")
 
-    rows.append(
-        textwrap.dedent(
-            f"""
+    rows.append(textwrap.dedent(f"""
 
     .. automodule:: {submodule}
         :members:
         :no-undoc-members:
-    """
-        )
-    )
+    """))
     res["index.rst"] = "\n".join(rows)
     return res
 
@@ -121,7 +105,7 @@ def sphinx_api(
     :return: list of written file
     """
     folder = folder.rstrip("/\\")
-    root, package_name = os.path.split(folder)
+    root, _package_name = os.path.split(folder)
     files = []
     if verbose:
         print(f"[sphinx_api] start creating API for {folder!r}")

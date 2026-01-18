@@ -60,9 +60,7 @@ class TestRunPythonExtension(ExtTestCase):
                         print(u"setsysvar: " + str(
                             sys.__dict__.get(
                                 'enable_disabled_documented_pieces_of_code', None)))
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
@@ -101,9 +99,7 @@ class TestRunPythonExtension(ExtTestCase):
 
                         import numpy
                         print(numpy.array([1.123456789, 1.987654321]))
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         html = rst2html(content, writer_name="rst")
         if "[1.12 1.99]" not in html:
@@ -129,9 +125,7 @@ class TestRunPythonExtension(ExtTestCase):
 
                         import numpy
                         print(numpy.array([1.123456789, 1.987654321]))
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         html = rst2html(content, writer_name="rst")
         if "[1.12 1.99]" not in html:
@@ -174,9 +168,7 @@ class TestRunPythonExtension(ExtTestCase):
 
                         import warnings
                         warnings.warn("deprecated", DeprecationWarning)
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -217,9 +209,7 @@ class TestRunPythonExtension(ExtTestCase):
 
                         import warnings
                         warnings.warn("deprecated", DeprecationWarning)
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -260,9 +250,7 @@ class TestRunPythonExtension(ExtTestCase):
                         import sys
                         print(u"setsysvar: " + str(sys.__dict__.get(
                             'enable_disabled_documented_pieces_of_code', None)))
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -319,9 +307,7 @@ class TestRunPythonExtension(ExtTestCase):
                         import sys
                         print(u"setsysvar: " + str(sys.__dict__.get(
                             'enable_disabled_documented_pieces_of_code', None)))
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
@@ -372,9 +358,7 @@ class TestRunPythonExtension(ExtTestCase):
                         print(u"this code should" + u" appear")
                         z = 1/0
                         print(u"this one should" + u" not")
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
@@ -417,9 +401,7 @@ class TestRunPythonExtension(ExtTestCase):
                         print(u"this code should" + u" appear")
                         z = 0.5 + 0.6
                         print(u"this one should" + u" not")
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
@@ -440,9 +422,7 @@ class TestRunPythonExtension(ExtTestCase):
                         :assert: z == 1.2
 
                         z = 0.5 + 0.6
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         try:
@@ -485,9 +465,7 @@ class TestRunPythonExtension(ExtTestCase):
                         print(u"this code should" + u" appear")
                         z = 1/0
                         print(u"this one should" + u" not")
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="html")
