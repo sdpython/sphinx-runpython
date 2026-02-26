@@ -148,6 +148,28 @@ class GDotDirective(Directive):
         content = "\n".join(self.content)
         if script or script == "":
             stdout, stderr, _ = run_python_script(content, process=process)
+
+            if stderr:
+                out = [
+                    "use_kernel_func_from_hub",
+                    "is deprecated, use",
+                    "was set in the config but",
+                    "The axis name: batch will not be used",
+                ]
+                if isinstance(stderr, str):
+                    stderr = "\n".join(
+                        [_ for _ in stderr.split("\n") if all(o not in _ for o in out)]
+                    )
+                else:
+                    bout = [_.encode("utf-8") for _ in out]
+                    stderr = b"\n".join(
+                        [
+                            _
+                            for _ in stderr.split(b"\n")
+                            if all(o not in _ for o in bout)
+                        ]
+                    )
+
             if stderr:
                 logger = logging.getLogger("gdot")
                 logger.warning("[gdot] a dot graph cannot be draw due to %s", stderr)
