@@ -4,7 +4,7 @@ Change Logs
 0.4.1
 +++++
 
-* :pr:`42`: excludes failing functions from pybind11 in docassert 
+* :pr:`42`: excludes failing functions from pybind11 in docassert
 
 0.4.0
 +++++

@@ -1421,7 +1421,7 @@ class RstBuilder(Builder):
         return f"{self.outdir}/{pagename}.rst".replace("\\", "/")
 
     def write_doc(self, docname, doctree):
-        """wrtie documentation"""
+        """write documentation"""
         destination = StringOutput(encoding="utf-8")
         self.current_docname = docname
         self.writer.write(doctree, destination)
