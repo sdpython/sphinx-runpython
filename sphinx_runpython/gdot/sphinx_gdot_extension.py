@@ -102,10 +102,7 @@ class GDotDirective(Directive):
         "process": directives.unchanged,
     }
 
-    _default_url = (
-        "https://github.com/sdpython/jyquickhelper/raw/master/src/"
-        "jyquickhelper/js/vizjs/viz.js"
-    )
+    _default_url = "https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.8.0/viz-lite.js"
 
     def run(self):
         """
@@ -120,19 +117,7 @@ class GDotDirective(Directive):
         bool_set_ = (True, 1, "True", "1", "true", "")
         process = "process" in self.options and self.options["process"] in bool_set_
         if url == "local":
-            try:
-                import jyquickhelper
-
-                path = os.path.join(
-                    os.path.dirname(jyquickhelper.__file__), "js", "vizjs", "viz.js"
-                )
-                if not os.path.exists(path):
-                    raise ImportError("jyquickelper needs to be updated to get viz.js.")
-                url = "local"
-            except ImportError:
-                url = GDotDirective._default_url
-                logger = logging.getLogger("gdot")
-                logger.warning("[gdot] use %r", url)
+            url = GDotDirective._default_url
 
         info = get_env_state_info(self)
         docname = info["docname"]
