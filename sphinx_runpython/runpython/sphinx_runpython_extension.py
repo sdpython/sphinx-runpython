@@ -470,8 +470,6 @@ def _filter_error(err):
         return err
     out = [
         "use_kernel_func_from_hub",
-        "is deprecated, use",
-        "was set in the config but",
     ]
     if isinstance(err, str):
         res = "\n".join([_ for _ in err.split("\n") if all(o not in _ for o in out)])
