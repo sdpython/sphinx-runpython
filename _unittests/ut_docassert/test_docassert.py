@@ -13,7 +13,7 @@ class TestDocAssert(ExtTestCase):
         this = os.path.abspath(os.path.dirname(__file__))
         data = os.path.join(this, "datadoc")
         with sys_path_append(data):
-            obj, name = import_object("exdocassert.onefunction", "function")
+            obj, _name = import_object("exdocassert.onefunction", "function")
             self.assertTrue(obj is not None)
             self.assertTrue(obj(4, 5), 9)
 
@@ -45,7 +45,7 @@ class TestDocAssert(ExtTestCase):
         this = os.path.abspath(os.path.dirname(__file__))
         data = os.path.join(this, "datadoc")
         with sys_path_append(data):
-            obj, name = import_object("exdocassert2.onefunction", "function")
+            _obj, _name = import_object("exdocassert2.onefunction", "function")
             newstring = ".. autofunction:: exdocassert2.onefunction"
             html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
@@ -88,7 +88,7 @@ class TestDocAssert(ExtTestCase):
         this = os.path.abspath(os.path.dirname(__file__))
         data = os.path.join(this, "datadoc")
         with sys_path_append(data):
-            obj, name = import_object("exsig.clex.onemethod", "method")
+            _obj, _name = import_object("exsig.clex.onemethod", "method")
             newstring = ".. automethod:: exsig.clex.onemethod"
             html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
@@ -133,7 +133,7 @@ class TestDocAssert(ExtTestCase):
         this = os.path.abspath(os.path.dirname(__file__))
         data = os.path.join(this, "datadoc")
         with sys_path_append(data):
-            obj, name = import_object("clsslk.Estimator", "class")
+            _obj, _name = import_object("clsslk.Estimator", "class")
             newstring = ".. autoclass:: clsslk.Estimator"
             html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
@@ -177,7 +177,7 @@ class TestDocAssert(ExtTestCase):
         this = os.path.abspath(os.path.dirname(__file__))
         data = os.path.join(this, "datadoc")
         with sys_path_append(data):
-            obj, name = import_object("clsslk.Estimator2", "class")
+            _obj, _name = import_object("clsslk.Estimator2", "class")
             newstring = ".. autoclass:: clsslk.Estimator2"
             html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
@@ -221,7 +221,7 @@ class TestDocAssert(ExtTestCase):
         this = os.path.abspath(os.path.dirname(__file__))
         data = os.path.join(this, "datadoc")
         with sys_path_append(data):
-            obj, name = import_object("clsslk.Estimator3", "class")
+            _obj, _name = import_object("clsslk.Estimator3", "class")
             newstring = ".. autoclass:: clsslk.Estimator3"
             html, warn = rst2html(
                 newstring, return_warnings=True, new_extensions=["numpydoc"]

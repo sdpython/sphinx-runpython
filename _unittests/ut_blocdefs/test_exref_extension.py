@@ -20,9 +20,7 @@ class TestExRefExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -64,9 +62,7 @@ class TestExRefExtension(ExtTestCase):
                         :sort: title
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -105,9 +101,7 @@ class TestExRefExtension(ExtTestCase):
                         :sort: title
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         rst = rst2html(content, writer_name="rst")

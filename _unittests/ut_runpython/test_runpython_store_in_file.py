@@ -39,9 +39,7 @@ class TestRunPythonStoreInFile(ExtTestCase):
                         print("***********")
                         print(code)
                         print("***********")
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         temp = os.path.abspath(os.path.dirname(__file__))
         dest = os.path.join(temp, "exescript.py")

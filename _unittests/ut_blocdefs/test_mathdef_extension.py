@@ -20,9 +20,7 @@ class TestMathDefExtension(ExtTestCase):
                         this code should appear___
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -62,9 +60,7 @@ class TestMathDefExtension(ExtTestCase):
                         :tag: definition
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -102,9 +98,7 @@ class TestMathDefExtension(ExtTestCase):
                         :contents:
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(content, writer_name="rst")
@@ -148,9 +142,7 @@ class TestMathDefExtension(ExtTestCase):
                         :contents:
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(

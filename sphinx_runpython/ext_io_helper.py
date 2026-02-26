@@ -3,7 +3,6 @@ import gzip
 import os
 import re
 import shutil
-import socket
 import time
 import warnings
 import http.client as http_client
@@ -368,7 +367,7 @@ def get_url_content_timeout(
         urllib_error.HTTPError,
         urllib_error.URLError,
         ConnectionRefusedError,
-        socket.timeout,
+        TimeoutError,
         ConnectionResetError,
         http_client.BadStatusLine,
         http_client.IncompleteRead,

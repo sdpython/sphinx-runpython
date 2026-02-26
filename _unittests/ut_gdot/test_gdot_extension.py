@@ -22,9 +22,7 @@ class TestGDotExtension(ExtTestCase):
                         }
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         content = rst2html(
             content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
@@ -44,9 +42,7 @@ class TestGDotExtension(ExtTestCase):
                         print('''digraph foo { HbarH -> HbazH; }'''.replace("H", '"'))
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         content = rst2html(
             content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
@@ -64,9 +60,7 @@ class TestGDotExtension(ExtTestCase):
                 print('''...BEGINdigraph foo { HbarH -> HbazH; }'''.replace("H", '"'))
 
             after
-            """.replace(
-            "            ", ""
-        )
+            """.replace("            ", "")
 
         content = rst2html(
             content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
@@ -87,9 +81,7 @@ class TestGDotExtension(ExtTestCase):
                         }
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         content = rst2html(
             content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
@@ -111,9 +103,7 @@ class TestGDotExtension(ExtTestCase):
                         }
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         content = rst2html(
             content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
@@ -135,9 +125,7 @@ class TestGDotExtension(ExtTestCase):
                         }
 
                     after
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         try:
             content = rst2html(

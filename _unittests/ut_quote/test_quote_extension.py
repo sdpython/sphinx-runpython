@@ -16,9 +16,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -71,9 +69,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -126,9 +122,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -182,9 +176,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -238,9 +230,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -294,9 +284,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -350,9 +338,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(
@@ -406,9 +392,7 @@ class TestQuoteExtension(ExtTestCase):
                         this code should appear___
 
                     next
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
         content = content.replace('u"', '"')
 
         html = rst2html(

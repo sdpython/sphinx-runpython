@@ -126,9 +126,7 @@ def visit_collapse_node_html(self, node):
                         x.style.display = "block"; b.innerText = '__HIDE__';
                     }
                     else { x.style.display = "none"; b.innerText = '__UNHIDE__'; }
-                }""".replace(
-        "                ", ""
-    )
+                }""".replace("                ", "")
     script = script.replace("__ID__", nid)
     script = script.replace("__HIDE__", hide)
     script = script.replace("__UNHIDE__", unhide)

@@ -27,9 +27,7 @@ class TestRunPythonCodeBlock(ExtTestCase):
                         ens = ["f", 0]
                         for j in ens:
                             print(j)
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         rst = rst2html(content, writer_name="rst")
         self.assertIn("csharp", str(rst))
@@ -55,9 +53,7 @@ class TestRunPythonCodeBlock(ExtTestCase):
                         {
                             return x.ToInt();
                         }
-                    """.replace(
-            "                    ", ""
-        )
+                    """.replace("                    ", "")
 
         rst = rst2html(content, writer_name="rst")
         self.assertIn(".. code-block:: csharp", rst)
