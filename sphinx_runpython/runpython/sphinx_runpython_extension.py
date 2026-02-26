@@ -372,7 +372,7 @@ def run_python_script(
 
         try:
             out, err = run_cmd(cmd, script_arg, wait=True, change_path=chdir)
-            return out, err, None
+            return out, _filter_error(err), None
         except Exception as ee:
             if not exception:
                 message = (  # noqa: UP030
@@ -383,7 +383,7 @@ def run_python_script(
                 if exc_path:
                     message += f"\n---EXC--\n{exc_path}"
                 raise RunPythonExecutionError(message) from ee
-            return str(ee), str(ee), None
+            return str(ee), _filter_error(str(ee)), None
     else:
         if store_in_file:
             raise NotImplementedError(
@@ -446,7 +446,7 @@ def run_python_script(
                         "\n{5}\n--TRACEBACK--\n{6}"
                     ).format(script, params, comment, gout, gerr, ee, excs)
                     raise RunPythonExecutionError(message) from ee
-                return (gout + "\n" + gerr), (gerr + "\n" + excs), None
+                return (gout + "\n" + gerr), _filter_error(gerr + "\n" + excs), None
 
             if chdir is not None:
                 os.chdir(current)
@@ -462,7 +462,23 @@ def run_python_script(
             for k, v in globs.items()
             if k.startswith("__runpython__") and k not in avoid
         }
-        return gout, gerr, context
+        return gout, _filter_error(gerr), context
+
+
+def _filter_error(err):
+    if not err:
+        return err
+    out = [
+        "use_kernel_func_from_hub",
+        "is deprecated, use",
+        "was set in the config but",
+    ]
+    if isinstance(err, str):
+        res = "\n".join([_ for _ in err.split("\n") if all(o not in _ for o in out)])
+        return res
+    bout = [_.encode("utf-8") for _ in out]
+    res = b"\n".join([_ for _ in err.split(b"\n") if all(o not in _ for o in bout)])
+    return res
 
 
 class runpython_node(nodes.Structural, nodes.Element):

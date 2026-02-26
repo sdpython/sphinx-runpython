@@ -1,6 +1,5 @@
 import os
 import logging
-import shutil
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
 import sphinx
@@ -150,11 +149,13 @@ class GDotDirective(Directive):
         if script or script == "":
             stdout, stderr, _ = run_python_script(content, process=process)
             if stderr:
+                logger = logging.getLogger("gdot")
                 logger.warning("[gdot] a dot graph cannot be draw due to %s", stderr)
             content = stdout
             if script:
                 spl = content.split(script)
                 if len(spl) > 2:
+                    logger = logging.getLogger("gdot")
                     logger.warning("[gdot] too many output lines %s", content)
                 content = spl[-1]
 
@@ -285,13 +286,6 @@ def depart_gdot_node_html(self, node):
 
 
 def copy_js_files(app):
-    try:
-        import jyquickhelper
-
-        local = True
-    except ImportError:
-        local = False
-
     logger = logging.getLogger("gdot")
     dest = app.config.html_static_path
     if isinstance(dest, list) and len(dest) > 0:
@@ -318,63 +312,41 @@ def copy_js_files(app):
 
     # viz.js
     file_dest = os.path.join(destf, "viz.js")
-    if os.path.exists(file_dest):
-        logger.info("[gdot] %r already installed.", file_dest)
-    else:
-        if local:
-            path = os.path.join(
-                os.path.dirname(jyquickhelper.__file__), "js", "vizjs", "viz.js"
+    if not os.path.exists(file_dest):
+        logger.info("[gdot] viz.js, use %r", GDotDirective._default_url)
+
+        try:
+            content = get_url_content_timeout(
+                GDotDirective._default_url, output=file_dest, raise_exception=False
             )
-            if os.path.exists(path):
-                # We copy the file to static path.
-                try:
-                    shutil.copy(path, file_dest)
-                    logger.info("[gdot] copy %r to %r.", path, file_dest)
-                except PermissionError as e:
-                    logger.warning(
-                        "[gdot] permission error (%r), unable to use local viz.js", e
-                    )
-            else:
-                logger.warning("[gdot] unable to find %r", path)
+        except Exception as e:
+            logger.warning("[gdot] download failed due to %r", e)
+            content = None
+
+        if content is None:
+            logger.warning(
+                "[gdot] unable to download %r to %r",
+                GDotDirective._default_url,
+                file_dest,
+            )
         else:
-            logger.info("[gdot] viz.js, use %r", GDotDirective._default_url)
-
-            file_dest = os.path.join(destf, "require.js")
-            try:
-                content = get_url_content_timeout(
-                    GDotDirective._default_url, output=file_dest, raise_exception=False
-                )
-            except Exception as e:
-                logger.warning("[gdot] download failed due to %r", e)
-                content = None
-
-            if content is None:
-                logger.warning(
-                    "[gdot] unable to download %r to %r",
-                    GDotDirective._default_url,
-                    file_dest,
-                )
-            else:
-                logger.info(
-                    "[gdot] download %r to %r", GDotDirective._default_url, file_dest
-                )
+            logger.info(
+                "[gdot] download %r to %r", GDotDirective._default_url, file_dest
+            )
 
     # require.js
     file_dest = os.path.join(destf, "require.js")
-    if os.path.exists(file_dest):
-        logger.info("[gdot] %r already installed.", file_dest)
-    else:
+    if not os.path.exists(file_dest):
+        logger.info("[gdot] download %r", file_dest)
         try:
             download_requirejs(destf)
         except Exception as e:
             logger.warning("[gdot] download_requirejs failed due to %r", e)
 
-    if os.path.exists(file_dest):
+    if not os.path.exists(file_dest):
         # It adds <script async="defer" src="_static/require.js"></script>
         # at the bottom of the file. It needs to be at the beginning.
         # app.add_js_file("require.js", priority=200)
-        logger.info("[gdot] %r installed.", file_dest)
-    else:
         logger.warning("[gdot] %r not installed.", file_dest)
 
 
