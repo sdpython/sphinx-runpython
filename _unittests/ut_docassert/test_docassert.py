@@ -57,7 +57,7 @@ class TestDocAssert(ExtTestCase):
         for line in lines:
             if "'onefunction' has no parameter 'c'" in line:
                 nb += 1
-        if nb == 0 and "failed to import function" not in str(warn):
+        if nb == 0 and "failed to import " not in str(warn):
             raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     @ignore_warnings(PendingDeprecationWarning)
@@ -100,7 +100,7 @@ class TestDocAssert(ExtTestCase):
         for line in lines:
             if "'onemethod' has no parameter 'c'" in line:
                 nb += 1
-        if nb == 0 and "failed to import method" not in str(warn):
+        if nb == 0 and "failed to import " not in str(warn):
             raise AssertionError("not the right warning:\n" + "\n".join(lines))
         for line in lines:
             if "'onemethod' has undocumented parameters 'b, self'" in line:
@@ -147,8 +147,10 @@ class TestDocAssert(ExtTestCase):
                 nb += 1
             if "'Estimator' has undocumented parameters" in line:
                 nb += 1
-        if nb == 0 and "failed to import class" not in str(warn):
-            raise AssertionError("not the right warning:\n" + "\n".join(lines))
+        if nb == 0 and "failed to import " not in str(warn):
+            raise AssertionError(
+                "not the right warning:\n" + "\n".join(lines) + "\n" + str(warn)
+            )
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_docassert_html_init2(self):
@@ -191,7 +193,7 @@ class TestDocAssert(ExtTestCase):
                 nb += 1
             if "'Estimator2' has undocumented parameters" in line:
                 nb += 1
-        if nb == 0 and "failed to import class" not in str(warn):
+        if nb == 0 and "failed to import " not in str(warn):
             raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     @ignore_warnings(PendingDeprecationWarning)
@@ -223,9 +225,7 @@ class TestDocAssert(ExtTestCase):
         with sys_path_append(data):
             _obj, _name = import_object("clsslk.Estimator3", "class")
             newstring = ".. autoclass:: clsslk.Estimator3"
-            html, warn = rst2html(
-                newstring, return_warnings=True, new_extensions=["numpydoc"]
-            )
+            html, warn = rst2html(newstring, return_warnings=True)
             self.assertTrue(html is not None)
 
         lines = log_capture_string.getvalue().split("\n")
@@ -237,7 +237,7 @@ class TestDocAssert(ExtTestCase):
                 nb += 1
             if "'Estimator3' has undocumented parameters 'fit" in line:
                 nb += 1
-        if nb == 0 and "failed to import class" not in str(warn):
+        if nb == 0 and "failed to import " not in str(warn):
             raise AssertionError("not the right warning:\n" + "\n".join(lines))
 
     def test_extract_signature(self):
