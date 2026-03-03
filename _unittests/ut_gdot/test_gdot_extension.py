@@ -68,9 +68,9 @@ class TestGDotExtension(ExtTestCase):
         content = rst2html(
             content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
         )
-        self.assertIn("svg", content)
+        self.assertNotIn("svg", content)
         self.assertNotIn("BEGIN", content)
-        self.assertNotIn("png", content)
+        self.assertIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot3_svg(self):
