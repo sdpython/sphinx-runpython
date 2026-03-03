@@ -2,7 +2,12 @@ import unittest
 import logging
 import sys
 from sphinx_runpython.process_rst import rst2html
-from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
+from sphinx_runpython.ext_test_case import (
+    ExtTestCase,
+    ignore_warnings,
+    skipif_ci_apple,
+    skipif_ci_windows,
+)
 
 
 class TestGDotExtension(ExtTestCase):
@@ -73,6 +78,8 @@ class TestGDotExtension(ExtTestCase):
         self.assertIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
+    @skipif_ci_windows("crash")
+    @skipif_ci_apple("crash")
     def test_gdot3_svg(self):
         content = """
                     before
