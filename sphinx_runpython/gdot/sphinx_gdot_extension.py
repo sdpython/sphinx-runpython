@@ -3,7 +3,7 @@ import logging
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
 import sphinx
-from sphinx.ext.graphviz import latex_visit_graphviz, text_visit_graphviz
+from sphinx.ext.graphviz import latex_visit_graphviz, text_visit_graphviz, graphviz
 from ..ext_helper import get_env_state_info
 from ..ext_io_helper import download_requirejs, get_url_content_timeout
 from ..runpython.sphinx_runpython_extension import run_python_script
@@ -104,9 +104,7 @@ class GDotDirective(Directive):
     _default_url = "https://cdnjs.cloudflare.com/ajax/libs/viz.js/1.8.0/viz-lite.js"
 
     def run(self):
-        """
-        Builds the collapse text.
-        """
+        """Builds the collapse text."""
         # retrieves the parameters
         if "format" in self.options:  # noqa: SIM401
             format = self.options["format"]
@@ -181,16 +179,19 @@ class GDotDirective(Directive):
                     logger.warning("[gdot] too many output lines %s", content)
                 content = spl[-1]
 
-        node = gdot_node(
-            format=format, code=content, url=url, options={"docname": docname}
-        )
+        if format == "svg":
+            node = graphviz()
+            node["code"] = content
+            node["options"] = {"docname": docname}
+        else:
+            node = gdot_node(
+                format=format, code=content, url=url, options={"docname": docname}
+            )
         return [node]
 
 
 def visit_gdot_node_rst(self, node):
-    """
-    visit collapse_node
-    """
+    """visit collapse_node"""
     self.new_state(0)
     self.add_text(".. gdot::" + self.nl)
     if node["format"] != "?":
@@ -203,17 +204,13 @@ def visit_gdot_node_rst(self, node):
 
 
 def depart_gdot_node_rst(self, node):
-    """
-    depart collapse_node
-    """
+    """depart collapse_node"""
     self.end_state()
     self.end_state(wrap=False)
 
 
 def visit_gdot_node_html_svg(self, node):
-    """
-    visit collapse_node
-    """
+    """visit collapse_node"""
 
     def process(text):
         text = text.replace("\\", "\\\\")
