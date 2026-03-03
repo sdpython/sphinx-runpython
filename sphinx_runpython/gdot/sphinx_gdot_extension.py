@@ -111,7 +111,7 @@ class GDotDirective(Directive):
         if "format" in self.options:  # noqa: SIM401
             format = self.options["format"]
         else:
-            format = "png"
+            format = "svg"
         url = self.options.get("url", "local")
         bool_set_ = (True, 1, "True", "1", "true", "")
         process = "process" in self.options and self.options["process"] in bool_set_
