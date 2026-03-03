@@ -2,8 +2,16 @@ import os
 import logging
 from docutils import nodes
 from docutils.parsers.rst import directives, Directive
+from typing import Any
 import sphinx
-from sphinx.ext.graphviz import latex_visit_graphviz, text_visit_graphviz, graphviz
+from sphinx.ext.graphviz import (
+    latex_visit_graphviz,
+    text_visit_graphviz,
+    render_dot,
+    GraphvizError,
+    ClickableMapDefinition,
+    __,
+)
 from ..ext_helper import get_env_state_info
 from ..ext_io_helper import download_requirejs, get_url_content_timeout
 from ..runpython.sphinx_runpython_extension import run_python_script
@@ -179,14 +187,13 @@ class GDotDirective(Directive):
                     logger.warning("[gdot] too many output lines %s", content)
                 content = spl[-1]
 
-        if format == "svg":
-            node = graphviz()
-            node["code"] = content
-            node["options"] = {"docname": docname}
-        else:
-            node = gdot_node(
-                format=format, code=content, url=url, options={"docname": docname}
-            )
+        node = gdot_node(
+            format=format,
+            code=content,
+            url=url,
+            options={"docname": docname},
+            use_sphinx_graphviz=True,
+        )
         return [node]
 
 
@@ -209,8 +216,76 @@ def depart_gdot_node_rst(self, node):
     self.end_state(wrap=False)
 
 
+def render_dot_html(
+    self,
+    node: gdot_node,
+    code: str,
+    options: dict[str, Any],
+    prefix: str = "gdot",
+    imgcls: str | None = None,
+    alt: str | None = None,
+    filename: str | None = None,
+    format: str = "svg",
+) -> tuple[str, str]:
+    if format not in {"png", "svg"}:
+        logger = logging.getLogger(__name__)
+        logger.warning(__("format must be either 'png' or 'svg', but is %r"), format)
+    try:
+        fname, outfn = render_dot(self, code, options, format, prefix, filename)
+    except GraphvizError as exc:
+        logger.warning(__("dot code %r: %s"), code, exc)
+        raise nodes.SkipNode from exc
+
+    classes = [imgcls, "graphviz", *node.get("classes", [])]
+    imgcls = " ".join(filter(None, classes))
+
+    if fname is None:
+        self.body.append(self.encode(code))
+    else:
+        src = fname.as_posix()
+        if alt is None:
+            alt = node.get("alt", self.encode(code).strip())
+        if "align" in node:
+            align = node["align"]
+            self.body.append(f'<div align="{align}" class="align-{align}">')
+        if format == "svg":
+            self.body.append('<div class="graphviz">')
+            self.body.append(
+                f'<object data="{src}" type="image/svg+xml" class="{imgcls}">\n'
+            )
+            self.body.append(f'<p class="warning">{alt}</p>')
+            self.body.append("</object></div>\n")
+        else:
+            assert outfn is not None
+            with open(f"{outfn}.map", encoding="utf-8") as mapfile:
+                map_content = mapfile.read()
+            imgmap = ClickableMapDefinition(f"{outfn}.map", map_content, dot=code)
+            if imgmap.clickable:
+                # has a map
+                self.body.append('<div class="graphviz">')
+                self.body.append(
+                    f'<img src="{src}" alt="{alt}" usemap="#{imgmap.id}" class="{imgcls}" />'
+                )
+                self.body.append("</div>\n")
+                self.body.append(imgmap.generate_clickable_map())
+            else:
+                # nothing in image map
+                self.body.append('<div class="graphviz">')
+                self.body.append(f'<img src="{src}" alt="{alt}" class="{imgcls}" />')
+                self.body.append("</div>\n")
+        if "align" in node:
+            self.body.append("</div>\n")
+
+    raise nodes.SkipNode
+
+
 def visit_gdot_node_html_svg(self, node):
     """visit collapse_node"""
+    if node["use_sphinx_graphviz"]:
+        render_dot_html(
+            self, node, node["code"], node["options"], filename=node.get("filename")
+        )
+        return
 
     def process(text):
         text = text.replace("\\", "\\\\")

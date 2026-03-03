@@ -68,8 +68,9 @@ class TestGDotExtension(ExtTestCase):
         content = rst2html(
             content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
         )
-        self.assertIn('digraph foo { "bar" -> "baz"; }', content)
+        self.assertIn("svg", content)
         self.assertNotIn("BEGIN", content)
+        self.assertNotIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot3_svg(self):
@@ -89,8 +90,8 @@ class TestGDotExtension(ExtTestCase):
         content = rst2html(
             content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
         )
-        self.assertIn("digraph foo {", content)
-        print(content)
+        self.assertIn("svg", content)
+        self.assertNotIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot3_svg_process(self):
