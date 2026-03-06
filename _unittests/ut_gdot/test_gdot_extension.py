@@ -164,7 +164,7 @@ class TestGDotExtension(ExtTestCase):
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot_unittest_going_svg(self):
-        """When UNITTEST_GOING=1, a dummy SVG is rendered instead of calling graphviz."""
+        """When UNITTEST_GOING=1, a dummy SVG containing 'DISABLED FOR TESTS' is rendered."""
         content = """
                     before
 
@@ -183,12 +183,13 @@ class TestGDotExtension(ExtTestCase):
                 content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
             )
 
-        self.assertIn("dummy", html)
-        self.assertIn("svg", html)
+        self.assertIn("DISABLED FOR TESTS", html)
+        self.assertIn("<svg", html)
+        self.assertNotIn("<img", html)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot_unittest_going_png(self):
-        """When UNITTEST_GOING=1, a dummy SVG is rendered for png format too."""
+        """When UNITTEST_GOING=1, a dummy image containing 'DISABLED FOR TESTS' is rendered."""
         content = """
                     before
 
@@ -207,8 +208,9 @@ class TestGDotExtension(ExtTestCase):
                 content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
             )
 
-        self.assertIn("dummy", html)
-        self.assertIn("svg", html)
+        self.assertIn("DISABLED FOR TESTS", html)
+        self.assertIn("<img", html)
+        self.assertNotIn("<svg", html)
 
 
 if __name__ == "__main__":
