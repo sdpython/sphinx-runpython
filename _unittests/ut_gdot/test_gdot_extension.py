@@ -189,7 +189,10 @@ class TestGDotExtension(ExtTestCase):
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot_unittest_going_png(self):
-        """When UNITTEST_GOING=1, a dummy image containing 'DISABLED FOR TESTS' is rendered."""
+        """
+        When UNITTEST_GOING=1, a dummy image containing
+        'DISABLED FOR TESTS' is rendered.
+        """
         content = """
                     before
 
