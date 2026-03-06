@@ -149,9 +149,7 @@ class GDotDirective(Directive):
         content = "\n".join(self.content)
         if script or script == "":
             env = info.get("env")
-            cache_key = hashlib.sha256(
-                f"{content}:{process}".encode("utf-8")
-            ).hexdigest()
+            cache_key = hashlib.sha256(f"{content}:{process}".encode()).hexdigest()
             if env is not None:
                 if not hasattr(env, "gdot_script_cache"):
                     env.gdot_script_cache = {}
