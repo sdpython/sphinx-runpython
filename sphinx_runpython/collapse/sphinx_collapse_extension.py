@@ -6,6 +6,8 @@ from docutils.parsers.rst import Directive
 from sphinx.util.nodes import nested_parse_with_titles
 from ..language import TITLES, sphinx_lang
 
+logger = logging.getLogger("sphinx")
+
 
 class collapse_node(nodes.admonition):
     """
@@ -61,7 +63,6 @@ class CollapseDirective(Directive):
         if "legend" in self.options:
             legend = self.options["legend"]
             if "/" not in legend:
-                logger = logging.getLogger("sphinx")
                 logger.warning(
                     "[CollapseDirective] unable to interpret parameter legend %r.",
                     legend,

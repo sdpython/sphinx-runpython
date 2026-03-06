@@ -6,6 +6,8 @@ from sphinx.util import logging
 from sphinx.util.docfields import DocFieldTransformer, _is_single_paragraph
 from ..import_object_helper import import_any_object, import_object
 
+logger = logging.getLogger("docassert")
+
 
 class Parameter:
     "Definition of a parameter."
@@ -121,7 +123,6 @@ def check_typed_make_field(
             return p if isinstance(p, str) else p.name
 
         check_params = {kg(p): 0 for p in parameters}
-    logger = logging.getLogger("docassert")
 
     def check_item(fieldarg, content, logger):
         "local function"
@@ -339,7 +340,6 @@ class OverrideDocFieldTransformer:
                     reasons = "\n".join(f"   {e}" for e in excs)
                 else:
                     reasons = "unknown"
-                logger = logging.getLogger("docassert")
                 logger.warning(
                     "[docassert] unable to import object %r, reasons: %s", docs, reasons
                 )
@@ -353,7 +353,6 @@ class OverrideDocFieldTransformer:
                     parameters = signature.parameters
                 except (TypeError, ValueError):
                     # built-in function
-                    logger = logging.getLogger("docassert")
                     if myfunc.__text_signature__:
                         logger.warning(
                             "[docassert] unable to get signature (1) of %r: %s",
@@ -393,7 +392,6 @@ class OverrideDocFieldTransformer:
         try:
             env = other_self.directive.state.document.settings.env
         except AttributeError as e:
-            logger = logging.getLogger("docassert")
             logger.warning("[docassert] %s", e)
             env = None
 
@@ -401,7 +399,6 @@ class OverrideDocFieldTransformer:
 
         for entry in entries:
             if isinstance(entry, nodes.field):
-                logger = logging.getLogger("docassert")
                 logger.warning("[docassert] unable to check [nodes.field] %s", entry)
             else:
                 fieldtype, content = entry
