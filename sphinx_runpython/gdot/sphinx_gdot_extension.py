@@ -235,6 +235,30 @@ def depart_gdot_node_rst(self, node):
     self.end_state(wrap=False)
 
 
+_DUMMY_SVG = (
+    '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">'
+    '<text x="10" y="50">DISABLED FOR TESTS</text>'
+    "</svg>"
+)
+
+_DUMMY_PNG_HTML = (
+    '<img src="data:image/png;base64,'
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQ"
+    'AABjkB6QAAAABJRU5ErkJggg==" alt="DISABLED FOR TESTS" />'
+)
+
+
+def _emit_dummy_output(self, format: str = "svg"):
+    """Emit a placeholder graphic when ``UNITTEST_GOING=1`` is set."""
+    self.body.append('<div class="graphviz">')
+    if format == "png":
+        self.body.append(_DUMMY_PNG_HTML)
+    else:
+        self.body.append(_DUMMY_SVG)
+    self.body.append("</div>\n")
+    raise nodes.SkipNode
+
+
 def render_dot_html(
     self,
     node: gdot_node,
@@ -246,6 +270,9 @@ def render_dot_html(
     filename: str | None = None,
     format: str = "svg",
 ) -> tuple[str, str]:
+    if os.environ.get("UNITTEST_GOING", "0") == "1":
+        _emit_dummy_output(self, format=format)
+
     if format not in {"png", "svg"}:
         logger = logging.getLogger(__name__)
         logger.warning(__("format must be either 'png' or 'svg', but is %r"), format)
@@ -381,6 +408,8 @@ def visit_gdot_node_html(self, node):
     and the :epkg:`SVG` format.
     """
     if node["format"].lower() == "png":
+        if os.environ.get("UNITTEST_GOING", "0") == "1":
+            _emit_dummy_output(self, format="png")
         from sphinx.ext.graphviz import html_visit_graphviz
 
         return html_visit_graphviz(self, node)
