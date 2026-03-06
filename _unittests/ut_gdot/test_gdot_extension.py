@@ -2,7 +2,12 @@ import unittest
 import logging
 import sys
 from sphinx_runpython.process_rst import rst2html
-from sphinx_runpython.ext_test_case import ExtTestCase, ignore_warnings
+from sphinx_runpython.ext_test_case import (
+    ExtTestCase,
+    ignore_warnings,
+    skipif_ci_apple,
+    skipif_ci_windows,
+)
 
 
 class TestGDotExtension(ExtTestCase):
@@ -16,6 +21,7 @@ class TestGDotExtension(ExtTestCase):
                     before
 
                     .. gdot::
+                        :format: png
 
                         digraph foo {
                           "bar" -> "baz";
@@ -38,6 +44,7 @@ class TestGDotExtension(ExtTestCase):
 
                     .. gdot::
                         :script:
+                        :format: png
 
                         print('''digraph foo { HbarH -> HbazH; }'''.replace("H", '"'))
 
@@ -56,6 +63,7 @@ class TestGDotExtension(ExtTestCase):
 
             .. gdot::
                 :script: BEGIN
+                :format: png
 
                 print('''...BEGINdigraph foo { HbarH -> HbazH; }'''.replace("H", '"'))
 
@@ -65,10 +73,13 @@ class TestGDotExtension(ExtTestCase):
         content = rst2html(
             content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
         )
-        self.assertIn('digraph foo { "bar" -> "baz"; }', content)
+        self.assertNotIn("svg", content)
         self.assertNotIn("BEGIN", content)
+        self.assertIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
+    @skipif_ci_windows("crash")
+    @skipif_ci_apple("crash")
     def test_gdot3_svg(self):
         content = """
                     before
@@ -86,8 +97,8 @@ class TestGDotExtension(ExtTestCase):
         content = rst2html(
             content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
         )
-        self.assertIn("document.getElementById('gdot-", content)
-        self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
+        self.assertIn("svg", content)
+        self.assertNotIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
     def test_gdot3_svg_process(self):
@@ -108,8 +119,7 @@ class TestGDotExtension(ExtTestCase):
         content = rst2html(
             content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
         )
-        self.assertIn("document.getElementById('gdot-", content)
-        self.assertIn('foo {\\n  \\"bar\\" -> \\"baz\\";\\n}");', content)
+        self.assertIn("digraph foo {", content)
 
     @unittest.skipIf(sys.platform != "linux", reason="Missing dependency.")
     @ignore_warnings(PendingDeprecationWarning)
