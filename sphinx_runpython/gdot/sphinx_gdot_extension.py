@@ -1,3 +1,4 @@
+import hashlib
 import os
 import logging
 from docutils import nodes
@@ -153,7 +154,25 @@ class GDotDirective(Directive):
         # executes script if any
         content = "\n".join(self.content)
         if script or script == "":
-            stdout, stderr, _ = run_python_script(content, process=process)
+            env = info.get("env")
+            doc_prefix = docname.split("/")[-1] if docname else ""
+            cache_key = (
+                f"{doc_prefix}:"
+                + hashlib.sha256(f"{content}:{process}".encode()).hexdigest()
+            )
+            if env is not None:
+                if not hasattr(env, "gdot_script_cache"):
+                    env.gdot_script_cache = {}
+                cached = env.gdot_script_cache.get(cache_key, None)
+            else:
+                cached = None
+
+            if cached is not None:
+                stdout, stderr = cached
+            else:
+                stdout, stderr, _ = run_python_script(content, process=process)
+                if env is not None:
+                    env.gdot_script_cache[cache_key] = (stdout, stderr)
 
             if stderr:
                 out = [

@@ -4,6 +4,9 @@ Change Logs
 0.4.2
 +++++
 
+* :pr:`53`: Disable gdot call to graphviz if ``UNITTEST_GOING=1``
+* :pr:`51`: Uses GitHub actions for CI
+* :pr:`49`: Cache gdot script execution results in Sphinx environment`
 * :pr:`47`: use svg by default with gdot
 
 0.4.1

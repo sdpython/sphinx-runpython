@@ -163,6 +163,35 @@ class TestGDotExtension(ExtTestCase):
         self.assertIn("png", content)
 
     @ignore_warnings(PendingDeprecationWarning)
+    def test_gdot_script_cache(self):
+        """Test that identical scripts are cached and produce the same output."""
+        script = "print('digraph foo { HbarH -> HbazH; }')".replace("H", '"')
+        content = f"""
+before
+
+.. gdot::
+    :script:
+
+    {script}
+
+middle
+
+.. gdot::
+    :script:
+
+    {script}
+
+after
+"""
+        content = rst2html(
+            content, writer_name="rst", new_extensions=["sphinx_runpython.gdot"]
+        )
+        # Both gdot directives should produce the same DOT output
+        count = content.count('digraph foo { "bar" -> "baz"; }')
+        self.assertEqual(
+            count, 2, f"Expected the DOT code to appear twice, got {count}"
+        )
+
     def test_gdot_unittest_going_svg(self):
         """When UNITTEST_GOING=1, a dummy SVG containing 'DISABLED FOR TESTS' is rendered."""
         content = """
