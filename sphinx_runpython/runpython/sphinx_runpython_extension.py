@@ -14,6 +14,8 @@ from ..language import TITLES
 from .run_cmd import run_cmd
 from ..collapse.sphinx_collapse_extension import collapse_node
 
+logger = logging.getLogger("runpython")
+
 
 def remove_extra_spaces_and_black(
     filename: str, apply_black=True, is_string=None
@@ -757,7 +759,6 @@ class RunPythonDirective(Directive):
             try:
                 script_disp = remove_extra_spaces_and_black(script_disp, is_string=True)
             except Exception as e:
-                logger = logging.getLogger("runpython")
                 if "." in docname:
                     comment = f'  File "{docname}", line {lineno}'
                 else:

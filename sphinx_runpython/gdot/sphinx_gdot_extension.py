@@ -17,6 +17,8 @@ from ..ext_helper import get_env_state_info
 from ..ext_io_helper import download_requirejs, get_url_content_timeout
 from ..runpython.sphinx_runpython_extension import run_python_script
 
+logger = logging.getLogger("gdot")
+
 
 class gdot_node(nodes.admonition):
     """
@@ -130,7 +132,6 @@ class GDotDirective(Directive):
         if url == "local":
             if docname is None or "HERE" not in info:
                 url = GDotDirective._default_url
-                logger = logging.getLogger("gdot")
                 logger.warning("[gdot] docname is none, falling back to %r.", url)
             else:
                 spl = docname.split("/")
@@ -196,13 +197,11 @@ class GDotDirective(Directive):
                     )
 
             if stderr:
-                logger = logging.getLogger("gdot")
                 logger.warning("[gdot] a dot graph cannot be draw due to %s", stderr)
             content = stdout
             if script:
                 spl = content.split(script)
                 if len(spl) > 2:
-                    logger = logging.getLogger("gdot")
                     logger.warning("[gdot] too many output lines %s", content)
                 content = spl[-1]
 
@@ -274,7 +273,6 @@ def render_dot_html(
         _emit_dummy_output(self, format=format)
 
     if format not in {"png", "svg"}:
-        logger = logging.getLogger(__name__)
         logger.warning(__("format must be either 'png' or 'svg', but is %r"), format)
     try:
         fname, outfn = render_dot(self, code, options, format, prefix, filename)
@@ -428,7 +426,6 @@ def depart_gdot_node_html(self, node):
 
 
 def copy_js_files(app):
-    logger = logging.getLogger("gdot")
     dest = app.config.html_static_path
     if isinstance(dest, list) and len(dest) > 0:
         dest = dest[0]

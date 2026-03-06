@@ -19,6 +19,8 @@ from sphinx import addnodes
 from ..language import TITLES
 from ..ext_helper import info_blocref
 
+logger = logging.getLogger("blocref")
+
 
 class blocref_node(nodes.admonition):
     """
@@ -471,7 +473,6 @@ def process_blocref_nodes_generic(
             try:
                 targ = blocref_info["target"]
             except KeyError as e:
-                logger = logging.getLogger("blocref")
                 logger.warning(
                     "Unable to find key 'target' in %r (e=%r)", blocref_info, e
                 )
@@ -479,7 +480,6 @@ def process_blocref_nodes_generic(
             try:
                 targ_refid = blocref_info["target"]["refid"]
             except KeyError as e:
-                logger = logging.getLogger("blocref")
                 logger.warning("Unable to find key 'refid' in %r (e=%r)", targ, e)
                 continue
             int_ids = [f"index{targ_refid}-{env.new_serialno(targ_refid)}"]
