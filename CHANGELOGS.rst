@@ -4,6 +4,7 @@ Change Logs
 0.4.2
 +++++
 
+* :pr:`48`: Cache gdot script execution results in Sphinx environment`
 * :pr:`47`: use svg by default with gdot
 
 0.4.1
