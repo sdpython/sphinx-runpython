@@ -1,6 +1,8 @@
 import unittest
 import logging
+import os
 import sys
+from contextlib import contextmanager
 from sphinx_runpython.process_rst import rst2html
 from sphinx_runpython.ext_test_case import (
     ExtTestCase,
@@ -8,6 +10,20 @@ from sphinx_runpython.ext_test_case import (
     skipif_ci_apple,
     skipif_ci_windows,
 )
+
+
+@contextmanager
+def unittest_going():
+    """Context manager that sets UNITTEST_GOING=1 for the duration of the block."""
+    old = os.environ.get("UNITTEST_GOING", None)
+    os.environ["UNITTEST_GOING"] = "1"
+    try:
+        yield
+    finally:
+        if old is None:
+            os.environ.pop("UNITTEST_GOING", None)
+        else:
+            os.environ["UNITTEST_GOING"] = old
 
 
 class TestGDotExtension(ExtTestCase):
@@ -145,6 +161,54 @@ class TestGDotExtension(ExtTestCase):
             # This class cannot write on disk.
             return
         self.assertIn("png", content)
+
+    @ignore_warnings(PendingDeprecationWarning)
+    def test_gdot_unittest_going_svg(self):
+        """When UNITTEST_GOING=1, a dummy SVG is rendered instead of calling graphviz."""
+        content = """
+                    before
+
+                    .. gdot::
+                        :format: svg
+
+                        digraph foo {
+                          "bar" -> "baz";
+                        }
+
+                    after
+                    """.replace("                    ", "")
+
+        with unittest_going():
+            html = rst2html(
+                content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
+            )
+
+        self.assertIn("dummy", html)
+        self.assertIn("svg", html)
+
+    @ignore_warnings(PendingDeprecationWarning)
+    def test_gdot_unittest_going_png(self):
+        """When UNITTEST_GOING=1, a dummy SVG is rendered for png format too."""
+        content = """
+                    before
+
+                    .. gdot::
+                        :format: png
+
+                        digraph foo {
+                          "bar" -> "baz";
+                        }
+
+                    after
+                    """.replace("                    ", "")
+
+        with unittest_going():
+            html = rst2html(
+                content, writer_name="html", new_extensions=["sphinx_runpython.gdot"]
+            )
+
+        self.assertIn("dummy", html)
+        self.assertIn("svg", html)
 
 
 if __name__ == "__main__":
