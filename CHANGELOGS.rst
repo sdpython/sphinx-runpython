@@ -1,6 +1,11 @@
 Change Logs
 ===========
 
+0.4.2
++++++
+
+* :pr:`47`: use svg by default with gdot
+
 0.4.1
 +++++
 

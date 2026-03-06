@@ -52,6 +52,8 @@ language = "en"
 exclude_patterns = []
 pygments_style = "sphinx"
 todo_include_todos = True
+graphviz_output_format = "svg"
+graphviz_dot_args = ["-Gbgcolor=transparent"]
 
 html_theme = "furo"
 html_theme_path = ["_static"]
