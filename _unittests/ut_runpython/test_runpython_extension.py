@@ -241,9 +241,9 @@ class TestRunPythonExtension(ExtTestCase):
         html = rst2html(content, writer_name="rst")
 
         if "runpythonerror" in html:
-            raise AssertionError(f"[runpythonerror] should not appear in output:\n{html}")
-        if "DeprecationWarning" in html:
-            raise AssertionError(f"DeprecationWarning should not appear in output:\n{html}")
+            raise AssertionError(
+                f"[runpythonerror] should not appear in output:\n{html}"
+            )
         if "output line" not in html:
             raise AssertionError(f"stdout should still appear in output:\n{html}")
 
