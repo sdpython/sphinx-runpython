@@ -218,6 +218,35 @@ class TestRunPythonExtension(ExtTestCase):
         if t1 not in html:
             raise AssertionError(html)
 
+    def test_runpython_hide_err(self):
+        """
+        Test that :hide_err: suppresses [runpythonerror] from the output.
+        """
+        if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
+            raise AssertionError("this case should not be")
+
+        content = """
+                    test a directive
+                    ================
+
+                    .. runpython::
+                        :rst:
+                        :hide_err:
+
+                        import warnings
+                        warnings.warn("deprecated", DeprecationWarning)
+                        print("output line")
+                    """.replace("                    ", "")
+
+        html = rst2html(content, writer_name="rst")
+
+        if "runpythonerror" in html:
+            raise AssertionError(f"[runpythonerror] should not appear in output:\n{html}")
+        if "DeprecationWarning" in html:
+            raise AssertionError(f"DeprecationWarning should not appear in output:\n{html}")
+        if "output line" not in html:
+            raise AssertionError(f"stdout should still appear in output:\n{html}")
+
     def test_runpython_raw(self):
         """
         this test also test the extension runpython
