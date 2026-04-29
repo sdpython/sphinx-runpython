@@ -220,7 +220,7 @@ class TestRunPythonExtension(ExtTestCase):
 
     def test_runpython_hide_err(self):
         """
-        Test that :hide_err: suppresses [runpythonerror] from the output.
+        Test that :hide-err: suppresses [runpythonerror] from the output.
         """
         if "enable_disabled_documented_pieces_of_code" in sys.__dict__:
             raise AssertionError("this case should not be")
@@ -231,7 +231,7 @@ class TestRunPythonExtension(ExtTestCase):
 
                     .. runpython::
                         :rst:
-                        :hide_err:
+                        :hide-err:
 
                         import warnings
                         warnings.warn("deprecated", DeprecationWarning)

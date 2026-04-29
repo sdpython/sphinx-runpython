@@ -559,7 +559,7 @@ class RunPythonDirective(Directive):
         the script to be stored somewhere in order to retrieve it.
     * ``:debug:`` if ``:rst:`` is used, it shows some information to help
       debugging.
-    * ``:hide_err:`` if present, hides any error or warning output that would
+    * ``:hide-err:`` if present, hides any error or warning output that would
       otherwise be appended as ``[runpythonerror]`` in the content. This is
       useful when the code produces stderr output (such as deprecation warnings)
       that should not appear in the rendered documentation.
@@ -634,7 +634,7 @@ class RunPythonDirective(Directive):
         "store_in_file": directives.unchanged,
         "linenos": directives.unchanged,
         "debug": directives.unchanged,
-        "hide_err": directives.unchanged,
+        "hide-err": directives.unchanged,
     }
     has_content = True
     runpython_class = runpython_node
@@ -698,7 +698,7 @@ class RunPythonDirective(Directive):
             "store": "store" in self.options and self.options["store"] in bool_set_,
             "restore": "restore" in self.options
             and self.options["restore"] in bool_set_,
-            "hide_err": "hide_err" in self.options,
+            "hide-err": "hide-err" in self.options,
         }
 
         if p["setsysvar"] is not None and len(p["setsysvar"]) == 0:
@@ -827,7 +827,7 @@ class RunPythonDirective(Directive):
         if err is not None:
             err = err.rstrip(" \n\r\t")
         content = out
-        if len(err) > 0 and not p["hide_err"]:
+        if len(err) > 0 and not p["hide-err"]:
             content += "\n[runpythonerror]\n" + err
 
         # add member

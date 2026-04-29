@@ -1,6 +1,11 @@
 Change Logs
 ===========
 
+0.4.3
++++++
+
+* :pr:`56`: Add `:hide_err:` option to suppress `[runpythonerror]` from runpython output
+
 0.4.2
 +++++
 
