@@ -25,7 +25,7 @@ extensions = [
     "sphinx_runpython.docassert",
     "sphinx_runpython.gdot",
     "sphinx_runpython.epkg",
-    "sphinx_runpython.mermaid",
+    "sphinx_runpython.mermaidjs",
     "sphinx_runpython.quote",
     "sphinx_runpython.runpython",
     "sphinx_runpython.sphinx_rst_builder",

@@ -6,15 +6,15 @@ import sphinx
 from ..ext_helper import get_env_state_info
 from ..runpython.sphinx_runpython_extension import run_python_script
 
-logger = logging.getLogger("mermaid")
+logger = logging.getLogger("mermaidjs")
 
 #: Default CDN URL for the mermaid JavaScript library.
 _MERMAID_JS_URL = "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"
 
 
-class mermaid_node(nodes.General, nodes.Element):
+class mermaidjs_node(nodes.General, nodes.Element):
     """
-    Defines ``mermaid`` node.
+    Defines ``mermaidjs`` node.
     """
 
     pass
@@ -22,7 +22,7 @@ class mermaid_node(nodes.General, nodes.Element):
 
 class MermaidDirective(Directive):
     """
-    A ``mermaid`` node displays a `Mermaid <https://mermaid.js.org/>`_ diagram.
+    A ``mermaidjs`` node displays a `Mermaid <https://mermaid.js.org/>`_ diagram.
 
     For *HTML* output the diagram is rendered client-side by embedding the
     Mermaid JavaScript library (loaded from a CDN or a local copy).
@@ -38,21 +38,21 @@ class MermaidDirective(Directive):
 
     Example – inline diagram::
 
-        .. mermaid::
+        .. mermaidjs::
 
             graph LR
                 A --> B --> C
 
     Which gives:
 
-    .. mermaid::
+    .. mermaidjs::
 
         graph LR
             A --> B --> C
 
     Example – script-generated diagram::
 
-        .. mermaid::
+        .. mermaidjs::
             :script:
 
             print(\"\"\"
@@ -60,7 +60,7 @@ class MermaidDirective(Directive):
                 A --> B
             \"\"\")
 
-    .. mermaid::
+    .. mermaidjs::
         :script:
 
         print(\"\"\"
@@ -69,7 +69,7 @@ class MermaidDirective(Directive):
         \"\"\")
     """
 
-    node_class = mermaid_node
+    node_class = mermaidjs_node
     has_content = True
     required_arguments = 0
     optional_arguments = 0
@@ -80,7 +80,7 @@ class MermaidDirective(Directive):
     }
 
     def run(self):
-        """Build the mermaid node."""
+        """Build the mermaidjs node."""
         bool_set_ = (True, 1, "True", "1", "true", "")
         process = "process" in self.options and self.options["process"] in bool_set_
 
@@ -107,9 +107,9 @@ class MermaidDirective(Directive):
                 + hashlib.sha256(f"{content}:{process}".encode()).hexdigest()
             )
             if env is not None:
-                if not hasattr(env, "mermaid_script_cache"):
-                    env.mermaid_script_cache = {}
-                cached = env.mermaid_script_cache.get(cache_key, None)
+                if not hasattr(env, "mermaidjs_script_cache"):
+                    env.mermaidjs_script_cache = {}
+                cached = env.mermaidjs_script_cache.get(cache_key, None)
             else:
                 cached = None
 
@@ -118,20 +118,20 @@ class MermaidDirective(Directive):
             else:
                 stdout, stderr, _ = run_python_script(content, process=process)
                 if env is not None:
-                    env.mermaid_script_cache[cache_key] = (stdout, stderr)
+                    env.mermaidjs_script_cache[cache_key] = (stdout, stderr)
 
             if stderr:
                 logger.warning(
-                    "[mermaid] a diagram cannot be drawn due to %s", stderr
+                    "[mermaidjs] a diagram cannot be drawn due to %s", stderr
                 )
             content = stdout
             if script:
                 spl = content.split(script)
                 if len(spl) > 2:
-                    logger.warning("[mermaid] too many output lines %s", content)
+                    logger.warning("[mermaidjs] too many output lines %s", content)
                 content = spl[-1]
 
-        node = mermaid_node(code=content, options={"docname": docname})
+        node = mermaidjs_node(code=content, options={"docname": docname})
         return [node]
 
 
@@ -140,8 +140,8 @@ class MermaidDirective(Directive):
 # ---------------------------------------------------------------------------
 
 
-def visit_mermaid_node_html(self, node):
-    """Render the mermaid node in HTML output."""
+def visit_mermaidjs_node_html(self, node):
+    """Render the mermaidjs node in HTML output."""
     code = node["code"].strip()
     # Emit a <pre class="mermaid"> block; mermaid.js will replace it at runtime.
     self.body.append(
@@ -152,42 +152,42 @@ def visit_mermaid_node_html(self, node):
     raise nodes.SkipNode
 
 
-def depart_mermaid_node_html(self, node):
-    """Depart the mermaid HTML node. Not called because the visitor raises SkipNode."""
+def depart_mermaidjs_node_html(self, node):
+    """Depart the mermaidjs HTML node. Not called because the visitor raises SkipNode."""
 
 
-def visit_mermaid_node_rst(self, node):
-    """Render the mermaid node in RST output."""
+def visit_mermaidjs_node_rst(self, node):
+    """Render the mermaidjs node in RST output."""
     self.new_state(0)
-    self.add_text(".. mermaid::" + self.nl)
+    self.add_text(".. mermaidjs::" + self.nl)
     self.new_state(self.indent)
     for row in node["code"].split("\n"):
         self.add_text(row + self.nl)
 
 
-def depart_mermaid_node_rst(self, node):
-    """depart mermaid node in RST output."""
+def depart_mermaidjs_node_rst(self, node):
+    """Depart mermaidjs node in RST output."""
     self.end_state()
     self.end_state(wrap=False)
 
 
-def visit_mermaid_node_text(self, node):
-    """Render the mermaid node in plain-text output."""
+def visit_mermaidjs_node_text(self, node):
+    """Render the mermaidjs node in plain-text output."""
     self.new_state(0)
-    self.add_text("[mermaid diagram]\n")
+    self.add_text("[mermaidjs diagram]\n")
     self.new_state(self.indent)
     for row in node["code"].split("\n"):
         self.add_text(row + self.nl)
 
 
-def depart_mermaid_node_text(self, node):
-    """depart mermaid node in text output."""
+def depart_mermaidjs_node_text(self, node):
+    """Depart mermaidjs node in text output."""
     self.end_state()
     self.end_state(wrap=False)
 
 
-def visit_mermaid_node_latex(self, node):
-    """Render the mermaid node in LaTeX output (verbatim source)."""
+def visit_mermaidjs_node_latex(self, node):
+    """Render the mermaidjs node in LaTeX output (verbatim source)."""
     code = node["code"].strip()
     self.body.append("\n\\begin{verbatim}\n")
     self.body.append(code)
@@ -195,8 +195,8 @@ def visit_mermaid_node_latex(self, node):
     raise nodes.SkipNode
 
 
-def depart_mermaid_node_latex(self, node):
-    """Depart the mermaid LaTeX node. Not called because the visitor raises SkipNode."""
+def depart_mermaidjs_node_latex(self, node):
+    """Depart the mermaidjs LaTeX node. Not called because the visitor raises SkipNode."""
 
 
 # ---------------------------------------------------------------------------
@@ -223,19 +223,19 @@ def add_mermaid_js(app):
 
 def setup(app):
     """
-    setup for ``mermaid`` (sphinx)
+    setup for ``mermaidjs`` (sphinx)
     """
     app.connect("builder-inited", add_mermaid_js)
 
     app.add_node(
-        mermaid_node,
-        html=(visit_mermaid_node_html, depart_mermaid_node_html),
-        epub=(visit_mermaid_node_html, depart_mermaid_node_html),
-        latex=(visit_mermaid_node_latex, depart_mermaid_node_latex),
-        text=(visit_mermaid_node_text, depart_mermaid_node_text),
-        rst=(visit_mermaid_node_rst, depart_mermaid_node_rst),
-        md=(visit_mermaid_node_text, depart_mermaid_node_text),
+        mermaidjs_node,
+        html=(visit_mermaidjs_node_html, depart_mermaidjs_node_html),
+        epub=(visit_mermaidjs_node_html, depart_mermaidjs_node_html),
+        latex=(visit_mermaidjs_node_latex, depart_mermaidjs_node_latex),
+        text=(visit_mermaidjs_node_text, depart_mermaidjs_node_text),
+        rst=(visit_mermaidjs_node_rst, depart_mermaidjs_node_rst),
+        md=(visit_mermaidjs_node_text, depart_mermaidjs_node_text),
     )
 
-    app.add_directive("mermaid", MermaidDirective)
+    app.add_directive("mermaidjs", MermaidDirective)
     return {"version": sphinx.__display_version__, "parallel_read_safe": True}
