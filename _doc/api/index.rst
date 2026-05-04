@@ -15,8 +15,8 @@ Extensions
     docassert
     epkg
     gdot
-    runmermaid
     quote
+    runmermaid
     runpython
     tools
     rst_builder
