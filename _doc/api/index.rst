@@ -16,6 +16,7 @@ Extensions
     epkg
     gdot
     quote
+    runmermaid
     runpython
     tools
     rst_builder
