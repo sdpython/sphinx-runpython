@@ -28,5 +28,8 @@ _unittests/ut__main/*.html
 _unittests/ut_runpython/*.png
 _unittests/ut_runpython/*.html
 test_latex/*
+test_latex2/*
+test_api/*
+test_sphinx_api_func/*
 *.pdf
 _unittests/ut_runpython/exescript.py
