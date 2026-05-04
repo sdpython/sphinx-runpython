@@ -28,3 +28,5 @@ _unittests/ut__main/*.html
 _unittests/ut_runpython/*.png
 _unittests/ut_runpython/*.html
 test_latex/*
+*.pdf
+_unittests/ut_runpython/exescript.py
