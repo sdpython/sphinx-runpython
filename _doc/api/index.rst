@@ -15,6 +15,7 @@ Extensions
     docassert
     epkg
     gdot
+    mermaid
     quote
     runpython
     tools

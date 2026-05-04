@@ -25,6 +25,7 @@ extensions = [
     "sphinx_runpython.docassert",
     "sphinx_runpython.gdot",
     "sphinx_runpython.epkg",
+    "sphinx_runpython.mermaid",
     "sphinx_runpython.quote",
     "sphinx_runpython.runpython",
     "sphinx_runpython.sphinx_rst_builder",
@@ -118,6 +119,7 @@ epkg_dictionary = {
     "git": "https://git-scm.com/",
     "Graphviz": "https://graphviz.org/",
     "HTML": "https://simple.wikipedia.org/wiki/HTML",
+    "Mermaid": "https://mermaid.js.org/",
     "nested_parse_with_titles": "https://www.sphinx-doc.org/en/master/extdev/markupapi.html#parsing-directive-content-as-rest",
     "numpy": (
         "https://www.numpy.org/",
