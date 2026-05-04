@@ -5,7 +5,7 @@ import tempfile
 import unittest
 import os
 from argparse import Namespace
-from sphinx_runpython.ext_test_case import ExtTestCase, hide_stdout
+from sphinx_runpython.ext_test_case import ExtTestCase, hide_stdout, skipif_ci_windows
 from sphinx_runpython._cmd_helper import (
     get_parser,
     nb2py,
@@ -68,6 +68,7 @@ class TestCmd(ExtTestCase):
             )
             process_args(args)
 
+    @skipif_ci_windows("readme processing does not work on Windows")
     def test_process_args_readme(self):
         readme = os.path.join(os.path.dirname(__file__), "..", "..", "README.rst")
         args = Namespace(
