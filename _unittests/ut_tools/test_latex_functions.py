@@ -41,6 +41,25 @@ class TestLatexFunction(ExtTestCase):
             "  {1\\!\\!1}_{\\left\\{ N < X \\right\\}} ",
         )
 
+    def test_replace_pattern_invalid_regex(self):
+        patterns = {"test": ("(invalid[", "replacement")}
+        self.assertRaise(
+            lambda: replace_latex_command("some text", patterns=patterns),
+            AssertionError,
+        )
+
+    def test_replace_pattern_unknown_type(self):
+        patterns = {"test": 42}
+        self.assertRaise(
+            lambda: replace_latex_command("some text", patterns=patterns),
+            AssertionError,
+        )
+
+    def test_replace_pattern_callable(self):
+        patterns = {"test": lambda t: t.replace("hello", "world")}
+        result = replace_latex_command("hello world", patterns=patterns)
+        self.assertEqual(result, "world world")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
