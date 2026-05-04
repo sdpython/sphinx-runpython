@@ -1,6 +1,13 @@
 Change Logs
 ===========
 
+0.4.4
++++++
+
+* :pr:`62`: Switch from Azure Pipelines to GitHub Actions
+* :pr:`60`: Extend code coverage across sphinx-runpython utilities
+* :pr:`58`: Add ``sphinx_runpython.runmermaid`` extension for Mermaid diagram support
+
 0.4.3
 +++++
 
