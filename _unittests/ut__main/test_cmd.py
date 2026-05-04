@@ -51,9 +51,7 @@ class TestCmd(ExtTestCase):
             self.assertExists(os.path.join(tmpdir, "strategie_avec_alea.rst"))
 
     def test_nb2py_not_found(self):
-        self.assertRaise(
-            lambda: nb2py("/nonexistent/path/xyz"), FileNotFoundError
-        )
+        self.assertRaise(lambda: nb2py("/nonexistent/path/xyz"), FileNotFoundError)
 
     def test_latex_process_not_found(self):
         self.assertRaise(
@@ -71,9 +69,7 @@ class TestCmd(ExtTestCase):
             process_args(args)
 
     def test_process_args_readme(self):
-        readme = os.path.join(
-            os.path.dirname(__file__), "..", "..", "README.rst"
-        )
+        readme = os.path.join(os.path.dirname(__file__), "..", "..", "README.rst")
         args = Namespace(
             command="readme",
             path=readme,
@@ -101,9 +97,7 @@ class TestCmd(ExtTestCase):
         process_args(args)
 
     def test_process_args_api(self):
-        data = os.path.join(
-            os.path.dirname(__file__), "..", "..", "sphinx_runpython"
-        )
+        data = os.path.join(os.path.dirname(__file__), "..", "..", "sphinx_runpython")
         folder = "test_api"
         if not os.path.exists(folder):
             os.mkdir(folder)
@@ -136,9 +130,7 @@ class TestCmd(ExtTestCase):
             self.assertExists(out_path)
 
     def test_sphinx_api_function(self):
-        data = os.path.join(
-            os.path.dirname(__file__), "..", "..", "sphinx_runpython"
-        )
+        data = os.path.join(os.path.dirname(__file__), "..", "..", "sphinx_runpython")
         folder = "test_sphinx_api_func"
         if not os.path.exists(folder):
             os.mkdir(folder)

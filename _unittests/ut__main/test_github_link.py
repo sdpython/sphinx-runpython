@@ -27,9 +27,7 @@ class TestGithubLink(ExtTestCase):
         self.assertIsNone(result)
 
     def test_linkcode_resolve_missing_fullname(self):
-        result = _linkcode_resolve(
-            "py", {"module": "os"}, "os", "url", revision="abc"
-        )
+        result = _linkcode_resolve("py", {"module": "os"}, "os", "url", revision="abc")
         self.assertIsNone(result)
 
     def test_linkcode_resolve_function(self):

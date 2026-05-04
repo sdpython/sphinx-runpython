@@ -1,6 +1,6 @@
 import os
 import unittest
-from sphinx_runpython.ext_test_case import ExtTestCase, sys_path_append
+from sphinx_runpython.ext_test_case import ExtTestCase
 from sphinx_runpython.import_object_helper import (
     import_object,
     import_any_object,
@@ -28,14 +28,10 @@ class TestImportObjectHelper(ExtTestCase):
         self.assertIs(obj, os.PathLike)
 
     def test_import_function_not_a_function(self):
-        self.assertRaise(
-            lambda: import_object("os.PathLike", "function"), TypeError
-        )
+        self.assertRaise(lambda: import_object("os.PathLike", "function"), TypeError)
 
     def test_import_class_not_a_class(self):
-        self.assertRaise(
-            lambda: import_object("os.path.join", "class"), TypeError
-        )
+        self.assertRaise(lambda: import_object("os.path.join", "class"), TypeError)
 
     def test_import_method(self):
         obj, name = import_object("os.PathLike.__fspath__", "method")
@@ -67,9 +63,7 @@ class TestImportObjectHelper(ExtTestCase):
         )
 
     def test_import_property_not_a_class(self):
-        self.assertRaise(
-            lambda: import_object("os.path.join", "property"), TypeError
-        )
+        self.assertRaise(lambda: import_object("os.path.join", "property"), TypeError)
 
     def test_import_staticmethod_not_a_class(self):
         self.assertRaise(
@@ -77,9 +71,7 @@ class TestImportObjectHelper(ExtTestCase):
         )
 
     def test_import_method_not_a_class(self):
-        self.assertRaise(
-            lambda: import_object("os.path.join", "method"), TypeError
-        )
+        self.assertRaise(lambda: import_object("os.path.join", "method"), TypeError)
 
     def test_import_any_object_function(self):
         obj, name, kind = import_any_object("os.path.join")

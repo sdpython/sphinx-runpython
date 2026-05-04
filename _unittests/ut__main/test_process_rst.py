@@ -28,7 +28,7 @@ class TestProcessRst(ExtTestCase):
         # This may or may not raise RuntimeError depending on the content
         # Just verify it runs without issue
         try:
-            result = rst2html(rst, use_sphinx=False)
+            _result = rst2html(rst, use_sphinx=False)
         except RuntimeError:
             pass  # Expected behavior for error-level messages
 

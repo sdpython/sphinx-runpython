@@ -108,7 +108,7 @@ class TestRunCmd(ExtTestCase):
 
     def test_run_cmd_with_change_path(self):
         with tempfile.TemporaryDirectory() as tmpdir:
-            out, err = run_cmd("pwd", wait=True, change_path=tmpdir)
+            out, _err = run_cmd("pwd", wait=True, change_path=tmpdir)
             self.assertIn(os.path.realpath(tmpdir), os.path.realpath(out.strip()))
 
     def test_run_cmd_with_logf(self):
@@ -118,15 +118,15 @@ class TestRunCmd(ExtTestCase):
             logs.append((prefix, msg))
 
         cmd = "echo hello"
-        out, err = run_cmd(cmd, wait=True, logf=logf)
+        _out, _err = run_cmd(cmd, wait=True, logf=logf)
         self.assertGreater(len(logs), 0)
 
     def test_run_cmd_list_cmd(self):
-        out, err = run_cmd(["echo", "test"], wait=True)
+        out, _err = run_cmd(["echo", "test"], wait=True)
         self.assertIn("test", out)
 
     def test_run_cmd_preprocess_false(self):
-        out, err = run_cmd("echo hello", wait=True, preprocess=False, shell=True)
+        out, _err = run_cmd("echo hello", wait=True, preprocess=False, shell=True)
         self.assertIn("hello", out)
 
     def test_run_cmd_exception_class(self):
@@ -159,12 +159,12 @@ class TestRunCmdExtra(ExtTestCase):
         def logf(prefix, msg):
             logs.append((prefix, msg))
 
-        out, err = run_cmd(["echo", "hello"], wait=True, logf=logf)
+        out, _err = run_cmd(["echo", "hello"], wait=True, logf=logf)
         self.assertGreater(len(logs), 0)
         self.assertIn("hello", out)
 
     def test_run_cmd_catch_exit(self):
-        out, err = run_cmd("echo hello", wait=True, catch_exit=True)
+        out, _err = run_cmd("echo hello", wait=True, catch_exit=True)
         self.assertIn("hello", out)
 
     def test_run_cmd_with_prefix_log(self):
@@ -173,7 +173,7 @@ class TestRunCmdExtra(ExtTestCase):
         def logf(prefix, msg):
             logs.append((prefix, msg))
 
-        out, err = run_cmd("echo hello", wait=True, logf=logf, prefix_log="[test] ")
+        _out, _err = run_cmd("echo hello", wait=True, logf=logf, prefix_log="[test] ")
         self.assertGreater(len(logs), 0)
         self.assertTrue(any("[test]" in str(log) for log in logs))
 

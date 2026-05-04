@@ -1,7 +1,6 @@
 import os
 import sys
 import unittest
-import warnings
 import numpy
 from sphinx_runpython.ext_test_case import (
     ExtTestCase,
@@ -172,7 +171,7 @@ class TestExtTestCase(ExtTestCase):
             print("output text")
             return 42
 
-        result, stdout, stderr = self.capture(my_func)
+        result, stdout, _stderr = self.capture(my_func)
         self.assertEqual(result, 42)
         self.assertIn("output text", stdout)
 

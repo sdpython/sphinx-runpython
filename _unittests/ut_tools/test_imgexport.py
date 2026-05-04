@@ -83,7 +83,7 @@ class TestImgExport(ExtTestCase):
     def test_export_to_stream(self):
         data = os.path.join(os.path.dirname(__file__), "data", "mazures1.jpg")
         stream = io.BytesIO()
-        res = images2pdf([data], stream)
+        _res = images2pdf([data], stream)
         self.assertGreater(stream.tell(), 0)
 
     def test_export_rotate(self):
@@ -91,7 +91,7 @@ class TestImgExport(ExtTestCase):
         with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
             dest = f.name
         try:
-            res = images2pdf([data], dest, rotate=90, verbose=1)
+            _res = images2pdf([data], dest, rotate=90, verbose=1)
             self.assertExists(dest)
         finally:
             if os.path.exists(dest):
@@ -102,7 +102,7 @@ class TestImgExport(ExtTestCase):
         with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
             dest = f.name
         try:
-            res = images2pdf([data], dest, zoom=0.5, verbose=1)
+            _res = images2pdf([data], dest, zoom=0.5, verbose=1)
             self.assertExists(dest)
         finally:
             if os.path.exists(dest):
