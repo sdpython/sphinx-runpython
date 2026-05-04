@@ -1,4 +1,4 @@
-__version__ = "0.4.3"
+__version__ = "0.4.4"
 __author__ = "Xavier Dupré"
 __github__ = "https://github.com/sdpython/sphinx-runpython"
 __url__ = "https://sdpython.github.io/doc/sphinx-runpython/dev/"
