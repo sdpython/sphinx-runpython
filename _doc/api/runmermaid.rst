@@ -1,6 +1,6 @@
-=========
-mermaidjs
-=========
+==========
+runmermaid
+==========
 
 This directive displays `Mermaid <https://mermaid.js.org/>`_ diagrams in the documentation.
 Diagrams are rendered client-side in *HTML* output via the Mermaid JavaScript library
@@ -14,21 +14,21 @@ In *conf.py*:
 ::
 
     extensions = [ ...
-        'sphinx_runpython.mermaidjs',
+        'sphinx_runpython.runmermaid',
     ]
 
 One example:
 
 ::
 
-    .. mermaidjs::
+    .. runmermaid::
 
         graph LR
             A --> B --> C
 
 Which gives:
 
-.. mermaidjs::
+.. runmermaid::
 
     graph LR
         A --> B --> C
@@ -38,7 +38,7 @@ Option *script* must be specified:
 
 ::
 
-    .. mermaidjs::
+    .. runmermaid::
         :script:
 
         print("""
@@ -46,7 +46,7 @@ Option *script* must be specified:
             A --> B
         """)
 
-.. mermaidjs::
+.. runmermaid::
     :script:
 
     print("""
@@ -60,7 +60,7 @@ as Mermaid source:
 
 ::
 
-    .. mermaidjs::
+    .. runmermaid::
         :script: AFTER-THIS
 
         print("preamble")
@@ -74,4 +74,4 @@ a separate process.
 Directive
 =========
 
-.. autoclass:: sphinx_runpython.mermaidjs.sphinx_mermaidjs_extension.MermaidDirective
+.. autoclass:: sphinx_runpython.runmermaid.sphinx_runmermaid_extension.RunMermaidDirective
