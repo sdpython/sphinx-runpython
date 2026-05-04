@@ -121,15 +121,15 @@ def is_linux() -> bool:
 
 
 def skipif_ci_windows(msg) -> Callable:
-    """Skips a unit test if it runs on :epkg:`azure pipeline` on :epkg:`Windows`."""
+    """Skips a unit test if it runs on :epkg:`GitHub Actions` on :epkg:`Windows`."""
     if is_windows():
-        msg = f"Test does not work on azure pipeline (Windows). {msg}"
+        msg = f"Test does not work on GitHub Actions (Windows). {msg}"
         return unittest.skip(msg)
     return lambda x: x
 
 
 def skipif_ci_linux(msg) -> Callable:
-    """Skips a unit test if it runs on :epkg:`azure pipeline` on :epkg:`Linux`."""
+    """Skips a unit test if it runs on :epkg:`GitHub Actions` on :epkg:`Linux`."""
     if is_linux():
         msg = f"Takes too long (Linux). {msg}"
         return unittest.skip(msg)
@@ -137,9 +137,9 @@ def skipif_ci_linux(msg) -> Callable:
 
 
 def skipif_ci_apple(msg) -> Callable:
-    """Skips a unit test if it runs on :epkg:`azure pipeline` on :epkg:`Windows`."""
+    """Skips a unit test if it runs on :epkg:`GitHub Actions` on :epkg:`macOS`."""
     if is_apple():
-        msg = f"Test does not work on azure pipeline (Apple). {msg}"
+        msg = f"Test does not work on GitHub Actions (Apple). {msg}"
         return unittest.skip(msg)
     return lambda x: x
 

@@ -56,6 +56,8 @@ todo_include_todos = True
 graphviz_output_format = "svg"
 graphviz_dot_args = ["-Gbgcolor=transparent"]
 
+issues_github_path = "sdpython/sphinx-runpython"
+
 html_theme = "furo"
 html_theme_path = ["_static"]
 html_theme_options = {}
