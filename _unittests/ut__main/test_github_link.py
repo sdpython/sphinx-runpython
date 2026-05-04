@@ -1,5 +1,5 @@
 import unittest
-from sphinx_runpython.ext_test_case import ExtTestCase
+from sphinx_runpython.ext_test_case import ExtTestCase, skipif_ci_windows
 from sphinx_runpython.github_link import (
     _get_git_revision,
     _linkcode_resolve,
@@ -30,6 +30,7 @@ class TestGithubLink(ExtTestCase):
         result = _linkcode_resolve("py", {"module": "os"}, "os", "url", revision="abc")
         self.assertIsNone(result)
 
+    @skipif_ci_windows("os.path.relpath fails across drives on Windows")
     def test_linkcode_resolve_function(self):
         url_fmt = "https://github.com/python/cpython/blob/{revision}/{path}#L{lineno}"
         result = _linkcode_resolve(
@@ -47,6 +48,7 @@ class TestGithubLink(ExtTestCase):
         resolver = make_linkcode_resolve("os", url_fmt)
         self.assertTrue(callable(resolver))
 
+    @skipif_ci_windows("os.path.relpath fails across drives on Windows")
     def test_make_linkcode_resolve_call(self):
         url_fmt = "https://github.com/python/cpython/blob/{revision}/{package}/{path}#L{lineno}"
         resolver = make_linkcode_resolve("os", url_fmt)

@@ -95,7 +95,11 @@ class TestImportObjectHelper(ExtTestCase):
 
         path = import_path(os.path.join)
         self.assertIsNotNone(path)
-        self.assertIn("os", path)
+        # On Windows os.path is ntpath; on POSIX it is posixpath or os
+        self.assertTrue(
+            "os" in path or "ntpath" in path or "posixpath" in path,
+            f"unexpected path: {path!r}",
+        )
 
     def test_import_path_with_err_msg(self):
         import os.path

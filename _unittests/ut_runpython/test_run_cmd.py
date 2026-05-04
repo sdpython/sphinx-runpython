@@ -10,7 +10,7 @@ from sphinx_runpython.runpython.run_cmd import (
     decode_outerr,
     RunCmdException,
 )
-from sphinx_runpython.ext_test_case import ExtTestCase
+from sphinx_runpython.ext_test_case import ExtTestCase, skipif_ci_windows
 
 
 class TestRunCmd(ExtTestCase):
@@ -106,6 +106,7 @@ class TestRunCmd(ExtTestCase):
             lambda: decode_outerr("hello", "utf-8", "ignore", "test"), TypeError
         )
 
+    @skipif_ci_windows("pwd is Unix-only and temp dirs may be on a different drive")
     def test_run_cmd_with_change_path(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             out, _err = run_cmd("pwd", wait=True, change_path=tmpdir)
