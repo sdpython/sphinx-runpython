@@ -93,11 +93,7 @@ class MermaidDirective(Directive):
                 script = None
             elif script in (1, "1", "True", "true", ""):
                 script = ""
-            elif len(script) == 0:
-                raise RuntimeError(
-                    "script should be a string to indicate"
-                    " the beginning of the Mermaid diagram."
-                )
+            # else: keep script as-is to use it as a split token
         else:
             script = False
 
@@ -157,7 +153,7 @@ def visit_mermaid_node_html(self, node):
 
 
 def depart_mermaid_node_html(self, node):
-    """depart – not called because visit raises SkipNode."""
+    """Depart the mermaid HTML node. Not called because the visitor raises SkipNode."""
 
 
 def visit_mermaid_node_rst(self, node):
@@ -200,7 +196,7 @@ def visit_mermaid_node_latex(self, node):
 
 
 def depart_mermaid_node_latex(self, node):
-    """depart – not called because visit raises SkipNode."""
+    """Depart the mermaid LaTeX node. Not called because the visitor raises SkipNode."""
 
 
 # ---------------------------------------------------------------------------
