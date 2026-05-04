@@ -36,7 +36,7 @@ class RunMermaidDirective(Directive):
       ``stdout`` contains the diagram definition.
     * *process*: run the Python script in a separate process.
 
-    Example – inline diagram::
+    Example - inline diagram::
 
         .. runmermaid::
 
@@ -50,7 +50,7 @@ class RunMermaidDirective(Directive):
         graph LR
             A --> B --> C
 
-    Example – script-generated diagram::
+    Example - script-generated diagram::
 
         .. runmermaid::
             :script:
@@ -208,11 +208,12 @@ def add_mermaid_js(app):
     """Inject the Mermaid JS library into HTML pages."""
     if app.builder.format != "html":
         return
-    app.add_js_file(_MERMAID_JS_URL, **{"loading_method": "async"})
+    app.add_js_file(_MERMAID_JS_URL, loading_method="async")
     # Initialise mermaid after the DOM is ready.
     app.add_js_file(
         None,
-        body="document.addEventListener('DOMContentLoaded', function() { mermaid.initialize({startOnLoad: true}); });",
+        body="document.addEventListener('DOMContentLoaded', function() "
+        "{ mermaid.initialize({startOnLoad: true}); });",
     )
 
 
