@@ -136,3 +136,53 @@ class TestRunCmd(ExtTestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestRunCmdExtra(ExtTestCase):
+    def test_decode_outerr_unicode_fallback(self):
+        # Bytes that fail ASCII but succeed with utf8 fallback
+        # 0xc3 0xa9 is the UTF-8 encoding of 'é'
+        result = decode_outerr(b"\xc3\xa9 hello", "ascii", "strict", "test")
+        self.assertIn("hello", result)
+
+    def test_decode_outerr_unicode_error(self):
+        # Bytes that fail both ASCII and UTF-8 strict decoding
+        # 0x80 is not valid in ascii strict or utf-8 strict
+        self.assertRaise(
+            lambda: decode_outerr(b"\x80\x81\x82", "ascii", "strict", "test"),
+            RuntimeError,
+        )
+
+    def test_run_cmd_with_logf_list(self):
+        logs = []
+
+        def logf(prefix, msg):
+            logs.append((prefix, msg))
+
+        out, err = run_cmd(["echo", "hello"], wait=True, logf=logf)
+        self.assertGreater(len(logs), 0)
+        self.assertIn("hello", out)
+
+    def test_run_cmd_catch_exit(self):
+        out, err = run_cmd("echo hello", wait=True, catch_exit=True)
+        self.assertIn("hello", out)
+
+    def test_run_cmd_with_prefix_log(self):
+        logs = []
+
+        def logf(prefix, msg):
+            logs.append((prefix, msg))
+
+        out, err = run_cmd("echo hello", wait=True, logf=logf, prefix_log="[test] ")
+        self.assertGreater(len(logs), 0)
+        self.assertTrue(any("[test]" in str(log) for log in logs))
+
+    def test_run_cmd_nowait(self):
+        # run_cmd with wait=False returns (pproc, None)
+        result = run_cmd("echo hello", wait=False)
+        pproc, _ = result
+        pproc.__exit__(None, None, None)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
